@@ -155,31 +155,8 @@
 
 
         /* ---------------------------------------------------- */
-        /* --- FLOATING BUTTONS (NÚT CỐ ĐỊNH DUY NHẤT) --- */
+        /* --- KHÔNG CẦN FLOATING BUTTONS NỮA (ĐÃ XÓA) --- */
         /* ---------------------------------------------------- */
-        .comment-button {
-            position: fixed;
-            bottom: 1.5rem; 
-            right: 1.5rem;  
-            background-color: #0c4a6e; 
-            color: #f0f9ff;           
-            width: 3.5rem; 
-            height: 3.5rem; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35); 
-            transition: all 0.3s ease;
-            z-index: 100;
-            font-size: 1.5rem; 
-            border: none;
-        }
-
-        .comment-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); 
-        }
         
         /* --- ANIMATION CHO CÁC BLOCK LỚN (Tiêu đề, Cơ chế) --- */
         .fade-in-scroll {
@@ -241,14 +218,7 @@
         /* === MOBILE ADJUSTMENTS (DƯỚI 640PX) === */
         /* ================================================= */
         @media (max-width: 639px) {
-            /* Điều chỉnh vị trí nút nổi trên Mobile */
-            .comment-button {
-                bottom: 1rem; 
-                right: 1rem; 
-                width: 3rem; 
-                height: 3rem; 
-                font-size: 1.25rem; 
-            }
+            /* Loại bỏ style cho nút bình luận */
             
             /* Tối ưu hóa kích thước font chữ trong danh sách cho mobile */
             .list-name { font-size: 0.875rem; font-weight: 600; } 
@@ -451,7 +421,6 @@
 
         <!-- Bảng Cơ chế cộng điểm MỚI -->
         <section id="point-system" class="text-center mt-16 fade-in-scroll">
-            <!-- ĐÃ BỎ CHỮ "CHI TIẾT" -->
             <h2 class="text-3xl md:text-4xl font-bold text-sky-900 mb-8">Cơ chế cộng điểm</h2>
             
             <!-- Bảng mới với tỷ lệ cân đối hơn: 20% | 25% | 55% -->
@@ -507,10 +476,7 @@
 
     </main>
     
-    <!-- Nút bình luận nổi bật, cố định ở góc dưới bên phải -->
-    <a href="https://forms.gle/sdiptXjXtoByeYiF8" target="_blank" rel="noopener noreferrer" class="comment-button" aria-label="Bình luận về CLB">
-        <i class="fa-solid fa-comment"></i>
-    </a>
+    <!-- ĐÃ XÓA NÚT BÌNH LUẬN NỔI ĐẶT Ở ĐÂY TRƯỚC ĐÓ -->
 
     <footer class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
