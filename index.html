@@ -7,7 +7,7 @@
 <meta name="google-site-verification" content="nGMlFb6LrwHCOL_XSEXT_TGE8leAvxWF5Gbs8HGqTnc" />
     
     <!-- CẬP NHẬT THEO YÊU CẦU: Thẻ Description mới cho SEO -->
-<meta name="description" content="Môi trường giúp học sinh rèn luyện thuyết trình, phản biện, học tập và sáng tạo nội dung số tại THPT Khánh Lâm." />
+<meta name="description" content="Đây là nơi bạn không chỉ học, mà còn hiểu sâu kiến thức hơn thông qua thuyết trình và phản biện đồng thời tận dụng nó để lan toả giá trị!" />
     
     <!-- CẬP NHẬT THEO YÊU CẦU: Thẻ Title mới cho SEO -->
 <title>You Can Club | CLB Thuyết Trình & Học Tập</title>
@@ -140,16 +140,8 @@
             box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); /* Shadow xanh dương */
         }
         
-        /* Custom card for Lợi ích khi tham gia */
-        .benefit-card {
-            transition: all 0.3s ease;
-            border-bottom: 6px solid transparent;
-            border-image: linear-gradient(to right, #0ea5e9, #0f766e) 1; /* Gradient border */
-        }
-        .benefit-card:hover {
-            box-shadow: 0 10px 20px -5px rgba(2, 44, 46, 0.1);
-            background-color: #f0f9ff; /* sky-50 */
-        }
+        /* Custom card for Lợi ích khi tham gia - ĐÃ XÓA VÀ THAY BẰNG TAILWIND */
+        /* Giữ lại khối này nhưng loại bỏ nội dung cũ để giữ cấu trúc */
         
         /* Custom card for Chủ đề hoạt động */
         .topic-card {
@@ -336,7 +328,7 @@
             </div>
         </section>
 
-        <!-- 4. LỢI ÍCH KHI THAM GIA (BENEFITS) - ĐÃ CẬP NHẬT NỘI DUNG -->
+        <!-- 4. LỢI ÍCH KHI THAM GIA (BENEFITS) - ĐÃ THIẾT KẾ LẠI -->
         <section id="loi-ich" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-b-4 border-sky-400">
             <div class="text-center mb-12">
                 <i class="fa-solid fa-circle-check text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -4s;"></i>
@@ -345,39 +337,79 @@
             </div>
             <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8">
                 
-                <!-- Lợi ích 1: Tự tin nói trước đám đông (Giữ nguyên) -->
-                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
-                    <i class="fa-solid fa-bullhorn text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                <!-- Lợi ích 1: Tự tin thuyết trình (Redesigned Card) -->
+                <div class="
+                    bg-white p-6 rounded-xl shadow-lg 
+                    border-l-4 border-sky-600 
+                    hover:shadow-2xl hover:-translate-y-1 
+                    transition duration-300
+                    flex items-start space-x-4
+                ">
+                    <!-- Icon Wrapper -->
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
+                        <i class="fa-solid fa-bullhorn text-2xl text-sky-700"></i>
+                    </div>
+                    <!-- Content -->
                     <div>
-                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Tự tin nói trước đám đông</h3>
-                        <p class="text-gray-700">Vượt qua nỗi sợ hãi, tự tin diễn đạt ý kiến và trình bày trước mọi người một cách lưu loát và chuyên nghiệp.</p>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Tự tin thuyết trình</h3>
+                        <p class="text-gray-700 text-sm">Rèn khả năng nói trước đám đông qua các buổi trình bày hằng tuần.</p>
                     </div>
                 </div>
                 
-                <!-- Lợi ích 2: Tư duy logic và phản biện tốt hơn (Giữ nguyên) -->
-                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
-                    <i class="fa-solid fa-brain text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                <!-- Lợi ích 2: Tư duy phản biện tốt hơn (Redesigned Card) -->
+                <div class="
+                    bg-white p-6 rounded-xl shadow-lg 
+                    border-l-4 border-sky-600 
+                    hover:shadow-2xl hover:-translate-y-1 
+                    transition duration-300
+                    flex items-start space-x-4
+                ">
+                    <!-- Icon Wrapper -->
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
+                        <i class="fa-solid fa-brain text-2xl text-sky-700"></i>
+                    </div>
+                    <!-- Content -->
                     <div>
-                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Tư duy logic và phản biện tốt hơn</h3>
-                        <p class="text-gray-700">Học cách phân tích vấn đề, xây dựng luận điểm chặt chẽ và bảo vệ quan điểm một cách thuyết phục.</p>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Tư duy phản biện tốt hơn</h3>
+                        <p class="text-gray-700 text-sm">Học cách phân tích vấn đề, đặt câu hỏi và phản hồi logic.</p>
                     </div>
                 </div>
                 
-                <!-- Lợi ích 3: Kỹ năng mềm đa dạng (CẬP NHẬT NỘI DUNG) -->
-                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
-                    <i class="fa-solid fa-people-arrows text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                <!-- Lợi ích 3: Kỹ năng học tập hiệu quả (Redesigned Card) -->
+                <div class="
+                    bg-white p-6 rounded-xl shadow-lg 
+                    border-l-4 border-sky-600 
+                    hover:shadow-2xl hover:-translate-y-1 
+                    transition duration-300
+                    flex items-start space-x-4
+                ">
+                    <!-- Icon Wrapper -->
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
+                        <i class="fa-solid fa-people-arrows text-2xl text-sky-700"></i>
+                    </div>
+                    <!-- Content -->
                     <div>
-                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Kỹ năng mềm đa dạng</h3>
-                        <p class="text-gray-700">Được thực hành và phát triển các kỹ năng thiết yếu: giao tiếp, sáng tạo nội dung, làm việc nhóm,...</p>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Kỹ năng học tập hiệu quả</h3>
+                        <p class="text-gray-700 text-sm">Áp dụng phương pháp “giảng lại” giúp hiểu sâu và nhớ lâu.</p>
                     </div>
                 </div>
                 
-                <!-- Lợi ích 4: Môi trường tích cực (CẬP NHẬT NỘI DUNG) -->
-                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
-                    <i class="fa-solid fa-hand-holding-heart text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                <!-- Lợi ích 4: Môi trường tích cực – hỗ trợ nhau phát triển (Redesigned Card) -->
+                <div class="
+                    bg-white p-6 rounded-xl shadow-lg 
+                    border-l-4 border-sky-600 
+                    hover:shadow-2xl hover:-translate-y-1 
+                    transition duration-300
+                    flex items-start space-x-4
+                ">
+                    <!-- Icon Wrapper -->
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
+                        <i class="fa-solid fa-hand-holding-heart text-2xl text-sky-700"></i>
+                    </div>
+                    <!-- Content -->
                     <div>
-                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Môi trường tích cực & thân thiện</h3>
-                        <p class="text-gray-700">Kết nối với những người bạn cùng chí hướng, tạo ra một không gian an toàn, cởi mở để cùng nhau học hỏi và phát triển cá nhân.</p>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Môi trường tích cực – hỗ trợ nhau phát triển</h3>
+                        <p class="text-gray-700 text-sm">Kết nối bạn bè có cùng mục tiêu, cùng học – cùng tiến bộ.</p>
                     </div>
                 </div>
                 
