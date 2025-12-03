@@ -7,7 +7,7 @@
 <meta name="google-site-verification" content="nGMlFb6LrwHCOL_XSEXT_TGE8leAvxWF5Gbs8HGqTnc" />
     
     <!-- CẬP NHẬT THEO YÊU CẦU: Thẻ Description mới cho SEO -->
-<meta name="description" content="Đây là nơi bạn không chỉ học, mà còn hiểu sâu kiến thức hơn thông qua thuyết trình và phản biện đồng thời tận dụng nó để lan toả giá trị!" />
+<meta name="description" content="Môi trường giúp học sinh rèn luyện thuyết trình, phản biện, học tập và sáng tạo nội dung số tại THPT Khánh Lâm." />
     
     <!-- CẬP NHẬT THEO YÊU CẦU: Thẻ Title mới cho SEO -->
 <title>You Can Club | CLB Thuyết Trình & Học Tập</title>
@@ -48,32 +48,12 @@
             color: #0c4a6e; /* sky-800 */
             font-weight: 600;
         }
-        /* Custom styles for interactive cards and buttons */
-        .interactive-card {
-            transition: all 0.3s ease;
-        }
-        /* Đã cập nhật trạng thái active cho card để dùng màu nền sky-700 và border sky-900 cho nổi bật */
-        .interactive-card.active {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 25px -5px rgb(0 0 0 / 0.2), 0 5px 10px -5px rgb(0 0 0 / 0.1);
-            border-color: #075985; /* sky-800 */
-            background-color: #0c4a6e; /* sky-900 */
-            color: white;
-        }
-        .interactive-card.active h4, .interactive-card.active p {
-            color: white !important;
-        }
-        /* Đảm bảo icon bên trong thẻ active cũng đổi màu thành trắng (hoặc màu sáng) */
-        .interactive-card.active .icon-bg {
-            background-color: white !important;
-            color: #0c4a6e !important; /* sky-900 */
-        }
 
-        /* ĐÃ CẬP NHẬT: chỉ giữ lại .comment-button và đặt nó ở vị trí cũ của .feedback-button */
+        /* Nút Bình luận (giữ nguyên) */
         .comment-button {
             position: fixed;
-            background-color: #0c4a6e; /* Nền xanh đậm theo yêu cầu */
-            color: #f0f9ff; /* Màu icon theo yêu cầu */
+            background-color: #0c4a6e; /* Nền xanh đậm */
+            color: #f0f9ff; /* Màu icon */
             width: 3.5rem;
             height: 3.5rem;
             display: flex;
@@ -127,8 +107,6 @@
             animation: subtle-float 3s ease-in-out infinite; /* 3 giây, kiểu ease-in-out, lặp vô hạn */
         }
         
-        /* Đã xóa hiệu ứng phát sáng cho ngôi sao */
-
         /* --- HIỆU ỨNG RUNG LẮC NHẸ CHO NÚT CTA (ĐĂNG KÝ) --- */
         @keyframes cta-wobble {
             0%, 100% {
@@ -151,6 +129,37 @@
             animation: cta-wobble 4s ease-in-out infinite; 
             transform-origin: center;
         }
+        
+        /* Custom card for Lĩnh vực hoạt động / Phương pháp hoạt động */
+        .area-card {
+            transition: all 0.3s ease;
+            transform: translateZ(0); /* Kích hoạt GPU acceleration */
+        }
+        .area-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); /* Shadow xanh dương */
+        }
+        
+        /* Custom card for Lợi ích khi tham gia */
+        .benefit-card {
+            transition: all 0.3s ease;
+            border-bottom: 6px solid transparent;
+            border-image: linear-gradient(to right, #0ea5e9, #0f766e) 1; /* Gradient border */
+        }
+        .benefit-card:hover {
+            box-shadow: 0 10px 20px -5px rgba(2, 44, 46, 0.1);
+            background-color: #f0f9ff; /* sky-50 */
+        }
+        
+        /* Custom card for Chủ đề hoạt động */
+        .topic-card {
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        .topic-card:hover {
+             border-color: #0ea5e9; /* sky-500 */
+             box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(14, 165, 233, 0.05);
+        }
 
     </style>
 </head>
@@ -164,8 +173,8 @@
 
 <a href="#" class="flex items-center space-x-2">
                 
-
-<img src="https://i.ibb.co/8LV2QDR2/4-D892-F5-A-D50-C-41-F6-AB82-610-B6-BF4-D719.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full shadow-lg border border-sky-200">
+                <!-- Logo đã được cập nhật -->
+<img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full shadow-lg border border-sky-200">
                 <div>
                     <span class="text-xl font-extrabold text-sky-900">You Can Club</span>
                     
@@ -227,168 +236,157 @@
     <main class="container mx-auto px-6 py-0 md:py-8">
 
         
-
-<section id="cau-chuyen" class="text-center pt-16 pb-20 flex flex-col justify-center items-center fade-in-scroll">
-            
-            
-
-<h1 class="text-4xl md:text-6xl font-extrabold text-sky-900 mb-6 tracking-tight">
-                <span class="text-sky-500">Tỏa sáng</span> để lan tỏa giá trị
+        <!-- 1. CÂU CHUYỆN (HEADER/MISSION) -->
+        <section id="cau-chuyen" class="text-center pt-16 pb-20 flex flex-col justify-center items-center fade-in-scroll">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight 
+                       bg-gradient-to-r from-sky-500 to-sky-900 
+                       text-transparent bg-clip-text py-2">
+                <!-- ĐÃ ÁP DỤNG GRADIENT MÀU XANH DƯƠNG SÁNG (sky-500) TỐI DẦN ĐẾN XANH DƯƠNG ĐẬM (sky-900) -->
+                Tỏa sáng để lan tỏa giá trị
             </h1>
-            
-
-<p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed font-light">
-                Câu lạc bộ được xây dựng dựa trên phương pháp teach back: Học thông qua dạy lại - Thành viên không chỉ học mà còn hệ thống hóa và thuyết trình lại, qua đó rèn luyện kỹ năng diễn đạt và sự tự tin khi nói trước đám đông. CLB đồng thời tạo môi trường an toàn và thân thiện, giúp những bạn ngại thuyết trình dám thể hiện và tỏa sáng. Ngoài học tập, thành viên còn được ứng dụng kỹ năng này để sáng tạo nội dung số giá trị (video, podcast) và xây dựng thương hiệu cá nhân tích cực, chuẩn bị hành trang vững vàng cho tương lai.
+            <p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed font-light">
+                Môi trường thân thiện khuyến khích mọi người dám thể hiện và tỏa sáng, đồng thời ứng dụng các kỹ năng thuyết trình, phản biện vào sáng tạo nội dung số để xây dựng thương hiệu cá nhân và chuẩn bị hành trang vững chắc cho tương lai.
             </p>
         </section>
 
         
-
-<section id="su-menh" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-t-4 border-sky-400">
+        <!-- 2. CHỦ ĐỀ HOẠT ĐỘNG (TOPICS) - Giữ nguyên -->
+        <section id="chu-de" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-t-4 border-sky-400">
             <div class="text-center mb-12 px-6">
+                <i class="fa-solid fa-graduation-cap text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -1s;"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Chủ Đề Hoạt Động</h2>
+                <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Chúng tôi khám phá ba lĩnh vực kiến thức trọng tâm, giúp bạn phát triển toàn diện cả về nội lực cá nhân và góc nhìn xã hội.</p>
+            </div>
+            
+            <!-- Grid 3 cột trên desktop, 1 cột trên mobile -->
+            <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
                 
-
-<i class="fa-solid fa-bullseye text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -1s;"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Sứ Mệnh</h2>
-                <p class="mt-2 text-gray-500">Mục tiêu cốt lõi của chúng tôi.</p>
-            </div>
-            <div class="max-w-3xl mx-auto px-6">
-                <p class="text-center text-gray-700 leading-relaxed text-lg font-medium">
-                    Góp phần phát triển cộng đồng học sinh địa phương bằng môi trường học hỏi, trau dồi kỹ năng, vượt qua nỗi sợ và kết nối những người cùng chí hướng.
-                </p>
-            </div>
-        </section>
-
-        
-
-<section id="dinh-huong" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll">
-            <div class="text-center mb-12 px-6">
+                <!-- Chủ đề 1: Phát triển bản thân -->
+                <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i class="fa-solid fa-person-running text-3xl text-sky-700 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-sky-900">Phát triển bản thân</h3>
+                    </div>
+                    <!-- NỘI DUNG GIỮ NGUYÊN -->
+                    <p class="text-gray-700">Giúp bạn nâng cao hiệu suất học tập và rèn luyện nội lực.</p>
+                </div>
                 
+                <!-- Chủ đề 2: Xu hướng -->
+                <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i class="fa-solid fa-lightbulb text-3xl text-sky-700 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-sky-900">Xu hướng</h3>
+                    </div>
+                    <!-- NỘI DUNG GIỮ NGUYÊN -->
+                    <p class="text-gray-700">Giúp bạn luôn cập nhật và sẵn sàng cho tương lai.</p>
+                </div>
 
-<i class="fa-solid fa-compass text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -2.5s;"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Định Hướng</h2>
-                <p class="mt-2 text-gray-500">La bàn dẫn lối cho mọi hoạt động.</p>
-            </div>
-            <div class="max-w-3xl mx-auto px-6">
-                <p class="text-center text-gray-700 leading-relaxed text-lg font-medium">
-                    Xây dựng cộng đồng học tập tích cực, rèn kỹ năng thuyết trình, phản biện, giao tiếp và thể hiện bản thân; hỗ trợ sự tiến bộ cá nhân và thói quen học tập chủ động.
-                </p>
-            </div>
-        </section>
+                <!-- Chủ đề 3: Xã hội -->
+                <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <i class="fa-solid fa-users text-3xl text-sky-700 flex-shrink-0"></i>
+                        <h3 class="text-xl font-bold text-sky-900">Xã hội</h3>
+                    </div>
+                    <!-- NỘI DUNG GIỮ NGUYÊN -->
+                    <p class="text-gray-700">Rèn luyện khả năng lập luận và đưa ra giải pháp cho các vấn đề thực tế.</p>
+                </div>
 
-        
-
-<section id="van-hoa" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-b-4 border-sky-400">
-            <div class="text-center mb-12 px-6">
-                
-
-<i class="fa-solid fa-handshake-angle text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -4s;"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Không Gian Văn Hóa</h2>
-                <p class="mt-2 text-gray-500">Nơi mọi cá tính được tôn trọng và phát triển.</p>
-            </div>
-            <div class="max-w-3xl mx-auto px-6">
-                <p class="text-center text-gray-700 leading-relaxed text-lg font-medium">
-                    Chúng tôi tạo không gian cởi mở, thân thiện, nơi mọi người được chia sẻ, lắng nghe và tôn trọng, cùng xây dựng văn hóa <strong class="text-sky-700">tích cực</strong>, <strong class="text-sky-700">cởi mở</strong>, <strong class="text-sky-700">dám thử</strong> và <strong class="text-sky-700">cùng nhau tiến bộ</strong>.
-                </p>
             </div>
         </section>
         
-        
+        <!-- 3. PHƯƠNG PHÁP HOẠT ĐỘNG (METHOD) - THAY THẾ LĨNH VỰC HOẠT ĐỘNG -->
+        <section id="phuong-phap" class="py-16 rounded-2xl my-16 fade-in-scroll">
+            <div class="text-center mb-12 px-6">
+                <i class="fa-solid fa-circle-nodes text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -2.5s;"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Phương Pháp Hoạt Động</h2>
+                <p class="mt-2 text-gray-500">Quy trình học tập chủ động và rèn luyện theo chu kỳ hiệu quả.</p>
+                <!-- Hình ảnh Chu trình học tập chủ động -->
+            </div>
+            
+            <div class="max-w-6xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- 1. Học tập chủ động -->
+                <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-book-open-reader text-5xl text-sky-600 mb-3"></i>
+                    <p class="text-xl font-bold text-gray-800 mb-1">1. Học tập chủ động</p>
+                    <p class="text-sm text-gray-600">Tìm kiếm nội dung và chuẩn bị để thuyết trình.</p>
+                </div>
+                
+                <!-- 2. Thuyết trình (Teach Back) -->
+                <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-chalkboard-user text-5xl text-sky-600 mb-3"></i>
+                    <p class="text-xl font-bold text-gray-800 mb-1">2. Thuyết trình</p>
+                    <p class="text-sm text-gray-600">Áp dụng phương pháp 'Teach Back'.</p>
+                </div>
+                
+                <!-- 3. Thảo luận -->
+                <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-users-viewfinder text-5xl text-sky-600 mb-3"></i>
+                    <p class="text-xl font-bold text-gray-800 mb-1">3. Thảo luận</p>
+                    <p class="text-sm text-gray-600">Cùng nhau đào sâu và hiểu kỹ hơn.</p>
+                </div>
+                
+                <!-- 4. Nhận xét -->
+                <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
+                    <i class="fa-solid fa-clipboard-check text-5xl text-sky-600 mb-3"></i>
+                    <p class="text-xl font-bold text-gray-800 mb-1">4. Nhận xét</p>
+                    <p class="text-sm text-gray-600">Góp ý giúp người thuyết trình tiến bộ.</p>
+                </div>
+                
+            </div>
+        </section>
 
-<section id="gia-tri" class="py-16 fade-in-scroll">
+        <!-- 4. LỢI ÍCH KHI THAM GIA (BENEFITS) - ĐÃ CẬP NHẬT NỘI DUNG -->
+        <section id="loi-ich" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-b-4 border-sky-400">
             <div class="text-center mb-12">
-                
-
-<i class="fa-solid fa-cogs text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -5.5s;"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Giá Trị Cốt Lõi</h2>
-                <p class="mt-2 text-gray-500">Nền tảng cho mọi quyết định và hành động. <strong class="text-sky-700">Nhấn vào từng giá trị</strong> để tìm hiểu thêm.</p>
+                <i class="fa-solid fa-circle-check text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -4s;"></i>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Lợi Ích Khi Tham Gia</h2>
+                <p class="mt-2 text-gray-500">Gặt hái những giá trị thực tế cho hành trang tương lai.</p>
             </div>
-            <div class="grid md:grid-cols-3 gap-6 mb-8">
+            <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8">
                 
-
-<div class="interactive-card value-card cursor-pointer bg-white p-6 rounded-xl border-2 border-sky-300 transition-all duration-300 shadow-md hover:shadow-xl" data-target="desc-1">
-                    <h4 class="font-bold text-xl text-gray-800">Tôn trọng - Cùng tiến bộ</h4>
+                <!-- Lợi ích 1: Tự tin nói trước đám đông (Giữ nguyên) -->
+                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
+                    <i class="fa-solid fa-bullhorn text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Tự tin nói trước đám đông</h3>
+                        <p class="text-gray-700">Vượt qua nỗi sợ hãi, tự tin diễn đạt ý kiến và trình bày trước mọi người một cách lưu loát và chuyên nghiệp.</p>
+                    </div>
                 </div>
                 
-
-<div class="interactive-card value-card cursor-pointer bg-white p-6 rounded-xl border-2 border-sky-300 transition-all duration-300 shadow-md hover:shadow-xl" data-target="desc-2">
-                    <h4 class="font-bold text-xl text-gray-800">Dám thử - Dám sửa</h4>
+                <!-- Lợi ích 2: Tư duy logic và phản biện tốt hơn (Giữ nguyên) -->
+                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
+                    <i class="fa-solid fa-brain text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Tư duy logic và phản biện tốt hơn</h3>
+                        <p class="text-gray-700">Học cách phân tích vấn đề, xây dựng luận điểm chặt chẽ và bảo vệ quan điểm một cách thuyết phục.</p>
+                    </div>
                 </div>
                 
-
-<div class="interactive-card value-card cursor-pointer bg-white p-6 rounded-xl border-2 border-sky-300 transition-all duration-300 shadow-md hover:hover:shadow-xl" data-target="desc-3">
-                    <h4 class="font-bold text-xl text-gray-800">Học từ nhau - Tư duy mở</h4>
+                <!-- Lợi ích 3: Kỹ năng mềm đa dạng (CẬP NHẬT NỘI DUNG) -->
+                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
+                    <i class="fa-solid fa-people-arrows text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Kỹ năng mềm đa dạng</h3>
+                        <p class="text-gray-700">Được thực hành và phát triển các kỹ năng thiết yếu: giao tiếp, sáng tạo nội dung, làm việc nhóm,...</p>
+                    </div>
                 </div>
-            </div>
-            
-
-<div id="descriptions-container" class="min-h-[150px] bg-white rounded-xl p-8 shadow-inner transition-all duration-500 border-l-4 border-sky-600" style="display: none;">
-                <div id="desc-1" class="value-description" style="display: none;">
-                    <h5 class="font-bold text-2xl text-sky-800 mb-3">Tôn trọng - Cùng tiến bộ</h5>
-                    <p class="text-gray-600 leading-relaxed text-lg">Chúng tôi tin rằng khi tôn trọng sự khác biệt và đa dạng trong suy nghĩ, chúng ta sẽ cùng nhau tạo ra những đột phá và phát triển bền vững cho cả cộng đồng.</p>
+                
+                <!-- Lợi ích 4: Môi trường tích cực (CẬP NHẬT NỘI DUNG) -->
+                <div class="benefit-card bg-white p-8 rounded-xl shadow-lg flex items-start space-x-6">
+                    <i class="fa-solid fa-hand-holding-heart text-4xl text-sky-700 flex-shrink-0 mt-1"></i>
+                    <div>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-2">Môi trường tích cực & thân thiện</h3>
+                        <p class="text-gray-700">Kết nối với những người bạn cùng chí hướng, tạo ra một không gian an toàn, cởi mở để cùng nhau học hỏi và phát triển cá nhân.</p>
+                    </div>
                 </div>
-                <div id="desc-2" class="value-description" style="display: none;">
-                    <h5 class="font-bold text-2xl text-sky-800 mb-3">Dám thử - Dám sửa</h5>
-                    <p class="text-gray-600 leading-relaxed text-lg">Khuyến khích sự sáng tạo, không ngại thử thách và sẵn sàng học hỏi từ những sai lầm. Thất bại không phải là điểm kết thúc, mà là một bước đệm cần thiết trên con đường dẫn đến thành công.</p>
-                </div>
-                <div id="desc-3" class="value-description" style="display: none;">
-                    <h5 class="font-bold text-2xl text-sky-800 mb-3">Học từ nhau - Tư duy mở</h5>
-                    <p class="text-gray-600 leading-relaxed text-lg">Mở lòng để tiếp nhận tri thức và góc nhìn mới, trao đi kiến thức để nhận lại giá trị lớn hơn cho cả bản thân và cộng đồng. Mỗi thành viên vừa là người học, vừa là người thầy.</p>
-                </div>
+                
             </div>
         </section>
 
         
-
-<section id="chu-de" class="py-16 text-center fade-in-scroll">
-            
-
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Chủ Đề Sinh Hoạt Chính</h2>
-            <p class="mb-10 text-gray-600 max-w-3xl mx-auto">Các buổi sinh hoạt giúp bạn phát triển khả năng thuyết trình, phản biện và học tập qua các chủ đề dưới đây. <strong class="text-sky-700">Nhấn vào từng chủ đề</strong> để xem chi tiết.</p>
-            
-            
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto">
-                
-                
-
-<div id="topic-card-1" class="interactive-card topic-card cursor-pointer bg-white rounded-xl border-2 border-sky-300 shadow-lg p-6 flex flex-col items-center justify-center transition-transform duration-300 hover:scale-[1.03]" data-target="topic-desc-1">
-                    <div class="icon-bg bg-sky-700 text-white rounded-full h-14 w-14 flex items-center justify-center mb-3 transition-colors duration-300">
-                        <i class="fa-solid fa-seedling text-3xl"></i>
-                    </div>
-                    <p class="text-lg font-bold text-gray-800">Phát triển bản thân</p>
-                </div>
-
-                
-
-<div id="topic-card-3" class="interactive-card topic-card cursor-pointer bg-white rounded-xl border-2 border-sky-300 shadow-lg p-6 flex flex-col items-center justify-center transition-transform duration-300 hover:scale-[1.03]" data-target="topic-desc-3">
-                    <div class="icon-bg bg-sky-700 text-white rounded-full h-14 w-14 flex items-center justify-center mb-3 transition-colors duration-300">
-                        <i class="fa-solid fa-earth-asia text-3xl"></i>
-                    </div>
-                    <p class="text-lg font-bold text-gray-800">Xã hội & Xu hướng</p>
-                </div>
-            </div>
-            
-
-<div id="topic-descriptions-container" class="max-w-5xl mx-auto mt-8 min-h-[150px] bg-white rounded-xl p-8 shadow-inner transition-all duration-500 border-l-4 border-sky-600" style="display: none;">
-                <div id="topic-desc-1" class="topic-description text-left" style="display: none;">
-                    <h5 class="font-bold text-2xl text-sky-800 mb-3"><i class="fa-solid fa-seedling mr-2"></i> Phát triển bản thân</h5>
-                    <p class="text-gray-600 leading-relaxed text-lg">Giúp thành viên khám phá điểm mạnh, điểm yếu, đặt mục tiêu, và phát triển thói quen tích cực thông qua các bài thuyết trình về kỹ năng mềm, quản lý thời gian và tư duy tăng trưởng.</p>
-                </div>
-                
-
-<div id="topic-desc-3" class="topic-description text-left" style="display: none;">
-                    <h5 class="font-bold text-2xl text-sky-800 mb-3"><i class="fa-solid fa-earth-asia mr-2"></i> Xã hội & Xu hướng</h5>
-                    <p class="text-gray-600 leading-relaxed text-lg">Nơi cập nhật và phân tích các vấn đề xã hội, công nghệ và xu hướng mới nhất. Rèn luyện kỹ năng nghiên cứu, tổng hợp thông tin và phản biện về thế giới xung quanh.</p>
-                </div>
-            </div>
-            
-
-</section>
-
-        
-
-<section id="dang-ky" class="py-16 text-center fade-in-scroll mt-16">
+        <!-- CTA (Giữ nguyên) -->
+        <section id="dang-ky" class="py-16 text-center fade-in-scroll mt-16">
             
 
 <div class="bg-sky-100 p-8 md:p-12 rounded-2xl shadow-2xl border-2 border-sky-300">
@@ -403,12 +401,12 @@
 
     </main>
 
-    <!-- Nút Bình luận -->
-    <a href="#contact-us" class="comment-button" aria-label="Bình luận về CLB">
+    <!-- Nút Bình luận (Giữ nguyên link đúng) -->
+    <a href="https://forms.gle/myknJfJTtSXm6z1P8" target="_blank" rel="noopener noreferrer" class="comment-button" aria-label="Gửi phản hồi cho CLB">
         <i class="fa-solid fa-comment"></i>
     </a>
 
-    <!-- Footer: Đã thêm ID "contact-us" để nút Bình luận có thể cuộn tới đây -->
+    <!-- Footer: Giữ nguyên -->
     <footer id="contact-us" class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
             <div class="flex space-x-6">
@@ -433,60 +431,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             
-            // --- Hàm chung để xử lý Active và Hiển thị mô tả ---
-            function handleCardClick(card, isValueCard) {
-                const targetId = card.dataset.target;
-                const targetDescription = document.getElementById(targetId);
-
-                // Kiểm tra xem thẻ hiện tại đã active chưa
-                const wasActive = card.classList.contains('active');
-
-                // Bỏ trạng thái active của TẤT CẢ các thẻ
-                document.querySelectorAll('.interactive-card').forEach(c => {
-                    c.classList.remove('active');
-                });
-                
-                // Ẩn tất cả mô tả (cả Giá trị và Chủ đề)
-                document.querySelectorAll('.value-description, .topic-description').forEach(desc => {
-                    desc.style.display = 'none';
-                });
-                document.getElementById('descriptions-container').style.display = 'none';
-                document.getElementById('topic-descriptions-container').style.display = 'none';
-
-                if (!wasActive) {
-                    // Kích hoạt thẻ hiện tại
-                    card.classList.add('active');
-                    
-                    // Hiển thị container và mô tả tương ứng
-                    if (isValueCard) {
-                        document.getElementById('descriptions-container').style.display = 'block';
-                    } else {
-                        document.getElementById('topic-descriptions-container').style.display = 'block';
-                    }
-
-                    if (targetDescription) {
-                        targetDescription.style.display = 'block';
-                    }
-                }
-            }
-
-            // --- 1. Core Values (Giá trị cốt lõi) ---
-            const valueCards = document.querySelectorAll('.interactive-card.value-card');
-            valueCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    handleCardClick(this, true); // true: là thẻ Giá trị
-                });
-            });
-            
-            // --- 2. Activity Topic Cards (Chủ đề sinh hoạt) ---
-            const topicCards = document.querySelectorAll('.interactive-card.topic-card');
-            topicCards.forEach(card => {
-                card.addEventListener('click', function () {
-                    handleCardClick(this, false); // false: là thẻ Chủ đề
-                });
-            });
-
-            // Mobile Menu Toggle
+            // --- Mobile Menu Toggle (Giữ nguyên) ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
@@ -506,7 +451,7 @@
                 });
             });
             
-            // --- JavaScript for scroll-in animation (Hiệu ứng xuất hiện khi cuộn) ---
+            // --- JavaScript for scroll-in animation (Hiệu ứng xuất hiện khi cuộn - Giữ nguyên) ---
             const fadeInObserverOptions = {
                 root: null, // Sử dụng viewport làm root
                 rootMargin: '0px',
