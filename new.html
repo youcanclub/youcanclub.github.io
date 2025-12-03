@@ -61,7 +61,8 @@
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-2">
-                <!-- ĐÃ SỬA: Đường dẫn logo bị lỗi cú pháp được đưa về dạng URL ảnh trực tiếp --><img src="https://i.ibb.co/8LV2QDR2/4-D892-F5-A-D50-C-41-F6-AB82-610-B6-BF4-D719.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/0c4a6e/ffffff?text=YCC'">
+                <!-- ĐÃ CẬP NHẬT: Đường dẫn logo mới từ raw.githubusercontent.com -->
+                <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/0c4a6e/ffffff?text=YCC'">
                 <div>
                     <!-- Dòng chữ "You Can Club" đã được đổi từ text-gray-900/font-bold sang text-sky-900/font-extrabold --><span class="text-xl font-extrabold text-sky-900 block">You Can Club</span>
                     <!-- Dòng chữ nhỏ "Bạn có thể!" đã được xác nhận đúng class: text-sm, italic, text-gray-500 --><span class="text-sm italic text-gray-500 block -mt-1">Bạn có thể!</span>
@@ -117,7 +118,7 @@
             <!-- Tiêu đề chính --><h1 class="text-4xl md:text-5xl font-bold text-sky-900 mb-12">Bảng thông báo</h1>
             
             <!-- Announcement cards section (Thiết kế lại cho bắt mắt hơn) --><div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
-                <!-- Announcement Card - THÔNG BÁO CHƯA CÓ SỰ KIỆN LỚN --><div class="relative max-w-lg mx-auto bg-gray-600 p-1.5 rounded-2xl shadow-2xl shadow-gray-400/50 transition-transform duration-300 hover:scale-[1.02]">
+                <!-- Announcement Card - THÔNG BÁO CHƯA CÓ SỰ KIỆN LỚN --><div class="relative w-full mx-auto bg-sky-900 p-2 rounded-2xl shadow-2xl shadow-sky-500/50 transition-transform duration-300 hover:scale-[1.02]">
                     <!-- Inner Card for content --><div class="bg-white p-8 rounded-xl relative text-center">
                         
                         <!-- Đã bỏ Tag thông báo chung (THÔNG BÁO CHUNG) --><!-- Tiêu đề Sự kiện --><h2 class="text-3xl font-extrabold text-gray-700 mb-2 mt-2">
@@ -148,60 +149,64 @@
             <!-- ĐÃ THAY ĐỔI ICON TỪ fa-list-check SANG fa-sitemap --><h2 class="text-3xl font-bold text-sky-900 text-center mb-10"><i class="fa-solid fa-sitemap mr-2"></i> Thông tin sinh hoạt</h2>
             
             <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                <!-- Sinh hoạt tuần Card (Online - Màu Xanh) --><div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-sky-400/50 hover:translate-y-[-4px] border border-sky-200">
+                <!-- Sinh hoạt tuần Card (Online - Màu Xanh) -->
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-sky-400/50 hover:translate-y-[-4px] border border-sky-200">
                     <!-- Header with Gradient and Icon --><div class="bg-gradient-to-r from-sky-600 to-sky-700 p-5 text-white flex items-center justify-center">
                         <i class="fa-solid fa-calendar-week text-3xl mr-3"></i>
-                        <h3 class="text-2xl font-extrabold">Sinh hoạt tuần</h3>
+                        <!-- ĐÃ SỬA: Bỏ số 1. --><h3 class="text-2xl font-extrabold">Sinh hoạt Online</h3>
                     </div>
                     <!-- Content Area --><div class="p-6 space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-graduation-cap text-sky-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Nội dung:</strong> <span class="text-sky-700 font-semibold">Phân tích, trả lời và thảo luận</span> các câu hỏi về những chủ đề liên quan đến Phát triển bản thân hay Xã hội & Xu hướng.
-                            </p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-laptop-code text-sky-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Hình thức:</strong> Thuyết trình <strong class="text-sky-700">online</strong> bật cam - không cần slide (qua Google Meet).
-                            </p>
-                        </div>
                         <div class="flex items-start space-x-3">
                             <i class="fa-solid fa-clock text-sky-600 text-xl pt-1"></i>
                             <p>
-                                <strong class="text-gray-900">Thời lượng:</strong> 10-15 phút/người, 2-3 người/buổi.
+                                <strong class="text-gray-900">Thời gian:</strong> <span class="text-sky-700 font-semibold">Thứ 7 hoặc Chủ nhật hằng tuần.</span>
                             </p>
                         </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-calendar-alt text-sky-600 text-xl pt-1"></i>
+                            <p>
+                                <strong class="text-gray-900">Lịch trình:</strong> Thứ 2: Thành viên đề xuất chủ đề; BCN chọn 1–2 người thuyết trình.
+                            </p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-microphone text-sky-600 text-xl pt-1"></i>
+                            <p>
+                                <strong class="text-gray-900">Chi tiết:</strong> Họp Zoom ~40 phút: thuyết trình → thảo luận → nhận xét qua biểu mẫu.
+                            </p>
+                        </div>
+                         <!-- ĐÃ XÓA: Phần Lưu ý cũ của sinh hoạt Online -->
                     </div>
                 </div>
 
-                <!-- Sinh hoạt tháng Card (Offline - Màu Vàng/Cam) --><div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-amber-400/50 hover:translate-y-[-4px] border border-amber-200">
+                <!-- Sinh hoạt tháng Card (Offline - Màu Vàng/Cam) -->
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-amber-400/50 hover:translate-y-[-4px] border border-amber-200">
                     <!-- Header with Gradient and Icon --><div class="bg-gradient-to-r from-amber-600 to-amber-700 p-5 text-white flex items-center justify-center">
                         <i class="fa-solid fa-calendar-days text-3xl mr-3"></i>
-                        <h3 class="text-2xl font-extrabold">Sinh hoạt tháng</h3>
+                        <!-- ĐÃ SỬA: Bỏ số 2. --><h3 class="text-2xl font-extrabold">Sinh hoạt Offline</h3>
                     </div>
                     <!-- Content Area --><div class="p-6 space-y-4">
                         <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-chart-bar text-amber-600 text-xl pt-1"></i>
+                            <i class="fa-solid fa-calendar-day text-amber-600 text-xl pt-1"></i>
                             <p>
-                                <strong class="text-gray-900">Nội dung:</strong> Tổng kết tháng, nhận xét, góp ý giúp các thành viên cải thiện, và <strong class="text-amber-700">trao thưởng thành viên xuất sắc</strong>.
+                                <strong class="text-gray-900">Thời gian:</strong> <strong class="text-amber-700">Thứ 6 – tuần 4 hằng tháng.</strong>
                             </p>
                         </div>
                         <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-location-dot text-amber-600 text-xl pt-1"></i>
+                            <i class="fa-solid fa-bullhorn text-amber-600 text-xl pt-1"></i>
                             <p>
-                                <strong class="text-gray-900">Hình thức:</strong> <strong class="text-amber-700">Offline</strong> tại một địa điểm cố định.
+                                <strong class="text-gray-900">Nội dung:</strong> Họp trực tiếp: BCN đánh giá hoạt động tháng và <strong class="text-amber-700">trao thưởng</strong>.
                             </p>
                         </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-calendar-check text-amber-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Thời gian:</strong> Diễn ra vào cuối tháng.
-                            </p>
-                        </div>
+                        <!-- ĐÃ XÓA: Phần Lưu ý cũ của sinh hoạt Offline -->
                     </div>
                 </div>
             </div>
+            
+            <!-- ĐÃ THÊM: Hộp Lưu ý chung cho cả Sinh hoạt Online và Offline -->
+            <p class="mt-8 text-sky-800 text-lg md:text-xl font-extrabold max-w-3xl mx-auto p-4 bg-sky-200/70 rounded-xl shadow-lg flex items-center justify-center">
+                <i class="fa-solid fa-circle-exclamation mr-3 text-red-600"></i>
+                Lưu ý: Toàn bộ buổi sinh hoạt được ghi hình và đăng lên Fanpage sau kiểm duyệt.
+            </p>
         </section>
         <!-- END: Phần Thông tin sinh hoạt đã được đổi tên --></main>
     
