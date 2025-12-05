@@ -31,7 +31,7 @@
         }
     </style>
 </head>
-<!-- Đã cập nhật body để sử dụng flexbox và đảm bảo trang chiếm ít nhất toàn bộ chiều cao của màn hình --><body class="flex flex-col min-h-screen bg-sky-100 text-gray-800">
+<!-- Đã cập nhật body để sử dụng flexbox và đảm bảo trang chiếm ít nhất toàn bộ chiều cao của màn màn hình --><body class="flex flex-col min-h-screen bg-sky-100 text-gray-800">
 
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
@@ -90,7 +90,8 @@
 
     <!-- Thêm flex-grow để main chiếm hết khoảng trống, đẩy footer xuống dưới cùng --><main class="container mx-auto px-6 py-8 md:py-16 flex-grow">
         <section id="announcements" class="text-center fade-in-scroll">
-            <!-- Tiêu đề chính --><h1 class="text-4xl md:text-5xl font-bold text-sky-900 mb-12">Bảng thông báo</h1>
+            <!-- Tiêu đề chính - ĐÃ THÊM GRADIENT VÀ THÊM PY-1 ĐỂ TRÁNH CẮT CHỮ -->
+            <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-600 to-sky-900 text-transparent bg-clip-text mb-12 py-1">Bảng thông báo</h1>
             
             <!-- Announcement cards section (Thiết kế lại cho bắt mắt hơn) --><div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
                 <!-- Announcement Card - THÔNG BÁO CHƯA CÓ SỰ KIỆN LỚN --><div class="relative w-full mx-auto bg-sky-900 p-2 rounded-2xl shadow-2xl shadow-sky-500/50 transition-transform duration-300 hover:scale-[1.02]">
@@ -121,7 +122,8 @@
         </section>
 
         <!-- START: Phần Thông tin sinh hoạt đã được thiết kế lại bắt mắt hơn --><section id="activity-format" class="mt-16 py-12 bg-white/70 rounded-2xl shadow-inner fade-in-scroll">
-            <!-- ĐÃ THAY ĐỔI ICON TỪ fa-list-check SANG fa-sitemap --><h2 class="text-3xl font-bold text-sky-900 text-center mb-10"><i class="fa-solid fa-sitemap mr-2"></i> Thông tin sinh hoạt</h2>
+            <!-- ĐÃ BỎ ICON: Xóa icon fa-sitemap khỏi tiêu đề -->
+            <h2 class="text-3xl font-bold text-sky-900 text-center mb-10">Thông tin sinh hoạt</h2>
             
             <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                 <!-- Sinh hoạt tuần Card (Online - Màu Xanh) -->
