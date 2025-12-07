@@ -154,10 +154,6 @@
         .list-score-normal { color: #0ea5e9; } 
 
 
-        /* ---------------------------------------------------- */
-        /* --- KHÔNG CẦN FLOATING BUTTONS NỮA (ĐÃ XÓA) --- */
-        /* ---------------------------------------------------- */
-        
         /* --- ANIMATION CHO CÁC BLOCK LỚN (Tiêu đề, Cơ chế) --- */
         .fade-in-scroll {
             opacity: 0;
@@ -218,7 +214,6 @@
         /* === MOBILE ADJUSTMENTS (DƯỚI 640PX) === */
         /* ================================================= */
         @media (max-width: 639px) {
-            /* Loại bỏ style cho nút bình luận */
             
             /* Tối ưu hóa kích thước font chữ trong danh sách cho mobile */
             .list-name { font-size: 0.875rem; font-weight: 600; } 
@@ -251,8 +246,10 @@
                     class="h-12 w-auto rounded-full">
                 <!-- WRAPPER MỚI CHO TIÊU ĐỀ VÀ PHỤ ĐỀ -->
                 <div class="flex flex-col items-start">
-                    <span class="text-xl font-bold text-gray-900 leading-none">You Can Club</span>
-                    <span class="text-sm italic text-gray-500 leading-none mt-0.5">Bạn có thể!</span>
+                    <!-- ĐÃ ĐỔI text-gray-900 THÀNH text-sky-900 THEO YÊU CẦU -->
+                    <span class="text-xl font-bold text-sky-900 leading-none">You Can Club</span>
+                    <!-- ĐÃ XÓA leading-none và THAY mt-0.5 thành mt-1 để tạo khoảng cách rõ hơn -->
+                    <span class="text-sm italic text-gray-500 mt-1">Bạn có thể!</span>
                 </div>
             </a>
             <div class="hidden md:flex items-center space-x-8">
@@ -302,6 +299,7 @@
 
     <main class="container mx-auto px-6 py-8 md:py-16">
         <section id="leaderboard" class="text-center fade-in-scroll">
+            <!-- ĐÃ XÓA WRAPPER trophy-container VÀ ICON CÚP Ở ĐÂY -->
             <!-- TIÊU ĐỀ H1 -->
             <h1 class="text-3xl md:text-5xl font-extrabold py-2 mb-2 md:mb-4 gradient-text flex justify-center">
                 Bảng xếp hạng
@@ -312,9 +310,9 @@
             </p>
 
             <!-- Bảng xếp hạng chi tiết (Rank 1+) - Dạng danh sách đồng nhất -->
-            <div id="leaderboard-list" class="max-w-3xl mx-auto p-2 md:p-4 bg-white rounded-2xl shadow-2xl border border-gray-100 space-y-1 md:space-y-1.5">
+            <div id="leaderboard-list" class="max-w-3xl mx-auto p-2 md:p-4 bg-white rounded-2xl shadow-2xl border border-gray-100 space-y-3">
                 
-                <!-- Hạng 1 (Trọng Khoa) - ĐÃ SỬA LỖI VIỀN BO CONG -->
+                <!-- Hạng 1 (Trọng Khoa) -->
                 <div class="rank-list-item rank-1-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
                         <!-- Huy hiệu Vàng Gradient -->
@@ -323,29 +321,29 @@
                             Trọng Khoa
                         </p>
                     </div>
-                    <!-- Điểm số - ĐÃ ĐỒNG NHẤT KÍCH CỠ -->
+                    <!-- Điểm số -->
                     <span class="list-score list-score-gold">34 điểm</span>
                 </div>
 
-                <!-- Hạng 2 (Phước Vinh) - ĐÃ SỬA LỖI VIỀN BO CONG -->
+                <!-- Hạng 2 (Phước Vinh) -->
                 <div class="rank-list-item rank-2-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
                         <!-- Huy hiệu Bạc Gradient -->
                         <span class="list-rank-badge list-rank-badge-silver">2</span>
                         <p class="list-name text-gray-900">Phước Vinh</p>
                     </div>
-                    <!-- Điểm số - ĐÃ ĐỒNG NHẤT KÍCH CỠ -->
+                    <!-- Điểm số -->
                     <span class="list-score list-score-silver">23 điểm</span>
                 </div>
 
-                <!-- Hạng 3 (Bé Trân) - ĐÃ SỬA LỖI VIỀN BO CONG -->
+                <!-- Hạng 3 (Bé Trân) -->
                 <div class="rank-list-item rank-3-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
                         <!-- Huy hiệu Đồng Gradient -->
                         <span class="list-rank-badge list-rank-badge-bronze">3</span>
                         <p class="list-name text-gray-900">Bé Trân</p>
                     </div>
-                    <!-- Điểm số - ĐÃ ĐỒNG NHẤT KÍCH CỠ -->
+                    <!-- Điểm số -->
                     <span class="list-score list-score-bronze">16 điểm</span>
                 </div>
 
@@ -476,8 +474,6 @@
 
     </main>
     
-    <!-- ĐÃ XÓA NÚT BÌNH LUẬN NỔI ĐẶT Ở ĐÂY TRƯỚC ĐÓ -->
-
     <footer class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
             <div class="flex space-x-6">
