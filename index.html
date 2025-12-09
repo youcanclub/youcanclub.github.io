@@ -56,9 +56,20 @@
             font-weight: 600;
         }
 
-        /* Nút Bình luận (giữ nguyên) */
+        /* CONTAINER CỦA NÚT CHAT (fixed position) */
+        .fixed-feedback-wrapper {
+            position: fixed; 
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            /* Giữ lại display: flex và align-items: center để dễ dàng thêm các phần tử khác nếu cần */
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+        
+        /* Nút Bình luận: Giữ style hình tròn */
         .comment-button {
-            position: fixed;
             background-color: #0c4a6e; /* Nền xanh đậm */
             color: #f0f9ff; /* Màu icon */
             width: 3.5rem;
@@ -69,9 +80,6 @@
             border-radius: 50%;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            z-index: 100;
-            bottom: 2rem; /* Vị trí mới: thấp nhất */
-            right: 2rem;
         }
         
         .comment-button:hover {
@@ -81,6 +89,8 @@
         .comment-button i {
             font-size: 1.5rem;
         }
+        
+        /* ĐÃ LOẠI BỎ CSS CỦA .feedback-text theo yêu cầu */
 
         /* Hero Section Styling */
         #cau-chuyen {
@@ -146,9 +156,6 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); /* Shadow xanh dương */
         }
-        
-        /* Custom card for Lợi ích khi tham gia - ĐÃ XÓA VÀ THAY BẰNG TAILWIND */
-        /* Giữ lại khối này nhưng loại bỏ nội dung cũ để giữ cấu trúc */
         
         /* Custom card for Chủ đề hoạt động */
         .topic-card {
@@ -440,10 +447,14 @@
 
     </main>
 
-    <!-- Nút Bình luận (Giữ nguyên link đúng) -->
-    <a href="https://forms.gle/myknJfJTtSXm6z1P8" target="_blank" rel="noopener noreferrer" class="comment-button" aria-label="Gửi phản hồi cho CLB">
-        <i class="fa-solid fa-comment"></i>
-    </a>
+    <!-- CONTAINER CHO NÚT BÌNH LUẬN VÀ CHỮ MÔ TẢ (ĐÃ XÓA CHỮ MIÊU TẢ) -->
+    <div class="fixed-feedback-wrapper">
+        <a href="https://zaloapp.com/0836344463" target="_blank" rel="noopener noreferrer" class="comment-button" aria-label="Nhắn tin Zalo hỗ trợ">
+            <!-- Icon chat chung (đại diện cho Zalo) -->
+            <i class="fa-solid fa-comment-dots"></i>
+        </a>
+        <!-- ĐÃ XÓA DÒNG CHỮ NHẬN XÉT CÁ NHÂN -->
+    </div>
 
     <!-- Footer: Giữ nguyên -->
     <footer id="contact-us" class="bg-gray-900 text-sky-100 mt-16">
