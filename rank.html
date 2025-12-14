@@ -61,7 +61,7 @@
         }
 
         /* ---------------------------------------------------- */
-        /* --- HIỆU ỨNG VIỀN ĐẶC BIỆT CHO TOP 3 (Đã sửa lỗi Bo cong viền) --- */
+        /* --- HIỆU ỨNG VIỀN ĐẶC BIỆT CHO TOP 2 (Vàng, Bạc) --- */
         /* ---------------------------------------------------- */
         
         /* Hạng 1: Viền Vàng Kim */
@@ -96,21 +96,6 @@
             border-left-color: #C0C0C0;
         }
         
-        /* Hạng 3: Viền Đồng */
-        .rank-3-item {
-            border: 2px solid #CD7F32; /* Solid Bronze Border */
-            border-left: 5px solid #A0522D; 
-            box-shadow: 0 0 0 1px #D2B48C,
-                        0 3px 8px rgba(205, 127, 50, 0.4); /* Bronze Glow */
-        }
-
-        .rank-3-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 0 1px #D2B48C,
-                        0 5px 12px rgba(205, 127, 50, 0.6);
-            border-left-color: #CD7F32; 
-        }
-
         /* --- STYLES CHO HUY HIỆU THỨ HẠNG (BADGE) --- */
         .list-rank-badge {
             width: 2rem; 
@@ -126,13 +111,12 @@
             transition: transform 0.2s;
         }
         
-        /* Gradient cho Gold, Silver, Bronze */
+        /* Gradient cho Gold, Silver */
         .list-rank-badge-gold { background: linear-gradient(135deg, #FFD700, #F59E0B); } 
         .list-rank-badge-silver { background: linear-gradient(135deg, #C0C0C0, #9CA3AF); } 
-        .list-rank-badge-bronze { background: linear-gradient(135deg, #CD7F32, #B45309); } 
         
-        /* Hạng 4+ */
-        .list-rank-badge:not(.list-rank-badge-gold):not(.list-rank-badge-silver):not(.list-rank-badge-bronze) {
+        /* Hạng 3+ (Đã bỏ Đồng) */
+        .list-rank-badge:not(.list-rank-badge-gold):not(.list-rank-badge-silver) {
             color: #4b5563; 
             background-color: #e5e7eb; 
             box-shadow: none;
@@ -150,7 +134,7 @@
         /* Đảm bảo màu điểm số theo màu rank */
         .list-score-gold { color: #d97706; } 
         .list-score-silver { color: #4b5563; } 
-        .list-score-bronze { color: #92400e; } 
+        /* Hạng 3+ dùng màu xanh chuẩn */
         .list-score-normal { color: #0ea5e9; } 
 
 
@@ -243,6 +227,7 @@
                 <img 
                     src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" 
                     alt="Logo You Can Club" 
+                    onerror="this.onerror=null; this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=YC'"
                     class="h-12 w-auto rounded-full">
                 <!-- WRAPPER MỚI CHO TIÊU ĐỀ VÀ PHỤ ĐỀ -->
                 <div class="flex flex-col items-start">
@@ -299,116 +284,69 @@
 
     <main class="container mx-auto px-6 py-8 md:py-16">
         <section id="leaderboard" class="text-center fade-in-scroll">
-            <!-- ĐÃ XÓA WRAPPER trophy-container VÀ ICON CÚP Ở ĐÂY -->
             <!-- TIÊU ĐỀ H1 -->
             <h1 class="text-3xl md:text-5xl font-extrabold py-2 mb-2 md:mb-4 gradient-text flex justify-center">
                 Bảng xếp hạng
             </h1>
-            <!-- THỜI GIAN CỦA BẢNG XẾP HẠNG -->
+            <!-- CẬP NHẬT THỜI GIAN LÀ THÁNG 12/2025 -->
             <p class="text-lg md:text-xl font-semibold text-sky-700 mb-8 md:mb-10">
-                Tháng 11/2025
+                Tháng 12/2025
             </p>
 
-            <!-- Bảng xếp hạng chi tiết (Rank 1+) - Dạng danh sách đồng nhất -->
+            <!-- Bảng xếp hạng chi tiết (RESET ĐIỂM VỀ 0, GIỮ HIỆU ỨNG TOP 2) -->
             <div id="leaderboard-list" class="max-w-3xl mx-auto p-2 md:p-4 bg-white rounded-2xl shadow-2xl border border-gray-100 space-y-3">
                 
-                <!-- Hạng 1 (Trọng Khoa) -->
+                <!-- Hạng 1 (Bé Trân - 0 điểm) - STYLE VÀNG -->
                 <div class="rank-list-item rank-1-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
                         <!-- Huy hiệu Vàng Gradient -->
                         <span class="list-rank-badge list-rank-badge-gold">1</span>
-                        <p class="list-name text-gray-900 flex items-center">
-                            Trọng Khoa
-                        </p>
+                        <p class="list-name text-gray-900 flex items-center">Bé Trân</p>
                     </div>
-                    <!-- Điểm số -->
-                    <span class="list-score list-score-gold">34 điểm</span>
+                    <!-- Điểm số Vàng, nhưng giá trị là 0 -->
+                    <span class="list-score list-score-gold">0 điểm</span>
                 </div>
 
-                <!-- Hạng 2 (Phước Vinh) -->
+                <!-- Hạng 2 (Trọng Khoa - 0 điểm) - STYLE BẠC -->
                 <div class="rank-list-item rank-2-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
                         <!-- Huy hiệu Bạc Gradient -->
                         <span class="list-rank-badge list-rank-badge-silver">2</span>
-                        <p class="list-name text-gray-900">Phước Vinh</p>
+                        <p class="list-name text-gray-900">Trọng Khoa</p>
                     </div>
-                    <!-- Điểm số -->
-                    <span class="list-score list-score-silver">23 điểm</span>
+                    <!-- Điểm số Bạc, nhưng giá trị là 0 -->
+                    <span class="list-score list-score-silver">0 điểm</span>
                 </div>
 
-                <!-- Hạng 3 (Bé Trân) -->
-                <div class="rank-list-item rank-3-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
+                <!-- Hạng 3 (Hoài Phúc - 0 điểm) - STYLE THƯỜNG (ĐÃ BỎ ĐỒNG) -->
+                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
                     <div class="flex items-center space-x-4">
-                        <!-- Huy hiệu Đồng Gradient -->
-                        <span class="list-rank-badge list-rank-badge-bronze">3</span>
-                        <p class="list-name text-gray-900">Bé Trân</p>
-                    </div>
-                    <!-- Điểm số -->
-                    <span class="list-score list-score-bronze">16 điểm</span>
-                </div>
-
-                <!-- Hạng 4 (Minh Tơ) - Dùng style cơ bản -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">4</span>
-                        <p class="list-name text-gray-900">Minh Tơ</p>
-                    </div>
-                    <span class="list-score list-score-normal">11 điểm</span>
-                </div>
-
-                <!-- Hạng 5 (Minh Khôi) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">5</span>
-                        <p class="list-name text-gray-900">Minh Khôi</p>
-                    </div>
-                    <span class="list-score list-score-normal">11 điểm</span>
-                </div>
-                
-                <!-- Hạng 6 (Khả Quỳnh) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">6</span>
-                        <p class="list-name text-gray-900">Khả Quỳnh</p>
-                    </div>
-                    <span class="list-score list-score-normal">11 điểm</span>
-                </div>
-                
-                <!-- Hạng 7 (Hoài Phúc) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">7</span>
+                        <!-- Huy hiệu cơ bản -->
+                        <span class="list-rank-badge">3</span>
                         <p class="list-name text-gray-900">Hoài Phúc</p>
                     </div>
-                    <span class="list-score list-score-normal">5 điểm</span>
+                    <!-- Điểm số xanh dương (bình thường) -->
+                    <span class="list-score list-score-normal">0 điểm</span>
                 </div>
 
-                <!-- Hạng 8 (Hồng Ngát) -->
+                <!-- Hạng 4 (Hồng Ngát - 0 điểm) - STYLE THƯỜNG -->
                 <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
                     <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">8</span>
+                        <span class="list-rank-badge">4</span>
                         <p class="list-name text-gray-900">Hồng Ngát</p>
-                    </div>
-                    <span class="list-score list-score-normal">5 điểm</span>
-                </div>
-
-                <!-- Hạng 9 (Duy Kiệt) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">9</span>
-                        <p class="list-name text-gray-900">Duy Kiệt</p>
-                    </div>
-                    <span class="list-score list-score-normal">5 điểm</span>
-                </div>
-                
-                <!-- Hạng 10 (Phương Uyên) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge text-gray-500 bg-gray-100">10</span>
-                        <p class="list-name text-gray-900">Phương Uyên</p>
                     </div>
                     <span class="list-score list-score-normal">0 điểm</span>
                 </div>
+
+                <!-- Hạng 5 (Duy Kiệt - 0 điểm) - STYLE THƯỜNG -->
+                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
+                    <div class="flex items-center space-x-4">
+                        <span class="list-rank-badge">5</span>
+                        <p class="list-name text-gray-900">Duy Kiệt</p>
+                    </div>
+                    <span class="list-score list-score-normal">0 điểm</span>
+                </div>
+                
             </div>
             
             <!-- Phần lưu ý -->
