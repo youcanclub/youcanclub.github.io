@@ -162,7 +162,6 @@
                         <h3 class="text-2xl font-extrabold">Sinh hoạt Tháng</h3>
                     </div>
                     <!-- Content Area --><div class="p-6 space-y-4">
-                        <!-- THÊM: Hình thức Sinh hoạt Tháng (Offline) -->
                         <div class="flex items-start space-x-3">
                             <i class="fa-solid fa-person-chalkboard text-amber-600 text-xl pt-1"></i>
                             <p>
@@ -172,14 +171,12 @@
                         <div class="flex items-start space-x-3">
                             <i class="fa-solid fa-calendar-day text-amber-600 text-xl pt-1"></i>
                             <p>
-                                <!-- CẬP NHẬT: Diễn ra: Thứ 7 hoặc Chủ nhật, sau 4 buổi sinh hoạt tuần. -->
                                 <strong class="text-gray-900">Diễn ra:</strong> <strong class="text-amber-700">Thứ 7 hoặc Chủ nhật, sau 4 buổi sinh hoạt tuần.</strong>
                             </p>
                         </div>
                         <div class="flex items-start space-x-3">
                             <i class="fa-solid fa-align-left text-amber-600 text-xl pt-1"></i>
                             <p>
-                                <!-- CẬP NHẬT: Xóa từ "trực tiếp" -->
                                 <strong class="text-gray-900">Nội dung:</strong> Họp ~60 phút: BCN đánh giá hoạt động tháng và <strong class="text-amber-700">trao thưởng</strong>.
                             </p>
                         </div>
@@ -187,29 +184,25 @@
                 </div>
             </div>
             
-            <!-- ĐÃ CẬP NHẬT: Hộp Lưu ý chung cho cả Sinh hoạt Online và Offline -->
+            <!-- ĐÃ CẬP NHẬT: Nội dung lưu ý ngắn gọn theo yêu cầu -->
             <p class="mt-8 text-sky-800 text-lg md:text-xl font-extrabold max-w-3xl mx-auto p-4 flex items-center justify-center">
                 <i class="fa-solid fa-circle-exclamation mr-3 text-red-600"></i>
-                Lưu ý: Hầu hết các buổi sinh hoạt đều được ghi hình nhằm trích xuất âm thanh để tạo sản phẩm số đăng lên Fanpage nếu được thông qua.
+                Lưu ý: Hầu hết các buổi sinh hoạt đều được ghi âm để tạo sản phẩm số đăng lên Fanpage nếu được thông qua.
             </p>
         </section>
         <!-- END: Phần Thông tin sinh hoạt đã được đổi tên --></main>
     
-    <!-- ĐÃ XÓA NÚT BÌNH LUẬN NỔI BẬT TẠI ĐÂY -->
-    
-    <!-- ĐÃ BỎ NÚT GÓP Ý CŨ --><footer class="bg-gray-900 text-sky-100 mt-16">
+    <footer class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
             <div class="flex space-x-4">
-                <!-- Icon và link Facebook (Đã cập nhật size thành text-3xl) -->
                 <a href="https://www.facebook.com/profile.php?id=61578363805571" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                     <i class="fab fa-facebook text-3xl hover:text-sky-400 transition-colors duration-300"></i>
                 </a>
-                <!-- Icon và link Email (mailto) (Đã thêm mới với size text-3xl) -->
                 <a href="mailto:clbyoucan@gmail.com" aria-label="Email liên hệ">
                     <i class="fa-solid fa-envelope text-3xl hover:text-sky-400 transition-colors duration-300"></i>
                 </a>
             </div>
-            <!-- Thêm ngày thành lập CLB vào footer --><p class="text-sm">Thành lập: 21/6/2025</p>
+            <p class="text-sm">Thành lập: 21/6/2025</p>
             <p>&copy; 2025. CLB Thuyết trình & Học tập</p>
         </div>
     </footer>
@@ -223,25 +216,21 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // --- New JavaScript for scroll-in animation (Hiệu ứng xuất hiện khi cuộn) ---
             const observerOptions = {
-                root: null, // Sử dụng viewport làm root
+                root: null,
                 rootMargin: '0px',
-                threshold: 0.1 // Kích hoạt khi 10% của phần tử hiển thị
+                threshold: 0.1
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Nếu phần tử đang hiển thị, thêm class 'is-visible' để kích hoạt animation
                         entry.target.classList.add('is-visible');
-                        // Dừng theo dõi phần tử này sau khi nó đã xuất hiện
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // Tìm tất cả các phần tử có class 'fade-in-scroll' và bắt đầu theo dõi chúng
             document.querySelectorAll('.fade-in-scroll').forEach(section => {
                 observer.observe(section);
             });
