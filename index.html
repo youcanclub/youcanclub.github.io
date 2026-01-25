@@ -21,7 +21,7 @@
 
     <!-- OPEN GRAPH TAGS (THẺ MẠNG XÃ HỘI) ĐƯỢC THÊM VÀO ĐÂY -->
     <meta property="og:title" content="You Can Club | CLB Thuyết Trình & Học Tập" />
-    <meta property="og:description" content="Đây là nơi bạn không chỉ học, mà còn hiểu sâu kiến thức hơn thông qua thuyết trình và phản biện đồng thời tận dụng nó để lan toả giá trị!" />
+    <meta property="og:description" content="Đây là nơi bạn không chỉ học, mà còn hiểu sâu kiến thức hơn thông qua thuyết trình và phản biện đồng thời tận dụng nó để lan toả giá trị!" />
     <meta property="og:image" content="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/94b7ac669358473ba408f5bbed73654c97327152/logoclbyoucan.jpg" />
     <meta property="og:type" content="website" />
     <!-- KẾT THÚC OPEN GRAPH TAGS -->
@@ -90,8 +90,6 @@
             font-size: 1.5rem;
         }
         
-        /* ĐÃ LOẠI BỎ CSS CỦA .feedback-text theo yêu cầu */
-
         /* Hero Section Styling */
         #cau-chuyen {
             background-color: transparent; 
@@ -110,30 +108,30 @@
             transform: translateY(0);
         }
 
-        /* --- ICON DYNAMIC EFFECTS (Hiệu ứng logo động - Chuyển động nhẹ, liên tục) --- */
+        /* --- ICON DYNAMIC EFFECTS --- */
         .icon-transition {
             transition: none;
-            display: inline-block; /* Quan trọng để áp dụng transform */
+            display: inline-block;
         }
         @keyframes subtle-float {
             0% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-12px) scale(1.08); } /* Nổi lên 12px và phóng to nhẹ 8% */
+            50% { transform: translateY(-12px) scale(1.08); }
             100% { transform: translateY(0) scale(1); }
         }
         .icon-animate-float {
-            animation: subtle-float 3s ease-in-out infinite; /* 3 giây, kiểu ease-in-out, lặp vô hạn */
+            animation: subtle-float 3s ease-in-out infinite;
         }
         
-        /* --- HIỆU ỨNG RUNG LẮC NHẸ CHO NÚT CTA (ĐĂNG KÝ) --- */
+        /* --- HIỆU ỨNG RUNG LẮC NHẸ CHO NÚT CTA --- */
         @keyframes cta-wobble {
             0%, 100% {
                 transform: rotate(0deg) scale(1.0);
             }
             15% {
-                transform: rotate(1deg) scale(1.01); /* Rung nhẹ sang phải */
+                transform: rotate(1deg) scale(1.01);
             }
             30% {
-                transform: rotate(-1deg) scale(1.0); /* Rung nhẹ sang trái */
+                transform: rotate(-1deg) scale(1.0);
             }
             45% {
                 transform: rotate(1deg) scale(1.01);
@@ -147,23 +145,22 @@
             transform-origin: center;
         }
         
-        /* Custom card for Lĩnh vực hoạt động / Phương pháp hoạt động */
+        /* Custom card */
         .area-card {
             transition: all 0.3s ease;
-            transform: translateZ(0); /* Kích hoạt GPU acceleration */
+            transform: translateZ(0);
         }
         .area-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3); /* Shadow xanh dương */
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.3);
         }
         
-        /* Custom card for Chủ đề hoạt động */
         .topic-card {
             background-color: white;
             transition: all 0.3s ease;
         }
         .topic-card:hover {
-             border-color: #0ea5e9; /* sky-500 */
+             border-color: #0ea5e9;
              box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.1), 0 4px 6px -2px rgba(14, 165, 233, 0.05);
         }
 
@@ -178,9 +175,7 @@
             
 
 <a href="#" class="flex items-center space-x-2">
-                
-                <!-- Logo đã được cập nhật -->
-<img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full shadow-lg border border-sky-200">
+                <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full shadow-lg border border-sky-200">
                 <div>
                     <span class="text-xl font-extrabold text-sky-900">You Can Club</span>
                     
@@ -189,14 +184,8 @@
                 </div>
             </a>
             <div class="hidden md:flex space-x-8 items-center">
-                
-                <!-- Cập nhật đường dẫn Hoạt động -->
                 <a href="https://youcanclub.github.io/new.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Hoạt động</a>
-                
-                <!-- Cập nhật đường dẫn Bảng xếp hạng -->
                 <a href="https://youcanclub.github.io/rank.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Bảng xếp hạng</a>
-                
-                <!-- CẬP NHẬT ĐƯỜNG DẪN THAM GIA NGAY (Desktop) -->
                 <a href="https://youcanclub.github.io/#dang-ky" class="
                     px-5 py-2.5 
                     bg-gradient-to-r from-sky-500 to-sky-700 
@@ -217,14 +206,8 @@
         
 
 <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg border-t border-sky-100 pb-4">
-            
-            <!-- Cập nhật đường dẫn Hoạt động cho Mobile -->
             <a href="https://youcanclub.github.io/new.html" class="nav-link block py-2 px-6 text-gray-600 hover:bg-sky-100">Hoạt động</a>
-            
-            <!-- Cập nhật đường dẫn Bảng xếp hạng cho Mobile -->
             <a href="https://youcanclub.github.io/rank.html" class="nav-link block py-2 px-6 text-gray-600 hover:bg-sky-100">Bảng xếp hạng</a>
-            
-            <!-- CẬP NHẬT ĐƯỜNG DẪN THAM GIA NGAY (Mobile) -->
             <a href="https://youcanclub.github.io/#dang-ky" class="
                 block mx-6 mt-2 py-3 text-center
                 bg-gradient-to-r from-sky-500 to-sky-700 
@@ -242,12 +225,11 @@
     <main class="container mx-auto px-6 py-0 md:py-8">
 
         
-        <!-- 1. CÂU CHUYỆN (HEADER/MISSION) -->
+        <!-- 1. CÂU CHUYỆN -->
         <section id="cau-chuyen" class="text-center pt-16 pb-20 flex flex-col justify-center items-center fade-in-scroll">
             <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight 
                        bg-gradient-to-r from-sky-500 to-sky-900 
                        text-transparent bg-clip-text py-2">
-                <!-- ĐÃ ÁP DỤNG GRADIENT MÀU XANH DƯƠNG SÁNG (sky-500) TỐI DẦN ĐẾN XANH DƯƠNG ĐẬM (sky-900) -->
                 Tỏa sáng để lan tỏa giá trị
             </h1>
             <p class="max-w-4xl mx-auto text-xl text-gray-700 leading-relaxed font-light">
@@ -256,93 +238,72 @@
         </section>
 
         
-        <!-- 2. CHỦ ĐỀ HOẠT ĐỘNG (TOPICS) - Giữ nguyên -->
+        <!-- 2. CHỦ ĐỀ HOẠT ĐỘNG -->
         <section id="chu-de" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-t-4 border-sky-400">
             <div class="text-center mb-12 px-6">
                 <i class="fa-solid fa-graduation-cap text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -1s;"></i>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Chủ Đề Hoạt Động</h2>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Chủ Đề Hoạt ĐỘNG</h2>
                 <p class="mt-2 text-gray-500 max-w-2xl mx-auto">Chúng tôi khám phá ba lĩnh vực kiến thức trọng tâm, giúp bạn phát triển toàn diện cả về nội lực cá nhân và góc nhìn xã hội.</p>
             </div>
             
-            <!-- Grid 3 cột trên desktop, 1 cột trên mobile -->
             <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-                
-                <!-- Chủ đề 1: Phát triển bản thân -->
                 <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
                     <div class="flex items-center space-x-3 mb-3">
                         <i class="fa-solid fa-person-running text-3xl text-sky-700 flex-shrink-0"></i>
                         <h3 class="text-xl font-bold text-sky-900">Phát triển bản thân</h3>
                     </div>
-                    <!-- NỘI DUNG GIỮ NGUYÊN -->
                     <p class="text-gray-700">Giúp bạn nâng cao hiệu suất học tập và rèn luyện nội lực.</p>
                 </div>
-                
-                <!-- Chủ đề 2: Xu hướng -->
                 <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
                     <div class="flex items-center space-x-3 mb-3">
                         <i class="fa-solid fa-lightbulb text-3xl text-sky-700 flex-shrink-0"></i>
                         <h3 class="text-xl font-bold text-sky-900">Xu hướng</h3>
                     </div>
-                    <!-- NỘI DUNG GIỮ NGUYÊN -->
                     <p class="text-gray-700">Giúp bạn luôn cập nhật và sẵn sàng cho tương lai.</p>
                 </div>
-
-                <!-- Chủ đề 3: Xã hội -->
                 <div class="topic-card p-6 rounded-xl shadow-lg border-b-4 border-sky-300 hover:border-sky-500">
                     <div class="flex items-center space-x-3 mb-3">
                         <i class="fa-solid fa-users text-3xl text-sky-700 flex-shrink-0"></i>
                         <h3 class="text-xl font-bold text-sky-900">Xã hội</h3>
                     </div>
-                    <!-- NỘI DUNG GIỮ NGUYÊN -->
                     <p class="text-gray-700">Rèn luyện khả năng lập luận và đưa ra giải pháp cho các vấn đề thực tế.</p>
                 </div>
-
             </div>
         </section>
         
-        <!-- 3. PHƯƠNG PHÁP HOẠT ĐỘNG (METHOD) - THAY THẾ LĨNH VỰC HOẠT ĐỘNG -->
+        <!-- 3. PHƯƠNG PHÁP HOẠT ĐỘNG -->
         <section id="phuong-phap" class="py-16 rounded-2xl my-16 fade-in-scroll">
             <div class="text-center mb-12 px-6">
                 <i class="fa-solid fa-circle-nodes text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -2.5s;"></i>
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Phương Pháp Hoạt Động</h2>
                 <p class="mt-2 text-gray-500">Quy trình học tập chủ động và rèn luyện theo chu kỳ hiệu quả.</p>
-                <!-- Hình ảnh Chu trình học tập chủ động -->
             </div>
             
             <div class="max-w-6xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                
-                <!-- 1. Học tập chủ động -->
                 <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
                     <i class="fa-solid fa-book-open-reader text-5xl text-sky-600 mb-3"></i>
                     <p class="text-xl font-bold text-gray-800 mb-1">1. Học tập chủ động</p>
                     <p class="text-sm text-gray-600">Tìm kiếm nội dung và chuẩn bị để thuyết trình.</p>
                 </div>
-                
-                <!-- 2. Thuyết trình (Teach Back) -->
                 <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
                     <i class="fa-solid fa-chalkboard-user text-5xl text-sky-600 mb-3"></i>
                     <p class="text-xl font-bold text-gray-800 mb-1">2. Thuyết trình</p>
                     <p class="text-sm text-gray-600">Áp dụng phương pháp 'Teach Back'.</p>
                 </div>
-                
-                <!-- 3. Thảo luận -->
                 <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
                     <i class="fa-solid fa-users-viewfinder text-5xl text-sky-600 mb-3"></i>
                     <p class="text-xl font-bold text-gray-800 mb-1">3. Thảo luận</p>
                     <p class="text-sm text-gray-600">Cùng nhau đào sâu và hiểu kỹ hơn.</p>
                 </div>
-                
-                <!-- 4. Nhận xét -->
                 <div class="area-card bg-white p-6 rounded-xl shadow-lg border-2 border-sky-200 flex flex-col items-center text-center">
                     <i class="fa-solid fa-clipboard-check text-5xl text-sky-600 mb-3"></i>
                     <p class="text-xl font-bold text-gray-800 mb-1">4. Nhận xét</p>
                     <p class="text-sm text-gray-600">Góp ý giúp người thuyết trình tiến bộ.</p>
                 </div>
-                
             </div>
         </section>
 
-        <!-- 4. LỢI ÍCH KHI THAM GIA (BENEFITS) - ĐÃ THIẾT KẾ LẠI -->
+        <!-- 4. LỢI ÍCH KHI THAM GIA -->
         <section id="loi-ich" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-b-4 border-sky-400">
             <div class="text-center mb-12">
                 <i class="fa-solid fa-circle-check text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -4s;"></i>
@@ -350,89 +311,50 @@
                 <p class="mt-2 text-gray-500">Gặt hái những giá trị thực tế cho hành trang tương lai.</p>
             </div>
             <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8">
-                
-                <!-- Lợi ích 1: Tự tin thuyết trình (Redesigned Card) -->
-                <div class="
-                    bg-white p-6 rounded-xl shadow-lg 
-                    border-l-4 border-sky-600 
-                    hover:shadow-2xl hover:-translate-y-1 
-                    transition duration-300
-                    flex items-start space-x-4
-                ">
-                    <!-- Icon Wrapper -->
-                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
-                        <i class="fa-solid fa-bullhorn text-2xl text-sky-700"></i>
-                    </div>
-                    <!-- Content -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-sky-600 hover:shadow-2xl transition duration-300 flex items-start space-x-4">
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0"><i class="fa-solid fa-bullhorn text-2xl text-sky-700"></i></div>
                     <div>
                         <h3 class="text-xl font-extrabold text-sky-900 mb-1">Tự tin thuyết trình</h3>
                         <p class="text-gray-700 text-sm">Rèn khả năng nói trước đám đông qua các buổi trình bày hằng tuần.</p>
                     </div>
                 </div>
-                
-                <!-- Lợi ích 2: Tư duy phản biện tốt hơn (Redesigned Card) -->
-                <div class="
-                    bg-white p-6 rounded-xl shadow-lg 
-                    border-l-4 border-sky-600 
-                    hover:shadow-2xl hover:-translate-y-1 
-                    transition duration-300
-                    flex items-start space-x-4
-                ">
-                    <!-- Icon Wrapper -->
-                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
-                        <i class="fa-solid fa-brain text-2xl text-sky-700"></i>
-                    </div>
-                    <!-- Content -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-sky-600 hover:shadow-2xl transition duration-300 flex items-start space-x-4">
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0"><i class="fa-solid fa-brain text-2xl text-sky-700"></i></div>
                     <div>
                         <h3 class="text-xl font-extrabold text-sky-900 mb-1">Tư duy phản biện tốt hơn</h3>
                         <p class="text-gray-700 text-sm">Học cách phân tích vấn đề, đặt câu hỏi và phản hồi logic.</p>
                     </div>
                 </div>
-                
-                <!-- Lợi ích 3: Kỹ năng học tập hiệu quả (Redesigned Card) -->
-                <div class="
-                    bg-white p-6 rounded-xl shadow-lg 
-                    border-l-4 border-sky-600 
-                    hover:shadow-2xl hover:-translate-y-1 
-                    transition duration-300
-                    flex items-start space-x-4
-                ">
-                    <!-- Icon Wrapper -->
-                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
-                        <i class="fa-solid fa-people-arrows text-2xl text-sky-700"></i>
-                    </div>
-                    <!-- Content -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-sky-600 hover:shadow-2xl transition duration-300 flex items-start space-x-4">
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0"><i class="fa-solid fa-people-arrows text-2xl text-sky-700"></i></div>
                     <div>
                         <h3 class="text-xl font-extrabold text-sky-900 mb-1">Kỹ năng học tập hiệu quả</h3>
                         <p class="text-gray-700 text-sm">Áp dụng phương pháp “giảng lại” giúp hiểu sâu và nhớ lâu.</p>
                     </div>
                 </div>
-                
-                <!-- Lợi ích 4: Môi trường tích cực – hỗ trợ nhau phát triển (Redesigned Card) -->
-                <div class="
-                    bg-white p-6 rounded-xl shadow-lg 
-                    border-l-4 border-sky-600 
-                    hover:shadow-2xl hover:-translate-y-1 
-                    transition duration-300
-                    flex items-start space-x-4
-                ">
-                    <!-- Icon Wrapper -->
-                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0">
-                        <i class="fa-solid fa-hand-holding-heart text-2xl text-sky-700"></i>
-                    </div>
-                    <!-- Content -->
+                <div class="bg-white p-6 rounded-xl shadow-lg border-l-4 border-sky-600 hover:shadow-2xl transition duration-300 flex items-start space-x-4">
+                    <div class="bg-sky-100 p-3 rounded-full flex-shrink-0"><i class="fa-solid fa-hand-holding-heart text-2xl text-sky-700"></i></div>
                     <div>
-                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Môi trường tích cực – hỗ trợ nhau phát triển</h3>
+                        <h3 class="text-xl font-extrabold text-sky-900 mb-1">Môi trường tích cực</h3>
                         <p class="text-gray-700 text-sm">Kết nối bạn bè có cùng mục tiêu, cùng học – cùng tiến bộ.</p>
                     </div>
                 </div>
-                
             </div>
         </section>
 
-        
-        <!-- CTA (ĐÃ CẬP NHẬT CHỈ CÒN CHỮ "ĐĂNG KÝ") -->
-        <section id="dang-ky" class="py-16 text-center fade-in-scroll mt-16">
+        <!-- PHẦN TÌM HIỂU CHI TIẾT (MỚI THÊM) -->
+        <section id="tim-hieu-them" class="py-16 text-center fade-in-scroll">
+            <div class="max-w-4xl mx-auto px-6 py-10 bg-white rounded-3xl shadow-lg border-2 border-dashed border-sky-300">
+                <h3 class="text-2xl md:text-3xl font-bold text-sky-900 mb-4">Tìm hiểu chi tiết hơn với tài liệu CLB</h3>
+                <p class="text-gray-600 mb-8 italic">Xem đầy đủ Quy chế, Nội quy và Hướng dẫn sinh hoạt chính thức của You Can Club.</p>
+                <a href="https://youcanclub.github.io/tailieu.html" class="inline-flex items-center px-8 py-3 bg-white border-2 border-sky-600 text-sky-700 font-bold rounded-full hover:bg-sky-50 transition-all duration-300 transform hover:scale-105 shadow-md">
+                    Xem tài liệu chi tiết <i class="fa-solid fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section id="dang-ky" class="py-16 text-center fade-in-scroll">
             
 
 <div class="bg-sky-100 p-8 md:p-12 rounded-2xl shadow-2xl border-2 border-sky-300">
@@ -447,52 +369,38 @@
 
     </main>
 
-    <!-- CONTAINER CHO NÚT BÌNH LUẬN VÀ CHỮ MÔ TẢ (ĐÃ XÓA CHỮ MIÊU TẢ) -->
     <div class="fixed-feedback-wrapper">
         <a href="https://zaloapp.com/0836344463" target="_blank" rel="noopener noreferrer" class="comment-button" aria-label="Nhắn tin Zalo hỗ trợ">
-            <!-- Icon chat chung (đại diện cho Zalo) -->
             <i class="fa-solid fa-comment-dots"></i>
         </a>
-        <!-- ĐÃ XÓA DÒNG CHỮ NHẬN XÉT CÁ NHÂN -->
     </div>
 
-    <!-- Footer: Giữ nguyên -->
     <footer id="contact-us" class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
             <div class="flex space-x-6">
-                
-                <!-- Icon và link Facebook -->
                 <a href="https://www.facebook.com/profile.php?id=61578363805571" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                     <i class="fab fa-facebook text-3xl hover:text-sky-400 transition-colors duration-300"></i>
                 </a>
-                
-                <!-- Icon và link Email (mailto) -->
                 <a href="mailto:clbyoucan@gmail.com" aria-label="Email liên hệ">
                     <i class="fa-solid fa-envelope text-3xl hover:text-sky-400 transition-colors duration-300"></i>
                 </a>
             </div>
             <p class="text-sm">Thành lập: 21/6/2025</p>
-            
-
-<p class="font-medium">&copy; 2025. CLB Thuyết trình & Học tập</p>
+            <p class="font-medium">&copy; 2025. CLB Thuyết trình & Học tập</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            
-            // --- Mobile Menu Toggle (Giữ nguyên) ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
             
-            // Close mobile menu when a link is clicked
             const navLinks = document.querySelectorAll('.nav-link, #mobile-menu a');
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    // Check if the link is a internal anchor link before closing
                     if (link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
                              if (mobileMenu.classList.contains('hidden') === false) {
                                 mobileMenu.classList.add('hidden');
@@ -501,25 +409,21 @@
                 });
             });
             
-            // --- JavaScript for scroll-in animation (Hiệu ứng xuất hiện khi cuộn - Giữ nguyên) ---
             const fadeInObserverOptions = {
-                root: null, // Sử dụng viewport làm root
+                root: null,
                 rootMargin: '0px',
-                threshold: 0.1 // Kích hoạt khi 10% của phần tử hiển thị
+                threshold: 0.1
             };
 
             const fadeInObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Nếu phần tử đang hiển thị, thêm class 'is-visible' để kích hoạt animation
                         entry.target.classList.add('is-visible');
-                        // Dừng theo dõi phần tử này sau khi nó đã xuất hiện
                         fadeInObserver.unobserve(entry.target);
                     }
                 });
             }, fadeInObserverOptions);
 
-            // Tìm tất cả các phần tử có class 'fade-in-scroll' và bắt đầu theo dõi chúng
             document.querySelectorAll('.fade-in-scroll').forEach(section => {
                 fadeInObserver.observe(section);
             });
