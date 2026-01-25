@@ -19,7 +19,6 @@
   <style>
     body {
       font-family: 'Be Vietnam Pro', sans-serif;
-      background-color: #f0f9ff;
     }
 
     .gradient-text {
@@ -28,7 +27,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      /* Đảm bảo khung chứa không cắt nét chữ */
       display: inline-block;
     }
 
@@ -81,7 +79,6 @@
       color: #4b5563;
     }
 
-    /* Hiệu ứng xuất hiện khi cuộn */
     .fade-in-scroll {
       opacity: 0;
       transform: translateY(20px);
@@ -91,41 +88,90 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    .nav-link {
+        position: relative;
+    }
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #0369a1;
+        transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+        width: 100%;
+    }
   </style>
 </head>
 
-<body class="flex flex-col min-h-screen bg-sky-50 text-gray-800">
+<body class="flex flex-col min-h-screen bg-sky-100 text-gray-800">
 
 <!-- ===== HEADER ===== -->
-<header class="bg-white/80 backdrop-blur sticky top-0 z-40 shadow-sm">
-  <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-    <a href="https://youcanclub.github.io" class="flex items-center space-x-3">
-      <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg"
-           class="h-12 rounded-full"
-           onerror="this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=YC'">
-      <div>
-        <div class="text-xl font-bold text-sky-900">You Can Club</div>
-        <div class="text-sm italic text-gray-500">Bạn có thể!</div>
-      </div>
-    </a>
-
-    <!-- Desktop menu -->
-    <div class="hidden md:flex items-center space-x-8">
-      <a href="https://youcanclub.github.io" class="text-gray-600 hover:text-sky-700">Trang chủ</a>
-      <a href="https://youcanclub.github.io/new.html" class="text-gray-600 hover:text-sky-700">Hoạt động</a>
-      <a href="https://youcanclub.github.io/#dang-ky"
-         class="px-5 py-2 bg-gradient-to-r from-sky-500 to-sky-700 text-white rounded-full font-bold transition-transform hover:scale-105">
-        Tham gia ngay
-      </a>
+<header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#" class="flex items-center space-x-2">
+            <!-- ĐÃ CẬP NHẬT: Đường dẫn logo từ raw.githubusercontent.com -->
+            <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/0c4a6e/ffffff?text=YCC'">
+            <div>
+                <span class="text-xl font-extrabold text-sky-900 block">You Can Club</span>
+                <span class="text-sm italic text-gray-500 block">Bạn có thể!</span>
+            </div>
+        </a>
+        
+        <!-- Nav links for desktop -->
+        <div class="hidden md:flex items-center space-x-8">
+            <a href="https://youcanclub.github.io/" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Trang chủ</a>
+            <a href="https://youcanclub.github.io/rank.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Bảng xếp hạng</a>
+            <a href="https://youcanclub.github.io/#dang-ky" class="
+                px-5 py-2.5 
+                bg-gradient-to-r from-sky-500 to-sky-700 
+                text-white font-bold 
+                rounded-full 
+                hover:from-sky-600 hover:to-sky-800 
+                transition-all duration-300 
+                shadow-xl hover:shadow-2xl 
+                transform hover:scale-105
+            ">
+                Tham gia ngay
+            </a>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" class="md:hidden text-gray-800 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+    </nav>
+    
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-inner pb-6 transition-all duration-300 overflow-hidden">
+        <a href="https://youcanclub.github.io/" class="block py-3 px-8 text-gray-600 hover:bg-sky-50 hover:text-sky-800 font-medium border-b border-gray-50">Trang chủ</a>
+        <a href="https://youcanclub.github.io/rank.html" class="block py-3 px-8 text-gray-600 hover:bg-sky-50 hover:text-sky-800 font-medium border-b border-gray-50">Bảng xếp hạng</a>
+        <div class="px-6 pt-4">
+            <a href="https://youcanclub.github.io/#dang-ky" class="
+                block py-3 text-center
+                bg-gradient-to-r from-sky-500 to-sky-700 
+                text-white font-bold 
+                rounded-lg 
+                hover:from-sky-600 hover:to-sky-800 
+                transition-all duration-300 
+                shadow-md active:scale-95
+            ">
+                Tham gia ngay
+            </a>
+        </div>
     </div>
-  </nav>
 </header>
 
 <!-- ===== MAIN ===== -->
-<main class="container mx-auto px-6 py-10 md:py-16 flex-grow pb-24 md:pb-16">
+<main class="container mx-auto px-6 py-10 md:py-16 flex-grow">
 
   <section id="leaderboard" class="text-center fade-in-scroll">
-    <!-- ĐÃ SỬA: Thêm pb-2 và inline-block để chữ không bị cắt chân -->
     <h1 class="text-4xl md:text-5xl font-extrabold gradient-text mb-3 pb-2 px-1">
       Bảng xếp hạng
     </h1>
@@ -199,39 +245,25 @@
   </div>
 </footer>
 
-<!-- ===== MOBILE BOTTOM NAVIGATION ===== -->
-<nav class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-gray-200 shadow-lg z-50">
-  <div class="flex justify-around items-center py-2">
-
-    <a href="https://youcanclub.github.io"
-       class="flex flex-col items-center text-gray-500 hover:text-sky-600 transition">
-      <i class="fa-solid fa-house text-xl"></i>
-      <span class="text-xs font-medium">Trang chủ</span>
-    </a>
-
-    <a href="https://youcanclub.github.io/new.html"
-       class="flex flex-col items-center text-gray-500 hover:text-sky-600 transition">
-      <i class="fa-solid fa-calendar-days text-xl"></i>
-      <span class="text-xs font-medium">Hoạt động</span>
-    </a>
-
-    <a href="#leaderboard"
-       class="flex flex-col items-center text-sky-600 font-bold">
-      <i class="fa-solid fa-ranking-star text-xl"></i>
-      <span class="text-xs">Bảng xếp hạng</span>
-    </a>
-
-    <a href="https://youcanclub.github.io/#dang-ky"
-       class="flex flex-col items-center text-gray-500 hover:text-sky-600 transition">
-      <i class="fa-solid fa-user-plus text-xl"></i>
-      <span class="text-xs font-medium">Tham gia</span>
-    </a>
-
-  </div>
-</nav>
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    // Xử lý đóng/mở Mobile Menu
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        
+        // Thay đổi icon menu khi đóng/mở (tùy chọn)
+        if (mobileMenu.classList.contains('hidden')) {
+            menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
+        } else {
+            menuIcon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+        }
+    });
+
+    // Hiệu ứng xuất hiện khi cuộn
     const observerOptions = {
       root: null,
       rootMargin: '0px',
@@ -255,4 +287,3 @@
 
 </body>
 </html>
-
