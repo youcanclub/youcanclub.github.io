@@ -51,6 +51,31 @@
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
         }
+        
+        /* HIỆU ỨNG GẠCH CHÂN CHO MENU ĐIỀU HƯỚNG */
+        .nav-link {
+            position: relative;
+            text-decoration: none;
+            padding-bottom: 2px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #0c4a6e; /* sky-800 */
+            transform: scaleX(0);
+            transform-origin: bottom left;
+            transition: transform 0.3s ease-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
         .active-nav {
             color: #0c4a6e; /* sky-800 */
             font-weight: 600;
@@ -237,7 +262,7 @@
         </section>
 
         
-        <!-- 2. CHỦ ĐỀ HOẠT ĐỘNG (Đã sửa lỗi viết hoa) -->
+        <!-- 2. CHỦ ĐỀ HOẠT ĐỘNG -->
         <section id="chu-de" class="py-16 bg-white rounded-2xl my-16 shadow-xl fade-in-scroll border-t-4 border-sky-400">
             <div class="text-center mb-12 px-6">
                 <i class="fa-solid fa-graduation-cap text-sky-600 text-6xl mx-auto mb-4 icon-transition icon-animate-float" style="animation-delay: -1s;"></i>
