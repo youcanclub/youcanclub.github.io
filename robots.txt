@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://youcanclub.github.io/sitemap.txt
