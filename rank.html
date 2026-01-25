@@ -113,8 +113,7 @@
 <!-- ===== HEADER ===== -->
 <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
     <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="#" class="flex items-center space-x-2">
-            <!-- ĐÃ CẬP NHẬT: Đường dẫn logo từ raw.githubusercontent.com -->
+        <a href="https://youcanclub.github.io/" class="flex items-center space-x-2">
             <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/0c4a6e/ffffff?text=YCC'">
             <div>
                 <span class="text-xl font-extrabold text-sky-900 block">You Can Club</span>
@@ -125,7 +124,8 @@
         <!-- Nav links for desktop -->
         <div class="hidden md:flex items-center space-x-8">
             <a href="https://youcanclub.github.io/" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Trang chủ</a>
-            <a href="https://youcanclub.github.io/rank.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Bảng xếp hạng</a>
+            <!-- ĐÃ CẬP NHẬT: Đổi Bảng xếp hạng thành Hoạt động -->
+            <a href="https://youcanclub.github.io/new.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Hoạt động</a>
             <a href="https://youcanclub.github.io/#dang-ky" class="
                 px-5 py-2.5 
                 bg-gradient-to-r from-sky-500 to-sky-700 
@@ -151,7 +151,8 @@
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-inner pb-6 transition-all duration-300 overflow-hidden">
         <a href="https://youcanclub.github.io/" class="block py-3 px-8 text-gray-600 hover:bg-sky-50 hover:text-sky-800 font-medium border-b border-gray-50">Trang chủ</a>
-        <a href="https://youcanclub.github.io/rank.html" class="block py-3 px-8 text-gray-600 hover:bg-sky-50 hover:text-sky-800 font-medium border-b border-gray-50">Bảng xếp hạng</a>
+        <!-- ĐÃ CẬP NHẬT: Đổi Bảng xếp hạng thành Hoạt động cho mobile -->
+        <a href="https://youcanclub.github.io/new.html" class="block py-3 px-8 text-gray-600 hover:bg-sky-50 hover:text-sky-800 font-medium border-b border-gray-50">Hoạt động</a>
         <div class="px-6 pt-4">
             <a href="https://youcanclub.github.io/#dang-ky" class="
                 block py-3 text-center
@@ -255,7 +256,6 @@
     menuButton.addEventListener('click', () => {
         mobileMenu.classList.toggle('hidden');
         
-        // Thay đổi icon menu khi đóng/mở (tùy chọn)
         if (mobileMenu.classList.contains('hidden')) {
             menuIcon.setAttribute('d', 'M4 6h16M4 12h16m-7 6h7');
         } else {
