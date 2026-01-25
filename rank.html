@@ -4,99 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bảng xếp hạng CLB</title>
-    <!-- THÊM ICON VÀ SHORTCUT ICON (theo yêu cầu) -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <!-- END ICON -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <!-- Import Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
-            background-color: #f0f9ff; /* Màu nền xanh nhạt (sky-50) */
+            background-color: #f0f9ff;
         }
         
-        /* ---------------------------------------------------- */
-        /* --- HIỆU ỨNG CHỮ GRADIENT CHO TIÊU ĐỀ H1 --- */
-        /* ---------------------------------------------------- */
         .gradient-text {
-            background: linear-gradient(90deg, #0ea5e9, #1e3a8a); /* Sky to Dark Blue */
+            background: linear-gradient(90deg, #0ea5e9, #1e3a8a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             color: transparent;
         }
 
-        /* ---------------------------------------------------- */
-        /* --- THIẾT KẾ MỚI: DANH SÁCH ĐỒNG NHẤT (EQUAL LIST) --- */
-        /* ---------------------------------------------------- */
-        
-        /* List Item Base Style (Áp dụng cho tất cả các hạng) */
         .rank-list-item {
             transition: all 0.3s ease;
-            border: 1px solid #e5e7eb; /* Viền cơ bản cho tất cả */
+            border: 1px solid #e5e7eb;
             border-left: 5px solid transparent; 
-            padding: 0.75rem 1rem; /* Kích thước đồng nhất */
+            padding: 0.75rem 1rem;
             background-color: #fff;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Bóng nhẹ cho tất cả */
-            /* Đã bo cong toàn bộ viền */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             border-radius: 0.75rem; 
         }
         
-        /* Màu sọc cho hàng chẵn */
-        .rank-list-item:nth-child(even) {
-            background-color: #f8fafc; 
-        }
-        
-        /* Hiệu ứng hover (Áp dụng cho tất cả) */
         .rank-list-item:hover {
-            border-left-color: #0ea5e9; /* Màu xanh khi hover */
+            border-left-color: #0ea5e9;
             transform: translateX(2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng rõ hơn khi hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* ---------------------------------------------------- */
-        /* --- HIỆU ỨNG VIỀN ĐẶC BIỆT CHO TOP 2 (Vàng, Bạc) --- */
-        /* ---------------------------------------------------- */
-        
-        /* Hạng 1: Viền Vàng Kim */
+        /* Styles for Top 3 (Vàng, Bạc, Nâu/Đồng) */
         .rank-1-item {
-            /* Sử dụng solid border và box-shadow để đảm bảo bo cong */
-            border: 3px solid #FFD700; /* Solid Gold Border */
-            border-left: 6px solid #F59E0B; /* Sọc đậm hơn bên trái */
-            /* Box shadow tạo hiệu ứng ánh kim và glow */
-            box-shadow: 0 0 0 1px #F59E0B, 
-                        0 6px 15px rgba(255, 193, 7, 0.4); 
+            border: 3px solid #FFD700;
+            border-left: 6px solid #F59E0B;
+            box-shadow: 0 0 0 1px #F59E0B, 0 6px 15px rgba(255, 193, 7, 0.4); 
         }
-        
-        .rank-1-item:hover {
-            transform: translateY(-2px) scale(1.005);
-            box-shadow: 0 0 0 1px #F59E0B,
-                        0 8px 20px rgba(255, 193, 7, 0.6); 
-            border-left-color: #FFD700; /* Đổi màu sọc trái khi hover */
-        }
-
-        /* Hạng 2: Viền Bạc */
         .rank-2-item {
-            border: 2px solid #C0C0C0; /* Solid Silver Border */
-            border-left: 5px solid #A0AEC0; 
-            box-shadow: 0 0 0 1px #E5E7EB,
-                        0 4px 10px rgba(192, 192, 192, 0.5); /* Silver Glow */
+            border: 2px solid #C0C0C0;
+            border-left: 5px solid #94A3B8; 
+            box-shadow: 0 4px 10px rgba(192, 192, 192, 0.4);
+        }
+        .rank-3-item {
+            border: 2px solid #CD7F32;
+            border-left: 5px solid #B45309; 
+            box-shadow: 0 4px 10px rgba(205, 127, 50, 0.4);
         }
 
-        .rank-2-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 0 1px #E5E7EB,
-                        0 6px 15px rgba(192, 192, 192, 0.7);
-            border-left-color: #C0C0C0;
-        }
-        
-        /* --- STYLES CHO HUY HIỆU THỨ HẠNG (BADGE) --- */
         .list-rank-badge {
             width: 2rem; 
             height: 2rem;
@@ -108,37 +70,18 @@
             color: white; 
             border-radius: 50%; 
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-            transition: transform 0.2s;
         }
         
-        /* Gradient cho Gold, Silver */
         .list-rank-badge-gold { background: linear-gradient(135deg, #FFD700, #F59E0B); } 
         .list-rank-badge-silver { background: linear-gradient(135deg, #C0C0C0, #9CA3AF); } 
+        .list-rank-badge-bronze { background: linear-gradient(135deg, #CD7F32, #A0522D); }
+        .list-rank-badge-normal { color: #4b5563; background-color: #e5e7eb; box-shadow: none; }
         
-        /* Hạng 3+ (Đã bỏ Đồng) */
-        .list-rank-badge:not(.list-rank-badge-gold):not(.list-rank-badge-silver) {
-            color: #4b5563; 
-            background-color: #e5e7eb; 
-            box-shadow: none;
-        }
-        
-        /* --- FONT SIZES ĐỒNG NHẤT --- */
-        .list-name { 
-            font-size: 1rem; 
-            font-weight: 600; 
-        }
-        .list-score { 
-            font-size: 1.125rem; 
-            font-weight: 900; 
-        }
-        /* Đảm bảo màu điểm số theo màu rank */
+        .list-name { font-size: 1rem; font-weight: 600; }
+        .list-score { font-size: 1.125rem; font-weight: 900; }
         .list-score-gold { color: #d97706; } 
-        .list-score-silver { color: #4b5563; } 
-        /* Hạng 3+ dùng màu xanh chuẩn */
         .list-score-normal { color: #0ea5e9; } 
 
-
-        /* --- ANIMATION CHO CÁC BLOCK LỚN (Tiêu đề, Cơ chế) --- */
         .fade-in-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -149,72 +92,20 @@
             transform: translateY(0);
         }
         
-        /* ---------------------------------------------------- */
-        /* --- HIỆU ỨNG XUẤT HIỆN TỪ TRÁI SANG PHẢI (CHO TỪNG THÀNH VIÊN) --- */
-        /* ---------------------------------------------------- */
         .rank-list-item-animated {
             opacity: 0;
             transform: translateX(-50px); 
             transition: opacity 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27), transform 0.5s cubic-bezier(0.17, 0.88, 0.32, 1.27);
-            will-change: opacity, transform; 
         }
         .rank-list-item-animated.is-visible {
             opacity: 1;
             transform: translateX(0);
         }
 
-        /* --- STYLES CHO BẢNG CƠ CHẾ ĐIỂM MỚI --- */
-        .point-table th {
-            background-color: #0c4a6e; /* Dark Blue Header */
-            color: white;
-            padding: 1rem;
-            font-weight: 700;
-            border-bottom: 2px solid #075985;
-        }
-
-        .point-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e0f2f1; /* Light cyan border */
-            vertical-align: top;
-            text-align: left;
-        }
-        
-        /* Cột Điểm cộng (Màu xanh nổi bật) */
-        .point-table .point-column {
-            font-weight: 900;
-            color: #0ea5e9; /* Sky Blue */
-            text-align: center;
-        }
-
-        .point-table tr:nth-child(even) {
-            background-color: #f8fafc; /* Light zebra striping */
-        }
-        
-        .point-table tr:hover {
-            background-color: #e0f2f1; /* Light cyan hover effect */
-        }
-
-        /* ================================================= */
-        /* === MOBILE ADJUSTMENTS (DƯỚI 640PX) === */
-        /* ================================================= */
         @media (max-width: 639px) {
-            
-            /* Tối ưu hóa kích thước font chữ trong danh sách cho mobile */
-            .list-name { font-size: 0.875rem; font-weight: 600; } 
-            .list-score { font-size: 1rem; font-weight: 900; } 
+            .list-name { font-size: 0.875rem; } 
+            .list-score { font-size: 1rem; } 
             .rank-list-item { padding: 0.6rem 0.75rem; }
-            
-            .list-rank-badge {
-                width: 1.75rem; 
-                height: 1.75rem;
-                font-size: 0.85rem;
-            }
-            
-            /* Cột bảng điểm trên mobile */
-            .point-table td, .point-table th {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.875rem;
-            }
         }
     </style>
 </head>
@@ -223,208 +114,86 @@
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-2">
-                <!-- LOGO -->
-                <img 
-                    src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" 
-                    alt="Logo You Can Club" 
-                    onerror="this.onerror=null; this.src='https://placehold.co/48x48/0ea5e9/ffffff?text=YC'"
-                    class="h-12 w-auto rounded-full">
-                <!-- WRAPPER MỚI CHO TIÊU ĐỀ VÀ PHỤ ĐỀ -->
+                <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full">
                 <div class="flex flex-col items-start">
-                    <!-- ĐÃ ĐỔI text-gray-900 THÀNH text-sky-900 THEO YÊU CẦU -->
                     <span class="text-xl font-bold text-sky-900 leading-none">You Can Club</span>
-                    <!-- ĐÃ XÓA leading-none và THAY mt-0.5 thành mt-1 để tạo khoảng cách rõ hơn -->
                     <span class="text-sm italic text-gray-500 mt-1">Bạn có thể!</span>
                 </div>
             </a>
             <div class="hidden md:flex items-center space-x-8">
-                <!-- Giới thiệu -->
                 <a href="https://youcanclub.github.io" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Giới thiệu</a>
-                <!-- Hoạt động -->
                 <a href="https://youcanclub.github.io/new.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Hoạt động</a>
-                <!-- Nút "Tham gia ngay" (Desktop link) -->
-                <a href="https://youcanclub.github.io/#dang-ky" class="
-                    px-5 py-2.5 
-                    bg-gradient-to-r from-sky-500 to-sky-700 
-                    text-white font-bold 
-                    rounded-full 
-                    hover:from-sky-600 hover:to-sky-800 
-                    transition-all duration-300 
-                    shadow-xl hover:shadow-2xl 
-                    transform hover:scale-105
-                ">
-                    Tham gia ngay
-                </a>
+                <a href="https://youcanclub.github.io/#dang-ky" class="px-5 py-2.5 bg-gradient-to-r from-sky-500 to-sky-700 text-white font-bold rounded-full hover:from-sky-600 hover:to-sky-800 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105">Tham gia ngay</a>
             </div>
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-button" class="md:hidden text-gray-800">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </nav>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4">
-            <!-- Giới thiệu -->
-            <a href="https://youcanclub.github.io" class="block py-2 px-6 text-gray-600 hover:bg-sky-100">Giới thiệu</a>
-            <!-- Hoạt động -->
-            <a href="https://youcanclub.github.io/new.html" class="block py-2 px-6 text-gray-600 hover:bg-sky-100">Hoạt động</a>
-            <!-- Nút "Tham gia ngay" mobile -->
-            <a href="https://youcanclub.github.io/#dang-ky" class="
-                block mx-6 mt-2 py-3 text-center
-                bg-gradient-to-r from-sky-500 to-sky-700 
-                text-white font-bold 
-                rounded-lg 
-                hover:from-sky-600 hover:to-sky-800 
-                transition-colors duration-300 
-                shadow-md
-            ">
-                Tham gia ngay
-            </a>
-        </div>
     </header>
 
     <main class="container mx-auto px-6 py-8 md:py-16">
         <section id="leaderboard" class="text-center fade-in-scroll">
-            <!-- TIÊU ĐỀ H1 -->
-            <h1 class="text-3xl md:text-5xl font-extrabold py-2 mb-2 md:mb-4 gradient-text flex justify-center">
-                Bảng xếp hạng
-            </h1>
-            <!-- CẬP NHẬT THỜI GIAN LÀ THÁNG 12/2025 -->
-            <p class="text-lg md:text-xl font-semibold text-sky-700 mb-8 md:mb-10">
-                Tháng 12/2025
-            </p>
+            <h1 class="text-3xl md:text-5xl font-extrabold py-2 mb-2 md:mb-4 gradient-text flex justify-center text-center">Bảng xếp hạng</h1>
+            <p class="text-lg md:text-xl font-semibold text-sky-700 mb-8 md:mb-10 text-center">Tháng 2/2026</p>
 
-            <!-- Bảng xếp hạng chi tiết (RESET ĐIỂM VỀ 0, GIỮ HIỆU ỨNG TOP 2) -->
             <div id="leaderboard-list" class="max-w-3xl mx-auto p-2 md:p-4 bg-white rounded-2xl shadow-2xl border border-gray-100 space-y-3">
                 
-                <!-- Hạng 1 (Bé Trân - 0 điểm) - STYLE VÀNG -->
-                <div class="rank-list-item rank-1-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
+                <!-- Hạng 1 (Bé Trân - 33 điểm - VÀNG) -->
+                <div class="rank-list-item rank-1-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
                     <div class="flex items-center space-x-4">
-                        <!-- Huy hiệu Vàng Gradient -->
                         <span class="list-rank-badge list-rank-badge-gold">1</span>
-                        <p class="list-name text-gray-900 flex items-center">Bé Trân</p>
+                        <p class="list-name text-gray-900">Bé Trân</p>
                     </div>
-                    <!-- Điểm số Vàng, nhưng giá trị là 0 -->
-                    <span class="list-score list-score-gold">0 điểm</span>
+                    <span class="list-score list-score-gold">33 điểm</span>
                 </div>
 
-                <!-- Hạng 2 (Trọng Khoa - 0 điểm) - STYLE BẠC -->
-                <div class="rank-list-item rank-2-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
+                <!-- Hạng 2 (Hoài Phúc - 33 điểm - BẠC) -->
+                <div class="rank-list-item rank-2-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
                     <div class="flex items-center space-x-4">
-                        <!-- Huy hiệu Bạc Gradient -->
                         <span class="list-rank-badge list-rank-badge-silver">2</span>
-                        <p class="list-name text-gray-900">Trọng Khoa</p>
-                    </div>
-                    <!-- Điểm số Bạc, nhưng giá trị là 0 -->
-                    <span class="list-score list-score-silver">0 điểm</span>
-                </div>
-
-                <!-- Hạng 3 (Hoài Phúc - 0 điểm) - STYLE THƯỜNG (ĐÃ BỎ ĐỒNG) -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl shadow-sm rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <!-- Huy hiệu cơ bản -->
-                        <span class="list-rank-badge">3</span>
                         <p class="list-name text-gray-900">Hoài Phúc</p>
                     </div>
-                    <!-- Điểm số xanh dương (bình thường) -->
-                    <span class="list-score list-score-normal">0 điểm</span>
+                    <span class="list-score text-slate-600">33 điểm</span>
                 </div>
 
-                <!-- Hạng 4 (Hồng Ngát - 0 điểm) - STYLE THƯỜNG -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
+                <!-- Hạng 3 (Duy Kiệt - 28 điểm - NÂU/ĐỒNG) -->
+                <div class="rank-list-item rank-3-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
                     <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge">4</span>
-                        <p class="list-name text-gray-900">Hồng Ngát</p>
-                    </div>
-                    <span class="list-score list-score-normal">0 điểm</span>
-                </div>
-
-                <!-- Hạng 5 (Duy Kiệt - 0 điểm) - STYLE THƯỜNG -->
-                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
-                    <div class="flex items-center space-x-4">
-                        <span class="list-rank-badge">5</span>
+                        <span class="list-rank-badge list-rank-badge-bronze">3</span>
                         <p class="list-name text-gray-900">Duy Kiệt</p>
                     </div>
-                    <span class="list-score list-score-normal">0 điểm</span>
+                    <span class="list-score text-orange-800">28 điểm</span>
+                </div>
+
+                <!-- Hạng 4 (Trọng Khoa - 23 điểm) -->
+                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
+                    <div class="flex items-center space-x-4">
+                        <span class="list-rank-badge list-rank-badge-normal">4</span>
+                        <p class="list-name text-gray-900">Trọng Khoa</p>
+                    </div>
+                    <span class="list-score list-score-normal">23 điểm</span>
+                </div>
+
+                <!-- Hạng 5 (Hồng Ngát - 13 điểm) -->
+                <div class="rank-list-item flex items-center justify-between p-3 md:p-4 rounded-xl rank-list-item-animated">
+                    <div class="flex items-center space-x-4">
+                        <span class="list-rank-badge list-rank-badge-normal">5</span>
+                        <p class="list-name text-gray-900">Hồng Ngát</p>
+                    </div>
+                    <span class="list-score list-score-normal">13 điểm</span>
                 </div>
                 
             </div>
             
-            <!-- Phần lưu ý -->
-            <p class="mt-8 p-4 bg-sky-100/50 text-gray-700 text-base rounded-lg border-l-4 border-sky-400 font-medium">
+            <p class="mt-8 p-4 bg-sky-100/50 text-gray-700 text-base rounded-lg border-l-4 border-sky-400 font-medium text-center">
                 Bảng xếp hạng chỉ phản ánh mức độ tham gia, không định giá con người. Hãy coi đây là lời nhắc để giữ lửa học tập, thi đua vui vẻ và cùng nhau tiến bộ.
             </p>
         </section>
-
-        <!-- Bảng Cơ chế cộng điểm MỚI -->
-        <section id="point-system" class="text-center mt-16 fade-in-scroll">
-            <h2 class="text-3xl md:text-4xl font-bold text-sky-900 mb-8">Cơ chế cộng điểm</h2>
-            
-            <!-- Bảng mới với tỷ lệ cân đối hơn: 20% | 25% | 55% -->
-            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
-                <table class="w-full text-left border-collapse point-table">
-                    <thead>
-                        <tr>
-                            <!-- Tỷ lệ: Hoạt động (20%) -->
-                            <th class="rounded-tl-xl w-[20%]">Hoạt động</th>
-                            <!-- Tỷ lệ: Điểm cộng (25%) -->
-                            <th class="w-[25%] text-center">Điểm cộng</th>
-                            <!-- Tỷ lệ: Điều kiện được cộng (55%) -->
-                            <th class="rounded-tr-xl w-[55%]">Điều kiện được cộng</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="font-bold text-gray-800">Tham gia</td>
-                            <td class="point-column">+5 điểm</td>
-                            <td class="text-gray-600">Có mặt đúng giờ và điểm danh theo quy định.</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-gray-800">Tương tác</td>
-                            <td class="point-column">+8 điểm</td>
-                            <td class="text-gray-600">Tương tác tích cực trong phần thảo luận cuối buổi sinh hoạt.</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-gray-800">Góp ý</td>
-                            <td class="point-column">+10 điểm</td>
-                            <td class="text-gray-600">Đưa ra nhận xét mang tính xây dựng cho người thuyết trình qua biểu mẫu.</td>
-                        </tr>
-                        <tr>
-                            <td class="font-bold text-gray-800">Xây dựng</td>
-                            <td class="point-column">+15 điểm</td>
-                            <td class="text-gray-600">Đóng góp tài liệu, nội dung, kịch bản, slide hoặc hỗ trợ xây dựng giúp buổi sinh hoạt tốt hơn.</td>
-                        </tr>
-                        <tr class="bg-sky-50/50">
-                            <!-- Đã loại bỏ font lớn để đồng nhất -->
-                            <td class="font-bold text-gray-800">Thuyết trình</td>
-                            <!-- Đã loại bỏ font lớn để đồng nhất -->
-                            <td class="point-column">+20 điểm</td>
-                            <td class="text-gray-600">Thực hiện phần thuyết trình; hoàn thành đầy đủ nội dung, chuẩn bị trước, bật camera (nếu sinh hoạt online).</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Phần lưu ý (Được giữ nguyên) -->
-            <p class="mt-8 p-4 bg-sky-100/50 text-gray-700 text-base rounded-lg border-l-4 border-sky-400 font-medium fade-in-scroll">
-                Cơ chế cộng điểm được áp dụng minh bạch và công bằng cho tất cả thành viên, dựa trên tiêu chí rõ ràng và được công bố trước. Mọi đóng góp đều được ghi nhận đúng mức, đảm bảo uy tín và sự tôn trọng lẫn nhau.
-            </p>
-        </section>
-
     </main>
     
     <footer class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
             <div class="flex space-x-6">
-                <!-- Icon và link Facebook -->
-                <a href="https://www.facebook.com/profile.php?id=61578363805571" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                    <i class="fab fa-facebook text-3xl hover:text-sky-400 transition-colors duration-300"></i>
-                </a>
-                <!-- Icon và link Email (mailto) -->
-                <a href="mailto:clbyoucan@gmail.com" aria-label="Email liên hệ">
-                    <i class="fa-solid fa-envelope text-3xl hover:text-sky-400 transition-colors duration-300"></i>
-                </a>
+                <a href="https://www.facebook.com/profile.php?id=61578363805571" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook text-3xl hover:text-sky-400"></i></a>
+                <a href="mailto:clbyoucan@gmail.com"><i class="fa-solid fa-envelope text-3xl hover:text-sky-400"></i></a>
             </div>
-            <!-- Thêm ngày thành lập CLB vào footer -->
             <p class="text-sm">Thành lập: 21/6/2025</p>
             <p>&copy; 2025. CLB Thuyết trình & Học tập</p>
         </div>
@@ -432,68 +201,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Mobile menu functionality
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            // --- JavaScript cho hiệu ứng xuất hiện khi cuộn (fade-in-scroll & rank-list-item-animated) ---
-            
-            // 1. Observer cho các khối lớn (Tiêu đề, Cơ chế cộng điểm, Lưu ý) - Fade in từ dưới lên
-            const fadeObserverOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1 
-            };
-            const fadeObserver = new IntersectionObserver((entries, observer) => {
+            const fadeObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, fadeObserverOptions);
+            }, { threshold: 0.1 });
 
-            // Bắt đầu theo dõi các khối lớn
-            document.querySelectorAll('.fade-in-scroll').forEach(section => {
-                fadeObserver.observe(section);
-            });
+            document.querySelectorAll('.fade-in-scroll').forEach(section => fadeObserver.observe(section));
 
-            // 2. Observer cho danh sách thành viên (Xuất hiện tuần tự từ trái sang phải)
-            const listObserverOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1 
-            };
-
-            const listObserver = new IntersectionObserver((entries, observer) => {
+            const listObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Khi container list xuất hiện, kích hoạt animation tuần tự cho các items
-                        const listItems = entry.target.querySelectorAll('.rank-list-item-animated');
-                        listItems.forEach((item, index) => {
-                            // Áp dụng delay tuần tự (0s, 0.1s, 0.2s, ...)
-                            item.style.transitionDelay = `${index * 0.1}s`; 
-                            
-                            // Sử dụng setTimeout để đảm bảo trình duyệt có thời gian áp dụng delay
-                            setTimeout(() => {
-                                item.classList.add('is-visible');
-                            }, 50); 
+                        entry.target.querySelectorAll('.rank-list-item-animated').forEach((item, index) => {
+                            item.style.transitionDelay = `${index * 0.15}s`; 
+                            setTimeout(() => item.classList.add('is-visible'), 50);
                         });
-
-                        // Dừng theo dõi container sau khi animation đã được kích hoạt
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, listObserverOptions);
+            }, { threshold: 0.1 });
 
-            // Bắt đầu theo dõi container của danh sách thành viên
             const leaderboardList = document.getElementById('leaderboard-list');
-            if (leaderboardList) {
-                listObserver.observe(leaderboardList);
-            }
+            if (leaderboardList) listObserver.observe(leaderboardList);
         });
     </script>
 </body>
