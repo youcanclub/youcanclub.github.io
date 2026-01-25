@@ -14,12 +14,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Import Font Awesome for icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <!-- Chosen Palette: Cool Sky & Charcoal --><!-- This page displays club announcements with a similar aesthetic to the main page. --><style>
+    <style>
         body {
             font-family: 'Be Vietnam Pro', sans-serif;
         }
         
-        /* --- New styles for scroll-in animation (Hiệu ứng xuất hiện khi cuộn) --- */
+        /* Hiệu ứng gạch chân chạy từ trái sang phải */
+        .nav-link {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #0369a1; /* sky-700 */
+            transform-origin: bottom left;
+            transition: transform 0.3s ease-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Hiệu ứng xuất hiện khi cuộn */
         .fade-in-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -31,25 +55,22 @@
         }
     </style>
 </head>
-<!-- Đã cập nhật body để sử dụng flexbox và đảm bảo trang chiếm ít nhất toàn bộ chiều cao của màn màn hình --><body class="flex flex-col min-h-screen bg-sky-100 text-gray-800">
+<body class="flex flex-col min-h-screen bg-sky-100 text-gray-800">
 
     <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-2">
-                <!-- ĐÃ CẬP NHẬT: Đường dẫn logo mới từ raw.githubusercontent.com -->
                 <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/logoclbyoucan.jpg" alt="Logo You Can Club" class="h-12 w-auto rounded-full" onerror="this.onerror=null;this.src='https://placehold.co/48x48/0c4a6e/ffffff?text=YCC'">
                 <div>
-                    <!-- Dòng chữ "You Can Club" đã được đổi từ text-gray-900/font-bold sang text-sky-900/font-extrabold --><span class="text-xl font-extrabold text-sky-900 block">You Can Club</span>
-                    <!-- Dòng chữ nhỏ "Bạn có thể!" đã được chỉnh sửa: ĐÃ BỎ LỀ ÂM (-mt-3) để tăng khoảng cách giữa hai dòng theo yêu cầu của người dùng --><span class="text-sm italic text-gray-500 block">Bạn có thể!</span>
+                    <span class="text-xl font-extrabold text-sky-900 block">You Can Club</span>
+                    <span class="text-sm italic text-gray-500 block">Bạn có thể!</span>
                 </div>
             </a>
-            <!-- Nav links for desktop, linking back to the main info page and leaderboard --><div class="hidden md:flex items-center space-x-8">
-                <!-- ĐÃ CẬP NHẬT: Đổi "Giới thiệu" thành "Trang chủ" -->
-                <a href="https://youcanclub.github.io/" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Trang chủ</a>
-                <!-- Đã cập nhật đường dẫn Bảng xếp hạng -->
-                <a href="https://youcanclub.github.io/rank.html" class="nav-link text-gray-600 hover:text-sky-800 transition-colors duration-300">Bảng xếp hạng</a>
-                <!-- Thêm nút "Tham gia ngay" cho desktop - ĐÃ CẬP NHẬT KIỂU DÁNG NỔI BẬT HƠN -->
-                <!-- Đã cập nhật đường dẫn Tham gia ngay -->
+            
+            <!-- Menu điều hướng với hiệu ứng gạch chân -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="https://youcanclub.github.io/" class="nav-link text-gray-600 font-medium hover:text-sky-800 transition-colors duration-300">Trang chủ</a>
+                <a href="https://youcanclub.github.io/rank.html" class="nav-link text-gray-600 font-medium hover:text-sky-800 transition-colors duration-300">Bảng xếp hạng</a>
                 <a href="https://youcanclub.github.io/#dang-ky" class="
                     px-5 py-2.5 
                     bg-gradient-to-r from-sky-500 to-sky-700 
@@ -63,17 +84,15 @@
                     Tham gia ngay
                 </a>
             </div>
-            <!-- Mobile menu button --><button id="mobile-menu-button" class="md:hidden text-gray-800">
+
+            <button id="mobile-menu-button" class="md:hidden text-gray-800">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
         </nav>
-        <!-- Mobile menu - ĐÃ CẬP NHẬT THIẾT KẾ NÚT "THAM GIA NGAY" --><div id="mobile-menu" class="hidden md:hidden bg-white pb-4">
-            <!-- ĐÃ CẬP NHẬT: Đổi "Giới thiệu" thành "Trang chủ" -->
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white pb-4">
             <a href="https://youcanclub.github.io/" class="block py-2 px-6 text-gray-600 hover:bg-sky-100">Trang chủ</a>
-            <!-- Đã cập nhật đường dẫn Bảng xếp hạng -->
             <a href="https://youcanclub.github.io/rank.html" class="block py-2 px-6 text-gray-600 hover:bg-sky-100">Bảng xếp hạng</a>
-            <!-- Thêm nút "Tham gia ngay" cho mobile - Đã thiết kế lại nổi bật -->
-            <!-- Đã cập nhật đường dẫn Tham gia ngay -->
             <a href="https://youcanclub.github.io/#dang-ky" class="
                 block mx-6 mt-2 py-3 text-center
                 bg-gradient-to-r from-sky-500 to-sky-700 
@@ -88,109 +107,86 @@
         </div>
     </header>
 
-    <!-- Thêm flex-grow để main chiếm hết khoảng trống, đẩy footer xuống dưới cùng --><main class="container mx-auto px-6 py-8 md:py-16 flex-grow">
+    <main class="container mx-auto px-6 py-8 md:py-16 flex-grow">
         <section id="announcements" class="text-center fade-in-scroll">
-            <!-- Tiêu đề chính - ĐÃ THÊM GRADIENT VÀ THÊM PY-1 ĐỂ TRÁNH CẮT CHỮ -->
             <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-600 to-sky-900 text-transparent bg-clip-text mb-12 py-1">Bảng thông báo</h1>
             
-            <!-- Announcement cards section (Thiết kế lại cho bắt mắt hơn) --><div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
-                <!-- Announcement Card - THÔNG BÁO CHƯA CÓ SỰ KIỆN LỚN --><div class="relative w-full mx-auto bg-sky-900 p-2 rounded-2xl shadow-2xl shadow-sky-500/50 transition-transform duration-300 hover:scale-[1.02]">
-                    <!-- Inner Card for content --><div class="bg-white p-8 rounded-xl relative text-center">
-                        
-                        <!-- Đã bỏ Tag thông báo chung (THÔNG BÁO CHUNG) --><!-- Tiêu đề Sự kiện --><h2 class="text-3xl font-extrabold text-gray-700 mb-2 mt-2">
+            <div class="grid grid-cols-1 gap-8 max-w-2xl mx-auto">
+                <div class="relative w-full mx-auto bg-sky-900 p-2 rounded-2xl shadow-2xl shadow-sky-500/50 transition-transform duration-300 hover:scale-[1.02]">
+                    <div class="bg-white p-8 rounded-xl relative text-center">
+                        <h2 class="text-3xl font-extrabold text-gray-700 mb-2 mt-2">
                             <i class="fa-solid fa-calendar-times mr-2 text-red-500"></i> Sự kiện
                         </h2>
-                        
-                        <!-- Ngày cập nhật - Đã đổi thành Cập nhật: vô thời hạn --><p class="text-gray-500 text-base mb-6 border-b border-gray-200 pb-2">
+                        <p class="text-gray-500 text-base mb-6 border-b border-gray-200 pb-2">
                             <i class="fa-solid fa-clock mr-2 text-gray-500"></i> Cập nhật: vô thời hạn
                         </p>
-                        
-                        <!-- Nội dung chính (CHƯA CÓ SỰ KIỆN) --><div class="space-y-4 pt-2">
-                            <!-- Trạng thái hiện tại --><p class="text-3xl text-red-600 font-extrabold mb-4 animate-pulse">
+                        <div class="space-y-4 pt-2">
+                            <p class="text-3xl text-red-600 font-extrabold mb-4 animate-pulse">
                                 Hiện chưa có sự kiện nào
-                            </p>
-                        </div>
-                        
-                    </div>
-                </div>
-                <!-- Có thể thêm các Announcement Card khác tại đây --></div>
-            
-            <!-- Dòng thông báo chung đã được làm nhỏ hơn --><p class="mt-12 text-sky-800 text-lg md:text-xl font-extrabold max-w-3xl mx-auto p-4 bg-sky-200/70 rounded-xl shadow-lg">
-                Cập nhật nhanh sự kiện và hoạt động lớn – ai cũng có thể tham gia. Hãy theo dõi để không bỏ lỡ cơ hội kết nối, thi đua vui vẻ và cùng nhau tiến bộ.
-            </p>
-            
-        </section>
-
-        <!-- START: Phần Thông tin sinh hoạt đã được thiết kế lại bắt mắt hơn --><section id="activity-format" class="mt-16 py-12 bg-white/70 rounded-2xl shadow-inner fade-in-scroll">
-            <!-- ĐÃ BỎ ICON: Xóa icon fa-sitemap khỏi tiêu đề -->
-            <h2 class="text-3xl font-bold text-sky-900 text-center mb-10">Thông tin sinh hoạt</h2>
-            
-            <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                <!-- Sinh hoạt tuần Card (Online - Màu Xanh) -->
-                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-sky-400/50 hover:translate-y-[-4px] border border-sky-200">
-                    <!-- Header with Gradient and Icon --><div class="bg-gradient-to-r from-sky-600 to-sky-700 p-5 text-white flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-week text-3xl mr-3"></i>
-                        <h3 class="text-2xl font-extrabold">Sinh hoạt Tuần</h3>
-                    </div>
-                    <!-- Content Area --><div class="p-6 space-y-4">
-                        <!-- CẬP NHẬT: Icon Hình thức Sinh hoạt Tuần đã được đổi sang fa-person-chalkboard -->
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-person-chalkboard text-sky-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Hình thức:</strong> <span class="text-sky-700 font-semibold">Online/Offline</span>
-                            </p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-calendar-day text-sky-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Diễn ra:</strong> <span class="text-sky-700 font-semibold">Thứ 7 hoặc Chủ nhật hằng tuần.</span>
-                            </p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-align-left text-sky-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Nội dung:</strong> Họp ~40 phút: thuyết trình → thảo luận → nhận xét qua biểu mẫu.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sinh hoạt tháng Card (Offline - Màu Vàng/Cam) -->
-                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-amber-400/50 hover:translate-y-[-4px] border border-amber-200">
-                    <!-- Header with Gradient and Icon --><div class="bg-gradient-to-r from-amber-600 to-amber-700 p-5 text-white flex items-center justify-center">
-                        <i class="fa-solid fa-calendar-days text-3xl mr-3"></i>
-                        <h3 class="text-2xl font-extrabold">Sinh hoạt Tháng</h3>
-                    </div>
-                    <!-- Content Area --><div class="p-6 space-y-4">
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-person-chalkboard text-amber-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Hình thức:</strong> <strong class="text-amber-700">Offline</strong>
-                            </p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-calendar-day text-amber-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Diễn ra:</strong> <strong class="text-amber-700">Thứ 7 hoặc Chủ nhật, sau 4 buổi sinh hoạt tuần.</strong>
-                            </p>
-                        </div>
-                        <div class="flex items-start space-x-3">
-                            <i class="fa-solid fa-align-left text-amber-600 text-xl pt-1"></i>
-                            <p>
-                                <strong class="text-gray-900">Nội dung:</strong> Họp ~60 phút: BCN đánh giá hoạt động tháng và <strong class="text-amber-700">trao thưởng</strong>.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- ĐÃ CẬP NHẬT: Nội dung lưu ý ngắn gọn theo yêu cầu -->
+            <p class="mt-12 text-sky-800 text-lg md:text-xl font-extrabold max-w-3xl mx-auto p-4 bg-sky-200/70 rounded-xl shadow-lg">
+                Cập nhật nhanh sự kiện và hoạt động lớn – ai cũng có thể tham gia. Hãy theo dõi để không bỏ lỡ cơ hội kết nối, thi đua vui vẻ và cùng nhau tiến bộ.
+            </p>
+        </section>
+
+        <section id="activity-format" class="mt-16 py-12 bg-white/70 rounded-2xl shadow-inner fade-in-scroll">
+            <h2 class="text-3xl font-bold text-sky-900 text-center mb-10">Thông tin sinh hoạt</h2>
+            
+            <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-sky-400/50 hover:translate-y-[-4px] border border-sky-200">
+                    <div class="bg-gradient-to-r from-sky-600 to-sky-700 p-5 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-week text-3xl mr-3"></i>
+                        <h3 class="text-2xl font-extrabold">Sinh hoạt Tuần</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-person-chalkboard text-sky-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Hình thức:</strong> <span class="text-sky-700 font-semibold">Online/Offline</span></p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-calendar-day text-sky-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Diễn ra:</strong> <span class="text-sky-700 font-semibold">Thứ 7 hoặc Chủ nhật hằng tuần.</span></p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-align-left text-sky-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Nội dung:</strong> Họp ~40 phút: thuyết trình → thảo luận → nhận xét qua biểu mẫu.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-amber-400/50 hover:translate-y-[-4px] border border-amber-200">
+                    <div class="bg-gradient-to-r from-amber-600 to-amber-700 p-5 text-white flex items-center justify-center">
+                        <i class="fa-solid fa-calendar-days text-3xl mr-3"></i>
+                        <h3 class="text-2xl font-extrabold">Sinh hoạt Tháng</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-person-chalkboard text-amber-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Hình thức:</strong> <strong class="text-amber-700">Offline</strong></p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-calendar-day text-amber-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Diễn ra:</strong> <strong class="text-amber-700">Thứ 7 hoặc Chủ nhật, sau 4 buổi sinh hoạt tuần.</strong></p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-align-left text-amber-600 text-xl pt-1"></i>
+                            <p><strong class="text-gray-900">Nội dung:</strong> Họp ~60 phút: BCN đánh giá hoạt động tháng và <strong class="text-amber-700">trao thưởng</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <p class="mt-8 text-sky-800 text-lg md:text-xl font-extrabold max-w-3xl mx-auto p-4 flex items-center justify-center">
                 <i class="fa-solid fa-circle-exclamation mr-3 text-red-600"></i>
                 Lưu ý: Hầu hết các buổi sinh hoạt đều được ghi âm để tạo sản phẩm số đăng lên Fanpage nếu được thông qua.
             </p>
         </section>
-        <!-- END: Phần Thông tin sinh hoạt đã được đổi tên --></main>
+    </main>
     
     <footer class="bg-gray-900 text-sky-100 mt-16">
         <div class="container mx-auto px-6 py-8 flex flex-col items-center space-y-4">
@@ -209,7 +205,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Mobile menu functionality
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => {
