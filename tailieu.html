@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài liệu | You Can Club</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+    <!-- Fonts & Icons -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f0f9ff; /* sky-50 */
+        }
+        
+        /* Custom Scrollbar for document container */
+        .doc-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .doc-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .doc-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .doc-container::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Tab Active State */
+        .tab-btn.active {
+            background-color: #0ea5e9; /* sky-500 */
+            color: white;
+            border-color: #0ea5e9;
+            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.4);
+        }
+
+        /* Document Typography */
+        .document-content h2 {
+            color: #0c4a6e; /* sky-900 */
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #e0f2fe;
+            padding-bottom: 0.5rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .document-content h3 {
+            color: #0369a1; /* sky-700 */
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .document-content h4 {
+            color: #0284c7; /* sky-600 */
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .document-content p {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+            color: #374151; /* gray-700 */
+            text-align: justify;
+        }
+        .document-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+        .document-content ol {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+            color: #374151;
+        }
+        .document-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .document-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .document-content th, .document-content td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        .document-content th {
+            background-color: #f0f9ff;
+            color: #0369a1;
+            font-weight: 700;
+        }
+        
+        /* Document Header Style */
+        .doc-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .doc-header .nation {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        .doc-header .motto {
+            font-weight: bold;
+            border-bottom: 1px solid #ccc;
+            display: inline-block;
+            padding-bottom: 2px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .doc-header .date {
+            font-style: italic;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        
+        /* Fade Animation */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header / Navigation -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-sky-100">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Back Button -->
+            <a href="javascript:history.back()" class="
+                flex items-center gap-2 
+                px-4 py-2 
+                text-sky-700 font-semibold 
+                hover:bg-sky-50 rounded-lg 
+                transition-colors duration-200
+            ">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span class="hidden sm:inline">Quay lại</span>
+            </a>
+
+            <h1 class="text-lg md:text-xl font-bold text-sky-900 uppercase tracking-wide">
+                Tài liệu Câu Lạc Bộ
+            </h1>
+
+            <!-- Spacer for visual balance -->
+            <div class="w-20 hidden sm:block"></div>
+            <!-- Mobile Logo (optional) -->
+            <div class="sm:hidden w-8 h-8 rounded-full bg-sky-100 flex items-center justify-center text-sky-600">
+                <i class="fa-solid fa-file-lines"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+        
+        <!-- Tab Navigation -->
+        <div class="flex flex-col sm:flex-row justify-center gap-3 mb-8">
+            <button onclick="switchTab('quyche')" id="tab-quyche" class="tab-btn active px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-scale-balanced"></i> Quy Chế
+            </button>
+            <button onclick="switchTab('noiquy')" id="tab-noiquy" class="tab-btn px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-gavel"></i> Nội Quy
+            </button>
+            <button onclick="switchTab('huongdan')" id="tab-huongdan" class="tab-btn px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-chalkboard-user"></i> Hướng Dẫn Sinh Hoạt
+            </button>
+        </div>
+
+        <!-- Document Viewer Container -->
+        <div class="bg-white rounded-2xl shadow-xl border border-sky-100 p-6 md:p-10 min-h-[600px] doc-container relative overflow-hidden">
+            
+            <!-- 1. QUY CHẾ CONTENT -->
+            <div id="content-quyche" class="document-content fade-in">
+                <div class="doc-header">
+                    <div class="nation">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                    <div class="motto">Độc lập - Tự do - Hạnh phúc</div>
+                    <div class="date mt-2">Khánh Lâm, ngày 20 tháng 1 năm 2026</div>
+                </div>
+
+                <h2>QUY CHẾ TỔ CHỨC & HOẠT ĐỘNG</h2>
+
+                <h3>I. THÔNG TIN CHUNG</h3>
+                <ul>
+                    <li><strong>Tên đầy đủ:</strong> Câu lạc bộ You Can – Thuyết trình & Học tập</li>
+                    <li><strong>Tên viết tắt:</strong> YOU CAN CLUB (YCC)</li>
+                    <li><strong>Đơn vị trực thuộc:</strong> Trường THPT Khánh Lâm</li>
+                    <li><strong>Phạm vi quản lý:</strong> Trong khuôn khổ hoạt động của nhà trường và dưới sự giám sát của Đoàn trường.</li>
+                </ul>
+
+                <h3>II. TÔN CHỈ – MỤC ĐÍCH</h3>
+                <p>CLB được thành lập nhằm:</p>
+                <ul>
+                    <li>Tạo môi trường cho học sinh rèn luyện thuyết trình, phản biện và học tập chủ động thông qua phương pháp "giảng lại".</li>
+                    <li>Khuyến khích học sinh tư duy độc lập, diễn đạt mạch lạc, học tập hiệu quả và phát triển kỹ năng mềm cần thiết.</li>
+                    <li>Ứng dụng kỹ năng học tập – thuyết trình vào sáng tạo nội dung số tích cực, góp phần xây dựng hình ảnh cá nhân và tập thể lành mạnh trong học sinh THPT.</li>
+                </ul>
+
+                <h3>III. LĨNH VỰC, NỘI DUNG VÀ PHẠM VI HOẠT ĐỘNG</h3>
+                <h4>1. Lĩnh vực hoạt động</h4>
+                <ul>
+                    <li>Thuyết trình và phản biện</li>
+                    <li>Học tập chủ động</li>
+                    <li>Sáng tạo nội dung số mang giá trị giáo dục</li>
+                </ul>
+
+                <h4>2. Chủ đề hoạt động</h4>
+                <ul>
+                    <li><strong>Phát triển bản thân:</strong> thói quen học tập, kỷ luật cá nhân, quản lý thời gian, tư duy tích cực, cải thiện kỹ năng mềm...</li>
+                    <li><strong>Xu hướng:</strong> AI trong học tập, học online, mạng xã hội, định hướng nghề nghiệp mới, cách tiếp cận tri thức hiện đại...</li>
+                    <li><strong>Xã hội:</strong> áp lực điểm số, so sánh bản thân, kỳ vọng gia đình, hành vi học sinh, ảnh hưởng từ môi trường xung quanh...</li>
+                </ul>
+
+                <h4>3. Phạm vi hoạt động</h4>
+                <ul>
+                    <li>Hoạt động trong khuôn khổ Trường THPT Khánh Lâm.</li>
+                    <li><strong>Sinh hoạt tuần:</strong> Online hoặc offline vào Thứ 7 hoặc Chủ nhật.</li>
+                    <li><strong>Sinh hoạt tháng:</strong> Offline (sau mỗi 4 buổi sinh hoạt tuần).</li>
+                </ul>
+
+                <h4>4. Các trường hợp bắt buộc xin phê duyệt Đoàn trường</h4>
+                <ul>
+                    <li>Có khách mời hoặc diễn giả ngoài nhà trường.</li>
+                    <li>Sử dụng kinh phí từ quỹ CLB vượt quá 200.000 VND/lần.</li>
+                    <li>Thời lượng hoạt động ngoài giờ học chính khóa trên 90 phút.</li>
+                    <li>Sử dụng hình ảnh, tên trường hoặc truyền thông ra ngoài phạm vi nội bộ CLB.</li>
+                    <li>Sử dụng các phòng chức năng đặc biệt (hội trường, phòng máy...).</li>
+                </ul>
+
+                <h3>IV. NGUYÊN TẮC TỔ CHỨC VÀ HOẠT ĐỘNG</h3>
+                <ul>
+                    <li><strong>Tự nguyện – kỷ luật:</strong> Tham gia trên tinh thần tự nguyện nhưng phải tuân thủ quy chế.</li>
+                    <li><strong>Tự quản – minh bạch:</strong> CLB vận hành theo mô hình tự quản, công khai và rõ ràng.</li>
+                    <li><strong>Tôn trọng – văn minh:</strong> Ứng xử lịch sự, xây dựng môi trường học tập tích cực.</li>
+                    <li><strong>Trách nhiệm – hợp tác:</strong> Mỗi thành viên có trách nhiệm với nhiệm vụ được giao.</li>
+                    <li><strong>Tuân thủ quy định nhà trường:</strong> Mọi hoạt động đều phù hợp nội quy trường THPT Khánh Lâm.</li>
+                </ul>
+
+                <h3>V. HỘI VIÊN</h3>
+                <h4>1. Tiêu chuẩn hội viên</h4>
+                <ul>
+                    <li>Là học sinh đang học tại Trường THPT Khánh Lâm.</li>
+                    <li>Có tinh thần học hỏi, hợp tác và trách nhiệm.</li>
+                    <li>Cam kết tuân thủ quy định CLB và nội quy nhà trường.</li>
+                </ul>
+
+                <h4>2. Quyền của hội viên</h4>
+                <ul>
+                    <li>Tham gia các hoạt động của CLB.</li>
+                    <li>Đề xuất ý kiến, chủ đề, ứng cử và bầu cử vào BCN.</li>
+                    <li>Được ghi nhận đóng góp và xét khen thưởng theo quy định.</li>
+                </ul>
+
+                <h4>3. Nghĩa vụ của hội viên</h4>
+                <ul>
+                    <li>Tham gia sinh hoạt đúng giờ, chuyên cần.</li>
+                    <li>Hoàn thành nhiệm vụ khi được phân công.</li>
+                    <li>Không tự ý chia sẻ thông tin, hình ảnh nội bộ.</li>
+                </ul>
+
+                <h3>VI. CƠ CẤU TỔ CHỨC</h3>
+                <h4>1. Ban Chủ nhiệm CLB</h4>
+                <ul>
+                    <li>Gồm: 01 Chủ nhiệm, 01 Phó Chủ nhiệm, 01 Thủ quỹ.</li>
+                    <li>CLB hoạt động theo mô hình tự quản; giáo viên và Đoàn trường đóng vai trò giám sát, hỗ trợ khi cần.</li>
+                </ul>
+                <h4>2. Bầu chọn và miễn nhiệm</h4>
+                <ul>
+                    <li>Bầu chọn bằng hình thức bình chọn online trên Zalo.</li>
+                    <li>Miễn nhiệm khi không hoàn thành nhiệm vụ hoặc vi phạm nghiêm trọng quy chế.</li>
+                    <li>Bầu chọn lại mọi vị trí theo nhiệm kỳ 1 năm.</li>
+                </ul>
+
+                <h3>VII. KÊNH THÔNG TIN CHÍNH THỨC (ZALO)</h3>
+                <p>CLB sử dụng 04 kênh thông tin chính thức:</p>
+                <ol>
+                    <li><strong>Kênh thông báo:</strong> Kênh duy nhất đăng tải thông tin chính thức của CLB (lịch sinh hoạt, kế hoạch, kết quả đánh giá, bảng xếp hạng).</li>
+                    <li><strong>Kênh chung:</strong> Nơi trao đổi, thảo luận và sinh hoạt của toàn bộ thành viên.</li>
+                    <li><strong>Kênh BCN:</strong> Kênh nội bộ của Ban Chủ nhiệm, dùng để điều phối và quản lý hoạt động CLB.</li>
+                    <li><strong>Kênh vi phạm:</strong> Ghi nhận và theo dõi các trường hợp vi phạm theo quy định CLB.</li>
+                </ol>
+                <p><strong>Nguyên tắc:</strong> Thành viên theo dõi thông tin đúng kênh; không tự ý lập kênh khác dưới danh nghĩa CLB; đảm bảo thống nhất hình ảnh và tinh thần CLB.</p>
+
+                <h3>VIII. QUẢN LÝ TÀI CHÍNH VÀ TÀI SẢN</h3>
+                <ul>
+                    <li><strong>Phí sinh hoạt:</strong> 5.000 VND/thành viên/tháng.</li>
+                    <li>Mọi khoản thu – chi phải được BCN thống nhất và công khai minh bạch.</li>
+                    <li>Không tự ý vận động hoặc thu tiền ngoài quy định.</li>
+                </ul>
+
+                <h3>IX. KHEN THƯỞNG – KỶ LUẬT – KHIẾU NẠI</h3>
+                <ul>
+                    <li><strong>Khen thưởng:</strong> Dựa trên mức độ tham gia và đóng góp.</li>
+                    <li><strong>Kỷ luật:</strong> Áp dụng theo các mức: nhắc nhở – cảnh cáo – tạm đình chỉ – khai trừ.</li>
+                    <li><strong>Khiếu nại:</strong> Gửi qua biểu mẫu; BCN xử lý trong vòng 7 ngày.</li>
+                </ul>
+
+                <h3>X. QUY ĐỊNH SINH HOẠT VÀ NỘI DUNG SỐ</h3>
+                <ul>
+                    <li>Sinh hoạt được ghi âm phục vụ lưu trữ và truyền thông sau khi được kiểm duyệt.</li>
+                    <li>Nội dung đăng tải phải đúng sự thật, tích cực, văn minh và tuân thủ quy định nhà trường.</li>
+                    <li>Nội dung thuộc quyền quản lý của CLB.</li>
+                </ul>
+
+                <h3>XI. SỬA ĐỔI VÀ HIỆU LỰC</h3>
+                <ul>
+                    <li>Quy chế được sửa đổi khi có ít nhất 2/3 thành viên đồng ý.</li>
+                    <li>Quy chế có hiệu lực kể từ ngày ký và áp dụng cho toàn bộ thành viên CLB.</li>
+                </ul>
+            </div>
+
+            <!-- 2. NỘI QUY CONTENT -->
+            <div id="content-noiquy" class="document-content hidden fade-in">
+                <div class="doc-header">
+                    <div class="nation">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                    <div class="motto">Độc lập - Tự do - Hạnh phúc</div>
+                    <div class="date mt-2">Khánh Lâm, ngày 20 tháng 1 năm 2026</div>
+                </div>
+
+                <h2>NỘI QUY CLB</h2>
+
+                <h3>Điều 1. Đối tượng và phạm vi áp dụng</h3>
+                <p>1. Nội quy này áp dụng cho toàn bộ thành viên chính thức và thành viên thử việc của CLB.</p>
+                <p>2. Nội quy có hiệu lực trong mọi hoạt động của CLB, bao gồm:</p>
+                <ul>
+                    <li>Sinh hoạt online và offline.</li>
+                    <li>Hoạt động nhóm, dự án, sự kiện.</li>
+                    <li>Giao tiếp trên các nền tảng trực tuyến (Zalo, Facebook, Zoom, ...).</li>
+                </ul>
+                <p><em>Lưu ý: Mọi thành viên đều bình đẳng trước nội quy, không phân biệt vai trò hay vị trí.</em></p>
+
+                <h3>Điều 2. Thái độ và tác phong sinh hoạt</h3>
+                <p>1. Thành viên cần giữ thái độ tôn trọng – hợp tác – cầu tiến.</p>
+                <p>2. Nghiêm túc khi tham gia sinh hoạt, thảo luận và thuyết trình.</p>
+                <p>3. Khuyến khích đóng góp ý kiến trên tinh thần xây dựng, văn minh.</p>
+                <p><strong>Không được:</strong></p>
+                <ul>
+                    <li>Gây mất trật tự, gián đoạn hoạt động.</li>
+                    <li>Thể hiện thái độ tiêu cực, thiếu hợp tác.</li>
+                </ul>
+
+                <h3>Điều 3. Quy định về duyệt thành viên, tham gia và rút khỏi CLB</h3>
+                <h4>1. Điều kiện tham gia CLB</h4>
+                <ul>
+                    <li>Học sinh có nguyện vọng tham gia CLB cần:
+                        <ul>
+                            <li>Điền biểu mẫu đăng ký chính thức của CLB trên trang web.</li>
+                            <li>Cam kết tuân thủ quy định của CLB.</li>
+                        </ul>
+                    </li>
+                    <li>Việc tiếp nhận thành viên do Ban Chủ nhiệm CLB xét duyệt.</li>
+                </ul>
+                <p><em>Lưu ý: CLB không phân biệt học lực, nhưng ưu tiên thái độ nghiêm túc và tinh thần hợp tác.</em></p>
+
+                <h4>2. Duyệt và từ chối thành viên</h4>
+                <ul>
+                    <li>Ban Chủ nhiệm có quyền: Chấp nhận, Tạm hoãn, hoặc Từ chối đơn đăng ký.</li>
+                    <li>Việc từ chối phải có lý do phù hợp, đảm bảo tôn trọng người đăng ký.</li>
+                </ul>
+
+                <h4>3. Quy định rút khỏi CLB</h4>
+                <ul>
+                    <li>Thành viên có nhu cầu rút khỏi CLB cần:
+                        <ul>
+                            <li>Thông báo trước cho Ban Chủ nhiệm.</li>
+                            <li>Gửi lý do rút khỏi CLB qua biểu mẫu.</li>
+                        </ul>
+                    </li>
+                    <li>Việc rút khỏi CLB có hiệu lực sau khi được Ban Chủ nhiệm xác nhận.</li>
+                </ul>
+                <p><em>Lưu ý: Thành viên rút khỏi CLB không được sử dụng danh nghĩa CLB trong các hoạt động cá nhân.</em></p>
+
+                <h4>4. Trường hợp bị buộc rời CLB</h4>
+                <ul>
+                    <li>Thành viên có thể bị buộc rời CLB trong các trường hợp:
+                        <ul>
+                            <li>Bị khai trừ theo Điều 9 – Xử lý kỷ luật.</li>
+                            <li>Không tham gia sinh hoạt trong thời gian dài mà không có lý do chính đáng.</li>
+                        </ul>
+                    </li>
+                    <li>Quyết định do Ban Chủ nhiệm CLB đưa ra.</li>
+                </ul>
+
+                <h4>5. Quy định quay lại CLB</h4>
+                <ul>
+                    <li>Thành viên đã rút khỏi CLB hoặc bị buộc rời CLB chỉ được xem xét quay lại khi:
+                        <ul>
+                            <li>Có đơn đề nghị tham gia lại.</li>
+                            <li>Được Ban Chủ nhiệm đồng ý.</li>
+                        </ul>
+                    </li>
+                    <li>Thời gian thử việc được áp dụng lại từ đầu (nếu có).</li>
+                </ul>
+
+                <h3>Điều 4. Quy định về hệ thống kênh thông tin của CLB</h3>
+                <p>CLB sử dụng 04 kênh thông tin chính thức nhằm đảm bảo quản lý, trao đổi và thông báo hiệu quả.</p>
+                
+                <h4>1. Kênh chung</h4>
+                <ul>
+                    <li>Là kênh dành cho toàn bộ thành viên CLB.</li>
+                    <li><strong>Mục đích:</strong> Trao đổi, thảo luận liên quan đến hoạt động CLB; Giao lưu, học tập, chia sẻ nội dung tích cực.</li>
+                    <li><strong>Quy định:</strong> Không spam, không gửi nội dung ngoài mục đích CLB; Giữ ngôn từ lịch sự, tôn trọng lẫn nhau; Tuân thủ Điều 6.</li>
+                </ul>
+
+                <h4>2. Kênh Ban Chủ nhiệm (BCN)</h4>
+                <ul>
+                    <li>Chỉ dành cho Ban Chủ nhiệm và người được ủy quyền.</li>
+                    <li><strong>Mục đích:</strong> Điều hành, phân công công việc; Trao đổi nội bộ, xử lý các vấn đề quản lý.</li>
+                    <li><strong>Quy định:</strong> Nội dung trong kênh BCN được xem là thông tin nội bộ; Không được chia sẻ ra ngoài khi chưa được phép.</li>
+                </ul>
+
+                <h4>3. Kênh vi phạm</h4>
+                <ul>
+                    <li>Dùng để ghi nhận và thông báo các vi phạm nội quy của thành viên.</li>
+                    <li><strong>Mục đích:</strong> Nhắc nhở, cảnh báo, hoặc thông báo hình thức xử lý; Đảm bảo tính minh bạch trong kỷ luật.</li>
+                    <li><strong>Quy định:</strong> Chỉ Ban Chủ nhiệm có quyền đăng nội dung; Nội dung phải rõ ràng, đúng sự việc, đúng mực; Thành viên không tranh cãi công khai tại kênh này.</li>
+                </ul>
+
+                <h4>4. Kênh thông báo</h4>
+                <ul>
+                    <li>Là kênh chính thức và bắt buộc theo dõi của CLB.</li>
+                    <li><strong>Mục đích:</strong> Thông báo lịch sinh hoạt; Thông tin quan trọng, quyết định của CLB; Công bố khen thưởng, kỷ luật.</li>
+                    <li><strong>Quy định:</strong> Thành viên có trách nhiệm theo dõi và thực hiện các thông báo; Việc không nắm thông tin do không theo dõi kênh không được xem là lý do miễn trách nhiệm.</li>
+                </ul>
+
+                <h4>5. Nguyên tắc chung</h4>
+                <ul>
+                    <li>Mỗi kênh có chức năng riêng, không sử dụng sai mục đích.</li>
+                    <li>Mọi thông báo hợp lệ được đăng tại kênh thông báo đều có giá trị áp dụng.</li>
+                    <li>Vi phạm quy định sử dụng kênh được xử lý theo Điều 9.</li>
+                </ul>
+
+                <h3>Điều 5. Chuyên cần và thời gian</h3>
+                <ol>
+                    <li>Thành viên phải tham gia đầy đủ các buổi sinh hoạt theo lịch CLB.</li>
+                    <li>Quy định vắng:
+                        <ul>
+                            <li><strong>Vắng có phép:</strong> báo bằng biểu mẫu trước ít nhất 12 giờ.</li>
+                            <li><strong>Vắng không phép:</strong> không báo hoặc báo muộn.</li>
+                        </ul>
+                    </li>
+                    <li>Vắng quá 3 buổi không phép/tháng sẽ bị xử lý theo quy định.</li>
+                    <li>Chỉ chấp nhận vắng có phép qua biểu mẫu.</li>
+                </ol>
+
+                <h3>Điều 6. Phát ngôn và ứng xử</h3>
+                <ul>
+                    <li>Giữ gìn ngôn từ lịch sự, phù hợp môi trường học đường.</li>
+                    <li>Không sử dụng lời nói, hình ảnh mang tính xúc phạm, công kích, phản cảm.</li>
+                    <li>Áp dụng cho cả offline - online - nhóm chat - bình luận liên quan CLB.</li>
+                </ul>
+
+                <h3>Điều 7. Bảo mật thông tin và hình ảnh</h3>
+                <ul>
+                    <li>Các nội dung nội bộ gồm: kế hoạch chưa công bố, nội dung họp, thông tin cá nhân thành viên.</li>
+                    <li>Thành viên không tự ý đăng tải, chia sẻ thông tin/hình ảnh CLB khi chưa được phép.</li>
+                </ul>
+
+                <h3>Điều 8. Cơ chế cộng điểm – khen thưởng</h3>
+                <h4>8.1. Cơ chế cộng điểm rèn luyện</h4>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Hoạt động</th>
+                                <th>Điểm cộng</th>
+                                <th>Điều kiện</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Tham gia</td>
+                                <td class="text-center font-bold text-sky-600">+5</td>
+                                <td>Có mặt đúng giờ, điểm danh đúng quy định</td>
+                            </tr>
+                            <tr>
+                                <td>Tương tác</td>
+                                <td class="text-center font-bold text-sky-600">+8</td>
+                                <td>Tham gia thảo luận cuối buổi</td>
+                            </tr>
+                            <tr>
+                                <td>Góp ý</td>
+                                <td class="text-center font-bold text-sky-600">+10</td>
+                                <td>Nhận xét mang tính xây dựng qua biểu mẫu</td>
+                            </tr>
+                            <tr>
+                                <td>Xây dựng</td>
+                                <td class="text-center font-bold text-sky-600">+15</td>
+                                <td>Đóng góp tài liệu, nội dung, slide, hỗ trợ tổ chức</td>
+                            </tr>
+                            <tr>
+                                <td>Thuyết trình</td>
+                                <td class="text-center font-bold text-sky-600">+20</td>
+                                <td>Chuẩn bị đầy đủ nội dung, bật camera, hoàn thành phần trình bày</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><strong>Nguyên tắc:</strong> Mỗi hoạt động chỉ được cộng 1 lần/buổi; Điểm do Ban Chủ nhiệm xác nhận; Làm mới và bảo lưu số điểm theo từng tháng.</p>
+
+                <h4>8.2. Khen thưởng theo bảng xếp hạng điểm hàng tháng</h4>
+                <ul>
+                    <li><strong>Hạng 1 tháng:</strong> 01 phần quà, Huy hiệu Hạng 1, Vinh danh trên fanpage CLB.</li>
+                    <li><strong>Hạng 2 tháng:</strong> 01 phần quà, Huy hiệu Hạng 2, Vinh danh trên fanpage CLB.</li>
+                </ul>
+
+                <h4>8.3. Khen thưởng theo thành tích nổi bật</h4>
+                <ul>
+                    <li>Thành viên có bài thuyết trình xuất sắc → đăng tải và vinh danh trên fanpage.</li>
+                    <li>Thành viên có phần phản biện xuất sắc → đăng tải và vinh danh trên fanpage.</li>
+                    <li>Bài đăng thuyết trình hoặc phản biện có lượt tương tác cao nhất trong nhiệm kỳ → vinh danh trên fanpage.</li>
+                </ul>
+
+                <h3>Điều 9. Xử lý kỷ luật</h3>
+                <h4>9.1. Các mức độ kỷ luật</h4>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mức độ</th>
+                                <th>Hình thức xử lý</th>
+                                <th>Áp dụng khi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-semibold">Nhắc nhở</td>
+                                <td>Nhắc trực tiếp hoặc tin nhắn.</td>
+                                <td>Vi phạm nhẹ, lần đầu.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-orange-600">Cảnh cáo</td>
+                                <td>Văn bản chính thức.</td>
+                                <td>Tái phạm nhắc nhở (từ 2 lần); tổng lần vắng >3 buổi/tháng; vắng không phép (từ lần 2).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-red-600">Tạm đình chỉ</td>
+                                <td>Dừng sinh hoạt 02 tuần.</td>
+                                <td>Tái phạm cảnh cáo (từ 3 lần); phát tán nội bộ lần đầu; phá rối nghiêm trọng; vắng không phép >3 buổi/tháng.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-semibold text-red-800">Khai trừ</td>
+                                <td>Loại khỏi CLB vĩnh viễn.</td>
+                                <td>Tái phạm tạm đình chỉ (từ 2 lần); vi phạm đạo đức; gây mất đoàn kết nghiêm trọng.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>9.2. Nguyên tắc xử lý</h4>
+                <ul>
+                    <li>Áp dụng theo mức độ tăng dần.</li>
+                    <li>Mang tính giáo dục, không trừng phạt.</li>
+                    <li>Ban Chủ nhiệm có quyền quyết định cuối cùng.</li>
+                </ul>
+
+                <h3>Điều 10. Khiếu nại và phản hồi</h3>
+                <ol>
+                    <li>Thành viên có quyền gửi phản hồi hoặc khiếu nại.</li>
+                    <li>Hình thức: gửi qua biểu mẫu.</li>
+                    <li>Thời gian xử lý: 03-07 ngày kể từ khi tiếp nhận.</li>
+                    <li>Không giải quyết khiếu nại qua việc đăng bài hoặc tranh cãi công khai trên mạng xã hội.</li>
+                </ol>
+
+                <h3>Điều 11. Hiệu lực thi hành</h3>
+                <ol>
+                    <li>Nội quy có hiệu lực kể từ ngày được Ban Chủ nhiệm công bố.</li>
+                    <li>Mọi thành viên tham gia CLB được xem là đã đồng ý và cam kết thực hiện nội quy này.</li>
+                </ol>
+            </div>
+
+            <!-- 3. HƯỚNG DẪN SINH HOẠT CONTENT -->
+            <div id="content-huongdan" class="document-content hidden fade-in">
+                <div class="doc-header">
+                    <div class="nation">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                    <div class="motto">Độc lập-Tự do-Hạnh phúc</div>
+                    <div class="date mt-2">Khánh Lâm, ngày 20 tháng 1 năm 2026</div>
+                </div>
+
+                <h2>HƯỚNG DẪN SINH HOẠT CLB</h2>
+                
+                <h3>1. Tổng quan hình thức sinh hoạt</h3>
+                <p>CLB tổ chức sinh hoạt theo hai hình thức chính: online và offline, được triển khai linh hoạt nhằm đảm bảo hiệu quả học tập, rèn luyện kỹ năng và gắn kết thành viên. Toàn bộ hoạt động sinh hoạt của CLB lấy học tập – rèn kỹ năng – tôn trọng – tiến bộ làm tinh thần xuyên suốt.</p>
+                <ul>
+                    <li><strong>Sinh hoạt online:</strong> diễn ra trên nền tảng trực tuyến Zoom, chỉ bao gồm sinh hoạt theo tuần.</li>
+                    <li><strong>Sinh hoạt offline:</strong> diễn ra trực tiếp tại trường học, bao gồm sinh hoạt theo tuần và theo tháng.</li>
+                </ul>
+
+                <h3>2. Thời gian & lịch sinh hoạt</h3>
+                <p><strong>Sinh hoạt tuần:</strong></p>
+                <ul>
+                    <li>Bao gồm sinh hoạt online và sinh hoạt offline, được luân phiên linh hoạt theo kế hoạch của BCN.</li>
+                    <li>Hình thức sinh hoạt (online hoặc offline) sẽ được thông báo trước mỗi tuần.</li>
+                    <li>Mục tiêu là đảm bảo tính linh hoạt nhưng vẫn giữ nhịp sinh hoạt ổn định.</li>
+                    <li>Tổ chức vào thứ 7 hoặc chủ nhật.</li>
+                    <li>Thời lượng tối đa: 40 phút (online), 50 phút (offline).</li>
+                </ul>
+                <p><strong>Sinh hoạt offline theo tháng:</strong></p>
+                <ul>
+                    <li>Tổ chức sau mỗi 4 buổi sinh hoạt tuần.</li>
+                    <li>Thời lượng do BCN sắp xếp, đảm bảo phù hợp với học sinh.</li>
+                </ul>
+                <p><strong>Nguyên tắc chung:</strong></p>
+                <ul>
+                    <li>Lịch sinh hoạt được thông báo trước và duy trì ổn định.</li>
+                    <li>Việc luân phiên online - offline nhằm tối ưu điều kiện học tập và tham gia của thành viên.</li>
+                    <li>Trường hợp nghỉ do lễ, thi cử hoặc lý do đặc biệt sẽ có thông báo và phương án điều chỉnh phù hợp.</li>
+                </ul>
+
+                <h3>3. Sinh hoạt theo tuần</h3>
+                <h4>3.1. Mục tiêu</h4>
+                <ul>
+                    <li>Duy trì kết nối thường xuyên giữa các thành viên.</li>
+                    <li>Rèn luyện kỹ năng thuyết trình, phản biện và trình bày.</li>
+                    <li>Hình thành thói quen chuẩn bị nội dung và tham gia sinh hoạt nghiêm túc.</li>
+                </ul>
+
+                <h4>3.2. Quy trình sinh hoạt</h4>
+                <ol>
+                    <li><strong>Ổn định – điểm danh:</strong> Thành viên vào phòng đúng giờ, chuẩn bị thiết bị và không gian phù hợp.</li>
+                    <li><strong>Mở đầu buổi sinh hoạt:</strong> Người điều phối giới thiệu nội dung, mục tiêu và người thuyết trình.</li>
+                    <li><strong>Thuyết trình (1-2 người, 5 phút/người):</strong> Thành viên được phân công trình bày nội dung đã chuẩn bị.</li>
+                    <li><strong>Thảo luận – phản hồi:</strong> Trao đổi, đặt câu hỏi và góp ý mang tính xây dựng.</li>
+                    <li><strong>Tổng kết - giao nhiệm vụ:</strong> Tóm tắt nội dung chính và định hướng cho buổi tiếp theo.</li>
+                </ol>
+
+                <h4>3.3. Lưu ý</h4>
+                <ul>
+                    <li>Ưu tiên tham gia đầy đủ và đúng giờ.</li>
+                    <li>Thành viên thuyết trình bắt buộc phải bật cam (online).</li>
+                    <li>Giữ thái độ nghiêm túc, tôn trọng người trình bày.</li>
+                </ul>
+
+                <h3>4. Sinh hoạt theo tháng</h3>
+                <h4>4.1. Mục tiêu</h4>
+                <ul>
+                    <li>Tổng kết hoạt động trong tháng.</li>
+                    <li>Đánh giá quá trình tham gia của thành viên.</li>
+                    <li>Gắn kết tập thể và định hướng hoạt động tiếp theo.</li>
+                </ul>
+
+                <h4>4.2. Quy trình sinh hoạt</h4>
+                <ol>
+                    <li><strong>Tổng hợp hoạt động tháng:</strong> Tóm tắt các buổi sinh hoạt, chủ đề đã triển khai; Thống kê mức độ tham gia và hoàn thành của thành viên.</li>
+                    <li><strong>Đánh giá & phản hồi:</strong> Tổng hợp nhận xét từ biểu mẫu; Chỉ ra điểm mạnh và điểm cần cải thiện chung.</li>
+                    <li><strong>Công bố bảng xếp hạng:</strong> Công bố BXH tháng dựa trên điểm tích lũy; Minh bạch tiêu chí, tạo động lực cạnh tranh lành mạnh.</li>
+                    <li><strong>Trao thưởng & vinh danh:</strong> Trao thưởng cho cá nhân/nhóm nổi bật; Ghi nhận sự nỗ lực và tiến bộ rõ rệt.</li>
+                    <li><strong>Rút kinh nghiệm & định hướng tháng mới:</strong> Chốt bài học chung; Công bố chủ đề, mục tiêu và kế hoạch tháng tiếp theo.</li>
+                </ol>
+
+                <h4>4.3. Lưu ý</h4>
+                <ul>
+                    <li>Không nặng tính hành chính.</li>
+                    <li>Ưu tiên chia sẻ, tương tác và hoạt động nhóm.</li>
+                    <li>Thời lượng phù hợp, không gây mệt mỏi cho thành viên.</li>
+                </ul>
+
+                <h3>5. Quy định đối với người thuyết trình</h3>
+                <ul>
+                    <li>Chuẩn bị nội dung đúng chủ đề, nghiêm túc và rõ ràng.</li>
+                    <li>Nếu là buổi sinh hoạt online thì thành viên thuyết trình bắt buộc phải bật cam.</li>
+                    <li>Hình thức linh hoạt: có thể dùng slide hoặc không.</li>
+                    <li>Thuyết trình cá nhân.</li>
+                    <li>CLB không đặt nặng áp lực trình diễn, khuyến khích sự tiến bộ.</li>
+                    <li>Mục tiêu là giúp thành viên dám nói – nói rõ – nói tốt dần theo thời gian.</li>
+                </ul>
+
+                <h3>6. Đánh giá & ghi nhận sau mỗi buổi</h3>
+                <ul>
+                    <li>CLB sử dụng biểu mẫu đánh giá từng bài thuyết trình sau mỗi buổi sinh hoạt.</li>
+                    <li>Nhận xét mang tính xây dựng, công bằng và tích cực.</li>
+                    <li>Việc đánh giá nhằm theo dõi sự tiến bộ của từng thành viên, không dùng để so sánh hay tạo áp lực tiêu cực.</li>
+                    <li>Kết quả đánh giá được liên kết với cơ chế cộng điểm và bảng xếp hạng của CLB.</li>
+                </ul>
+
+                <h3>7. Ghi âm & sử dụng nội dung</h3>
+                <ul>
+                    <li>Trong quá trình sinh hoạt, CLB chỉ thực hiện ghi âm, không ghi hình dưới mọi hình thức.</li>
+                    <li>Việc ghi âm nhằm: Lưu trữ nội dung sinh hoạt; Phục vụ tổng hợp, rút kinh nghiệm và cải thiện chất lượng hoạt động.</li>
+                    <li><strong>Nguyên tắc:</strong> Nội dung được chọn lọc và biên tập trước khi sử dụng; Không dùng ghi âm để gây áp lực hay đánh giá cá nhân.</li>
+                    <li>CLB ưu tiên xây dựng không gian an toàn để chia sẻ và học hỏi.</li>
+                </ul>
+                <p><em>Hướng dẫn này được áp dụng thống nhất cho toàn bộ hoạt động sinh hoạt của CLB.</em></p>
+            </div>
+
+        </div>
+
+        <!-- Footer Note -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 You Can Club. Tài liệu lưu hành nội bộ.</p>
+        </div>
+
+    </main>
+
+    <!-- JavaScript for Tab Switching -->
+    <script>
+        function switchTab(tabId) {
+            // 1. Hide all content divs
+            document.querySelectorAll('.document-content').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('fade-in'); // Reset animation
+            });
+
+            // 2. Remove active class from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('bg-sky-500', 'text-white', 'border-sky-500'); // Remove styled classes
+                btn.classList.add('bg-white', 'text-sky-700', 'border-sky-200'); // Add default classes
+            });
+
+            // 3. Show selected content
+            const content = document.getElementById('content-' + tabId);
+            content.classList.remove('hidden');
+            // Trigger reflow to restart animation
+            void content.offsetWidth; 
+            content.classList.add('fade-in');
+
+            // 4. Highlight selected button
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.add('active');
+        }
+    </script>
+</body>
+</html>
