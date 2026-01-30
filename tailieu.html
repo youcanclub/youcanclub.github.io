@@ -37,12 +37,32 @@
             background: #94a3b8;
         }
 
-        /* Tab Active State */
-        .tab-btn.active {
-            background-color: #0ea5e9; /* sky-500 */
+        /* --- CẬP NHẬT CSS CHO TAB BUTTONS --- */
+        .tab-btn {
+            transition: all 0.3s ease;
+            font-weight: 700;
+            border-width: 2px; /* Viền dày hơn để dễ nhìn */
+        }
+
+        /* Trạng thái INACTIVE (Mặc định) */
+        .tab-btn-inactive {
+            background-color: white;
+            color: #64748b; /* slate-500: Màu xám đậm dễ đọc hơn */
+            border-color: #bae6fd; /* sky-200 */
+        }
+        .tab-btn-inactive:hover {
+            border-color: #0ea5e9; /* sky-500 */
+            color: #0ea5e9;
+            background-color: #f0f9ff;
+        }
+
+        /* Trạng thái ACTIVE (Đang chọn) */
+        .tab-btn-active {
+            background-color: #0284c7; /* sky-600 */
             color: white;
-            border-color: #0ea5e9;
-            box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.4);
+            border-color: #0284c7;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.4);
+            transform: translateY(-1px);
         }
 
         /* Document Typography */
@@ -180,16 +200,23 @@
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
         
-        <!-- Tab Navigation -->
-        <div class="flex flex-col sm:flex-row justify-center gap-3 mb-8">
-            <button onclick="switchTab('quyche')" id="tab-quyche" class="tab-btn active px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-scale-balanced"></i> Quy Chế
+        <!-- Tab Navigation 
+             CẬP NHẬT: Thêm w-full cho mobile để nút to dễ bấm, md:w-auto cho desktop
+        -->
+        <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
+            <button onclick="switchTab('quyche')" id="tab-quyche" class="tab-btn tab-btn-active w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-solid fa-scale-balanced text-xl"></i> 
+                <span>Quy Chế</span>
             </button>
-            <button onclick="switchTab('noiquy')" id="tab-noiquy" class="tab-btn px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-gavel"></i> Nội Quy
+            
+            <button onclick="switchTab('noiquy')" id="tab-noiquy" class="tab-btn tab-btn-inactive w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-solid fa-gavel text-xl"></i> 
+                <span>Nội Quy</span>
             </button>
-            <button onclick="switchTab('huongdan')" id="tab-huongdan" class="tab-btn px-6 py-3 rounded-full font-bold text-sky-700 bg-white border border-sky-200 hover:bg-sky-50 transition-all duration-300 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-chalkboard-user"></i> Hướng Dẫn Sinh Hoạt
+            
+            <button onclick="switchTab('huongdan')" id="tab-huongdan" class="tab-btn tab-btn-inactive w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
+                <i class="fa-solid fa-chalkboard-user text-xl"></i> 
+                <span>Hướng Dẫn Sinh Hoạt</span>
             </button>
         </div>
 
@@ -722,11 +749,10 @@
                 el.classList.remove('fade-in'); // Reset animation
             });
 
-            // 2. Remove active class from all buttons
+            // 2. Remove active class from all buttons and add inactive class
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.remove('bg-sky-500', 'text-white', 'border-sky-500'); // Remove styled classes
-                btn.classList.add('bg-white', 'text-sky-700', 'border-sky-200'); // Add default classes
+                btn.classList.remove('tab-btn-active');
+                btn.classList.add('tab-btn-inactive');
             });
 
             // 3. Show selected content
@@ -738,7 +764,8 @@
 
             // 4. Highlight selected button
             const activeBtn = document.getElementById('tab-' + tabId);
-            activeBtn.classList.add('active');
+            activeBtn.classList.remove('tab-btn-inactive');
+            activeBtn.classList.add('tab-btn-active');
         }
     </script>
 </body>
