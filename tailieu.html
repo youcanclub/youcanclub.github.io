@@ -37,17 +37,17 @@
             background: #94a3b8;
         }
 
-        /* --- CẬP NHẬT CSS CHO TAB BUTTONS --- */
+        /* --- CSS CHO TAB BUTTONS --- */
         .tab-btn {
             transition: all 0.3s ease;
             font-weight: 700;
-            border-width: 2px; /* Viền dày hơn để dễ nhìn */
+            border-width: 2px;
         }
 
         /* Trạng thái INACTIVE (Mặc định) */
         .tab-btn-inactive {
             background-color: white;
-            color: #64748b; /* slate-500: Màu xám đậm dễ đọc hơn */
+            color: #64748b; /* slate-500 */
             border-color: #bae6fd; /* sky-200 */
         }
         .tab-btn-inactive:hover {
@@ -200,9 +200,7 @@
     <!-- Main Content -->
     <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
         
-        <!-- Tab Navigation 
-             CẬP NHẬT: Thêm w-full cho mobile để nút to dễ bấm, md:w-auto cho desktop
-        -->
+        <!-- Tab Navigation -->
         <div class="flex flex-col md:flex-row justify-center gap-4 mb-8">
             <button onclick="switchTab('quyche')" id="tab-quyche" class="tab-btn tab-btn-active w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-scale-balanced text-xl"></i> 
@@ -212,11 +210,6 @@
             <button onclick="switchTab('noiquy')" id="tab-noiquy" class="tab-btn tab-btn-inactive w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
                 <i class="fa-solid fa-gavel text-xl"></i> 
                 <span>Nội Quy</span>
-            </button>
-            
-            <button onclick="switchTab('huongdan')" id="tab-huongdan" class="tab-btn tab-btn-inactive w-full md:w-auto px-6 py-4 rounded-xl flex items-center justify-center gap-2 shadow-sm">
-                <i class="fa-solid fa-chalkboard-user text-xl"></i> 
-                <span>Hướng Dẫn Sinh Hoạt</span>
             </button>
         </div>
 
@@ -235,7 +228,7 @@
 
                 <h3>I. THÔNG TIN CHUNG</h3>
                 <ul>
-                    <li><strong>Tên đầy đủ:</strong> Câu lạc bộ You Can – Thuyết trình & Tranh biện</li>
+                    <li><strong>Tên đầy đủ:</strong> Câu lạc bộ You Can – Thuyết trình & Học tập</li>
                     <li><strong>Tên viết tắt:</strong> YOU CAN CLUB (YCC)</li>
                     <li><strong>Đơn vị trực thuộc:</strong> Trường THPT Khánh Lâm</li>
                     <li><strong>Phạm vi quản lý:</strong> Trong khuôn khổ hoạt động của nhà trường và dưới sự giám sát của Đoàn trường.</li>
@@ -622,120 +615,11 @@
                 </ol>
             </div>
 
-            <!-- 3. HƯỚNG DẪN SINH HOẠT CONTENT -->
-            <div id="content-huongdan" class="document-content hidden fade-in">
-                <div class="doc-header">
-                    <div class="nation">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
-                    <div class="motto">Độc lập-Tự do-Hạnh phúc</div>
-                    <div class="date mt-2">Khánh Lâm, ngày 20 tháng 1 năm 2026</div>
-                </div>
+        </div>
 
-                <h2>HƯỚNG DẪN SINH HOẠT CLB</h2>
-                
-                <h3>1. Tổng quan hình thức sinh hoạt</h3>
-                <p>CLB tổ chức sinh hoạt theo hai hình thức chính: online và offline, được triển khai linh hoạt nhằm đảm bảo hiệu quả học tập, rèn luyện kỹ năng và gắn kết thành viên. Toàn bộ hoạt động sinh hoạt của CLB lấy học tập – rèn kỹ năng – tôn trọng – tiến bộ làm tinh thần xuyên suốt.</p>
-                <ul>
-                    <li><strong>Sinh hoạt online:</strong> diễn ra trên nền tảng trực tuyến Zoom, chỉ bao gồm sinh hoạt theo tuần.</li>
-                    <li><strong>Sinh hoạt offline:</strong> diễn ra trực tiếp tại trường học, bao gồm sinh hoạt theo tuần và theo tháng.</li>
-                </ul>
-
-                <h3>2. Thời gian & lịch sinh hoạt</h3>
-                <p><strong>Sinh hoạt tuần:</strong></p>
-                <ul>
-                    <li>Bao gồm sinh hoạt online và sinh hoạt offline, được luân phiên linh hoạt theo kế hoạch của BCN.</li>
-                    <li>Hình thức sinh hoạt (online hoặc offline) sẽ được thông báo trước mỗi tuần.</li>
-                    <li>Mục tiêu là đảm bảo tính linh hoạt nhưng vẫn giữ nhịp sinh hoạt ổn định.</li>
-                    <li>Tổ chức vào thứ 7 hoặc chủ nhật.</li>
-                    <li>Thời lượng tối đa: 40 phút (online), 50 phút (offline).</li>
-                </ul>
-                <p><strong>Sinh hoạt offline theo tháng:</strong></p>
-                <ul>
-                    <li>Tổ chức sau mỗi 4 buổi sinh hoạt tuần.</li>
-                    <li>Thời lượng do BCN sắp xếp, đảm bảo phù hợp với học sinh.</li>
-                </ul>
-                <p><strong>Nguyên tắc chung:</strong></p>
-                <ul>
-                    <li>Lịch sinh hoạt được thông báo trước và duy trì ổn định.</li>
-                    <li>Việc luân phiên online - offline nhằm tối ưu điều kiện học tập và tham gia của thành viên.</li>
-                    <li>Trường hợp nghỉ do lễ, thi cử hoặc lý do đặc biệt sẽ có thông báo và phương án điều chỉnh phù hợp.</li>
-                </ul>
-
-                <h3>3. Sinh hoạt theo tuần</h3>
-                <h4>3.1. Mục tiêu</h4>
-                <ul>
-                    <li>Duy trì kết nối thường xuyên giữa các thành viên.</li>
-                    <li>Rèn luyện kỹ năng thuyết trình, phản biện và trình bày.</li>
-                    <li>Hình thành thói quen chuẩn bị nội dung và tham gia sinh hoạt nghiêm túc.</li>
-                </ul>
-
-                <h4>3.2. Quy trình sinh hoạt</h4>
-                <ol>
-                    <li><strong>Ổn định – điểm danh:</strong> Thành viên vào phòng đúng giờ, chuẩn bị thiết bị và không gian phù hợp.</li>
-                    <li><strong>Mở đầu buổi sinh hoạt:</strong> Người điều phối giới thiệu nội dung, mục tiêu và người thuyết trình.</li>
-                    <li><strong>Thuyết trình (1-2 người, 5 phút/người):</strong> Thành viên được phân công trình bày nội dung đã chuẩn bị.</li>
-                    <li><strong>Thảo luận – phản hồi:</strong> Trao đổi, đặt câu hỏi và góp ý mang tính xây dựng.</li>
-                    <li><strong>Tổng kết - giao nhiệm vụ:</strong> Tóm tắt nội dung chính và định hướng cho buổi tiếp theo.</li>
-                </ol>
-
-                <h4>3.3. Lưu ý</h4>
-                <ul>
-                    <li>Ưu tiên tham gia đầy đủ và đúng giờ.</li>
-                    <li>Thành viên thuyết trình bắt buộc phải bật cam (online).</li>
-                    <li>Giữ thái độ nghiêm túc, tôn trọng người trình bày.</li>
-                </ul>
-
-                <h3>4. Sinh hoạt theo tháng</h3>
-                <h4>4.1. Mục tiêu</h4>
-                <ul>
-                    <li>Tổng kết hoạt động trong tháng.</li>
-                    <li>Đánh giá quá trình tham gia của thành viên.</li>
-                    <li>Gắn kết tập thể và định hướng hoạt động tiếp theo.</li>
-                </ul>
-
-                <h4>4.2. Quy trình sinh hoạt</h4>
-                <ol>
-                    <li><strong>Tổng hợp hoạt động tháng:</strong> Tóm tắt các buổi sinh hoạt, chủ đề đã triển khai; Thống kê mức độ tham gia và hoàn thành của thành viên.</li>
-                    <li><strong>Đánh giá & phản hồi:</strong> Tổng hợp nhận xét từ biểu mẫu; Chỉ ra điểm mạnh và điểm cần cải thiện chung.</li>
-                    <li><strong>Công bố bảng xếp hạng:</strong> Công bố BXH tháng dựa trên điểm tích lũy; Minh bạch tiêu chí, tạo động lực cạnh tranh lành mạnh.</li>
-                    <li><strong>Trao thưởng & vinh danh:</strong> Trao thưởng cho cá nhân/nhóm nổi bật; Ghi nhận sự nỗ lực và tiến bộ rõ rệt.</li>
-                    <li><strong>Rút kinh nghiệm & định hướng tháng mới:</strong> Chốt bài học chung; Công bố chủ đề, mục tiêu và kế hoạch tháng tiếp theo.</li>
-                </ol>
-
-                <h4>4.3. Lưu ý</h4>
-                <ul>
-                    <li>Không nặng tính hành chính.</li>
-                    <li>Ưu tiên chia sẻ, tương tác và hoạt động nhóm.</li>
-                    <li>Thời lượng phù hợp, không gây mệt mỏi cho thành viên.</li>
-                </ul>
-
-                <h3>5. Quy định đối với người thuyết trình</h3>
-                <ul>
-                    <li>Chuẩn bị nội dung đúng chủ đề, nghiêm túc và rõ ràng.</li>
-                    <li>Nếu là buổi sinh hoạt online thì thành viên thuyết trình bắt buộc phải bật cam.</li>
-                    <li>Hình thức linh hoạt: có thể dùng slide hoặc không.</li>
-                    <li>Thuyết trình cá nhân.</li>
-                    <li>CLB không đặt nặng áp lực trình diễn, khuyến khích sự tiến bộ.</li>
-                    <li>Mục tiêu là giúp thành viên dám nói – nói rõ – nói tốt dần theo thời gian.</li>
-                </ul>
-
-                <h3>6. Đánh giá & ghi nhận sau mỗi buổi</h3>
-                <ul>
-                    <li>CLB sử dụng biểu mẫu đánh giá từng bài thuyết trình sau mỗi buổi sinh hoạt.</li>
-                    <li>Nhận xét mang tính xây dựng, công bằng và tích cực.</li>
-                    <li>Việc đánh giá nhằm theo dõi sự tiến bộ của từng thành viên, không dùng để so sánh hay tạo áp lực tiêu cực.</li>
-                    <li>Kết quả đánh giá được liên kết với cơ chế cộng điểm và bảng xếp hạng của CLB.</li>
-                </ul>
-
-                <h3>7. Ghi âm & sử dụng nội dung</h3>
-                <ul>
-                    <li>Trong quá trình sinh hoạt, CLB chỉ thực hiện ghi âm, không ghi hình dưới mọi hình thức.</li>
-                    <li>Việc ghi âm nhằm: Lưu trữ nội dung sinh hoạt; Phục vụ tổng hợp, rút kinh nghiệm và cải thiện chất lượng hoạt động.</li>
-                    <li><strong>Nguyên tắc:</strong> Nội dung được chọn lọc và biên tập trước khi sử dụng; Không dùng ghi âm để gây áp lực hay đánh giá cá nhân.</li>
-                    <li>CLB ưu tiên xây dựng không gian an toàn để chia sẻ và học hỏi.</li>
-                </ul>
-                <p><em>Hướng dẫn này được áp dụng thống nhất cho toàn bộ hoạt động sinh hoạt của CLB.</em></p>
-            </div>
-
+        <!-- Footer Note -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 You Can Club. Tài liệu lưu hành nội bộ.</p>
         </div>
 
     </main>
