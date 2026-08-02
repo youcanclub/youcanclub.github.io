@@ -293,16 +293,6 @@
         </div>
     </div>
 
-    <!-- Hướng dẫn cuộn -->
-    <div id="scroll-hint" class="fixed bottom-6 left-1/2 opacity-0 transition-opacity duration-700 pointer-events-none z-50 transform -translate-x-1/2">
-        <div class="flex flex-col items-center gap-1.5 text-white/70 animate-float-hint drop-shadow-sm">
-            <span class="font-medium text-[10px] md:text-xs tracking-[0.2em] uppercase">Cuộn xuống</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-        </div>
-    </div>
-
     <script>
         // ==========================================
         // KHAI BÁO DỮ LIỆU CÁC CHƯƠNG SÁCH
@@ -359,17 +349,17 @@
                         <ul class="list-none space-y-8">
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">1.</span>
-                                <strong class="text-white text-xl font-title tracking-wide">Dũng cảm cất lời <span class="text-slate-400 text-lg font-normal italic">(Courage to Speak)</span></strong>
+                                <strong class="text-white text-xl font-title tracking-wide">Dũng cảm cất lời</strong>
                                 <p class="mt-2 text-slate-300">You Can Club chưa bao giờ là nơi dành riêng cho những người giỏi nói. Điều quan trọng nhất là dám "dũng cảm" nói ra suy nghĩ của bản thân. Chỉ khi nói ra, những suy nghĩ đó mới thực sự tồn tại. You Can Club sẽ là nơi mọi người cảm thấy an toàn để thử, để sai, và để trưởng thành sau mỗi lần "cất lời".</p>
                             </li>
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">2.</span>
-                                <strong class="text-white text-xl font-title tracking-wide">Cùng nhau tiến bộ <span class="text-slate-400 text-lg font-normal italic">(Grow Together)</span></strong>
+                                <strong class="text-white text-xl font-title tracking-wide">Cùng nhau tiến bộ</strong>
                                 <p class="mt-2 text-slate-300">Mỗi thành viên vừa là người học, vừa là người dạy - và hai vai trò ấy luôn phải song hành, phải "cùng nhau" thì mới có thể "tiến bộ" được. Mỗi người đều có những điều đáng để người khác học hỏi. You Can Club không chỉ là nơi mọi người chia sẻ góc nhìn, mà còn là nơi để mọi người lắng nghe nhau một cách chân thành nhất. Góc nhìn của một người thì khó mà bao quát hết được.</p>
                             </li>
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">3.</span>
-                                <strong class="text-white text-xl font-title tracking-wide">Lan tỏa giá trị <span class="text-slate-400 text-lg font-normal italic">(Spread the Impact)</span></strong>
+                                <strong class="text-white text-xl font-title tracking-wide">Lan tỏa giá trị</strong>
                                 <p class="mt-2 text-slate-300">Nói là để trao đi, nghe là để nhận lại - và chính vòng lặp ấy khiến "giá trị" không mất đi, mà cứ thế được nhân lên. Dù là người nói hay người nghe, giá trị vẫn luôn được tạo ra và lan tỏa đến tất cả. Dù chỉ là một nhóm nhỏ, nhưng chỉ cần tạo ra được giá trị, You Can Club sẽ là nơi giúp giá trị ấy được "lan tỏa" khắp nơi.</p>
                             </li>
                         </ul>
@@ -452,7 +442,6 @@
         const envFlap = document.getElementById('env-flap');
         const letterWrapper = document.getElementById('letter-wrapper');
         const letterCard = document.getElementById('letter-card');
-        const scrollHint = document.getElementById('scroll-hint');
         const chapterView = document.getElementById('chapter-view');
         
         // Bắt các DOM của Nội dung Chương
@@ -493,7 +482,6 @@
                 document.body.style.height = `${letterHeight + window.innerHeight}px`;
                 document.body.style.overflowY = 'auto';
 
-                scrollHint.style.opacity = '1';
                 isReadyToScroll = true;
                 
                 requestAnimationFrame(renderScroll);
@@ -503,7 +491,6 @@
             window.addEventListener('scroll', () => {
                 if (!isReadyToScroll || isChapterViewOpen) return;
                 targetScrollY = window.scrollY;
-                if (targetScrollY > 10) scrollHint.style.opacity = '0';
             });
 
             // Resize body height
