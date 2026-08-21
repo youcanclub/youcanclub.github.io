@@ -1034,31 +1034,65 @@
                             </h5>
                             <p class="text-slate-300 text-sm md:text-base mb-6 ml-0 md:ml-7">Ban Chủ nhiệm sẽ tổng hợp và công khai Bảng xếp hạng nội bộ. Điểm số được tính như sau:</p>
                             
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 ml-0 md:ml-7 mb-6">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5 ml-0 md:ml-7 mb-6">
                                 <!-- Box +5 -->
-                                <div class="flex flex-col justify-between items-center p-3 md:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 hover:-translate-y-1 transition-all gap-2 text-center h-full">
-                                    <span class="text-slate-200 text-xs md:text-sm font-medium flex-grow flex items-center">Tham gia đầy đủ 1 buổi sinh hoạt</span>
-                                    <span class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] font-bold rounded-lg border border-[var(--accent)]/30 shadow-[0_0_10px_rgba(106,210,255,0.1)] text-base md:text-lg font-title">+5</span>
+                                <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    </div>
+                                    <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Tham gia đầy đủ 1 buổi sinh hoạt</span>
+                                    <div class="px-5 py-1.5 bg-emerald-500/10 text-emerald-400 font-bold rounded-xl border border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.1)] text-base md:text-lg font-title group-hover:bg-emerald-500/20 transition-colors">
+                                        +5
+                                    </div>
                                 </div>
+                                
                                 <!-- Box +10 -->
-                                <div class="flex flex-col justify-between items-center p-3 md:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 hover:-translate-y-1 transition-all gap-2 text-center h-full">
-                                    <span class="text-slate-200 text-xs md:text-sm font-medium flex-grow flex items-center">Thực hiện Bài nói (Cơ bản)</span>
-                                    <span class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] font-bold rounded-lg border border-[var(--accent)]/30 shadow-[0_0_10px_rgba(106,210,255,0.1)] text-base md:text-lg font-title">+10</span>
+                                <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-sky-500/50 hover:shadow-[0_0_20px_rgba(14,165,233,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="w-12 h-12 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-400 border border-sky-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(14,165,233,0.1)]">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                    </div>
+                                    <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Thực hiện Bài nói (Cơ bản)</span>
+                                    <div class="px-5 py-1.5 bg-sky-500/10 text-sky-400 font-bold rounded-xl border border-sky-500/30 shadow-[0_0_10px_rgba(14,165,233,0.1)] text-base md:text-lg font-title group-hover:bg-sky-500/20 transition-colors">
+                                        +10
+                                    </div>
                                 </div>
+
                                 <!-- Box +15 -->
-                                <div class="flex flex-col justify-between items-center p-3 md:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 hover:-translate-y-1 transition-all gap-2 text-center h-full">
-                                    <span class="text-slate-200 text-xs md:text-sm font-medium flex-grow flex items-center">Thực hiện Bài nói (Nâng cao)</span>
-                                    <span class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] font-bold rounded-lg border border-[var(--accent)]/30 shadow-[0_0_10px_rgba(106,210,255,0.1)] text-base md:text-lg font-title">+15</span>
+                                <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                    </div>
+                                    <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Thực hiện Bài nói (Nâng cao)</span>
+                                    <div class="px-5 py-1.5 bg-purple-500/10 text-purple-400 font-bold rounded-xl border border-purple-500/30 shadow-[0_0_10px_rgba(168,85,247,0.1)] text-base md:text-lg font-title group-hover:bg-purple-500/20 transition-colors">
+                                        +15
+                                    </div>
                                 </div>
+
                                 <!-- Box +2 -->
-                                <div class="flex flex-col justify-between items-center p-3 md:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 hover:-translate-y-1 transition-all gap-2 text-center h-full">
-                                    <span class="text-slate-200 text-xs md:text-sm font-medium flex-grow flex items-center">Nêu quan điểm</span>
-                                    <span class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] font-bold rounded-lg border border-[var(--accent)]/30 shadow-[0_0_10px_rgba(106,210,255,0.1)] text-base md:text-lg font-title">+2</span>
+                                <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                    </div>
+                                    <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Nêu quan điểm</span>
+                                    <div class="px-5 py-1.5 bg-amber-500/10 text-amber-400 font-bold rounded-xl border border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.1)] text-base md:text-lg font-title group-hover:bg-amber-500/20 transition-colors">
+                                        +2
+                                    </div>
                                 </div>
+
                                 <!-- Box +1 -->
-                                <div class="flex flex-col justify-between items-center p-3 md:p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 hover:-translate-y-1 transition-all gap-2 text-center h-full">
-                                    <span class="text-slate-200 text-xs md:text-sm font-medium flex-grow flex items-center">Xây dựng quan điểm</span>
-                                    <span class="px-3 py-1 bg-[var(--accent)]/10 text-[var(--accent)] font-bold rounded-lg border border-[var(--accent)]/30 shadow-[0_0_10px_rgba(106,210,255,0.1)] text-base md:text-lg font-title">+1</span>
+                                <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-rose-500/50 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+                                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-rose-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="w-12 h-12 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400 border border-rose-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(244,63,94,0.1)]">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                    </div>
+                                    <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Xây dựng quan điểm</span>
+                                    <div class="px-5 py-1.5 bg-rose-500/10 text-rose-400 font-bold rounded-xl border border-rose-500/30 shadow-[0_0_10px_rgba(244,63,94,0.1)] text-base md:text-lg font-title group-hover:bg-rose-500/20 transition-colors">
+                                        +1
+                                    </div>
                                 </div>
                             </div>
                             
@@ -1457,7 +1491,6 @@
             requestAnimationFrame(renderScroll);
         }
 
-        
         // Mở một chương cụ thể theo Index (0, 1, 2...)
         function openChapter(index) {
             currentChapterIndex = index;
