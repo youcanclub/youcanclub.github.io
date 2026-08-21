@@ -376,44 +376,67 @@
                     <div class="space-y-6 md:space-y-8 text-slate-700 font-medium">
                         
                         <!-- Thẻ 1 -->
-                        <div class="bg-blue-50/80 p-6 md:p-8 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow group">
-                            <div class="absolute -right-4 -top-4 text-blue-200/50 transform group-hover:scale-110 transition-transform pointer-events-none">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 22a10 10 0 110-20 10 10 0 010 20zm-1-15v6l5 3 1-2-4-2V7h-2z"/></svg>
+                        <div class="bg-gradient-to-br from-blue-50/80 via-white/80 to-blue-50/50 p-6 md:p-8 rounded-2xl border border-blue-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden hover:shadow-[0_8px_30px_rgb(59,130,246,0.12)] hover:-translate-y-1 transition-all duration-500 group">
+                            <!-- Hiệu ứng ánh sáng nền (Blob) -->
+                            <div class="absolute -top-10 -left-10 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-colors duration-500 pointer-events-none"></div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-300/10 rounded-full blur-2xl group-hover:bg-blue-300/20 transition-colors duration-500 pointer-events-none"></div>
+                            
+                            <!-- Icon mờ (Megaphone - Lan tỏa) -->
+                            <div class="absolute -right-6 -bottom-6 text-blue-500/10 transform -rotate-12 group-hover:scale-110 group-hover:rotate-0 transition-transform duration-700 pointer-events-none">
+                                <svg class="w-32 h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4.646 13.523a1.5 1.5 0 01-.646-1.229V9.707a1.5 1.5 0 011.082-1.44l8.134-2.324A2 2 0 0116 7.868v8.264a2 2 0 01-2.784 1.925l-8.134-2.324a1.5 1.5 0 01-.436-.21z"/>
+                                    <path d="M18 7v10a2 2 0 002-2V9a2 2 0 00-2-2zM4 14.5v3.25a1.25 1.25 0 002.5 0v-2.5l-2.5-.75z"/>
+                                </svg>
                             </div>
+                            
                             <div class="relative z-10">
-                                <h3 class="text-xl md:text-2xl font-bold font-title text-blue-900 mb-3 flex items-center gap-3">
-                                    <span class="text-2xl md:text-3xl text-yellow-500 drop-shadow-sm">🌟</span> 
+                                <h3 class="text-xl md:text-2xl font-bold font-title text-blue-900 mb-3">
                                     1. Bạn có góc nhìn, muốn được lan tỏa?
                                 </h3>
-                                <p class="text-base md:text-lg leading-relaxed text-slate-600">Bạn có kiến thức, có trải nghiệm và muốn đứng trước đám đông để chia sẻ nó? You Can Club chính là bệ phóng để những giá trị bên trong bạn không chỉ dừng lại ở suy nghĩ, mà được cất tiếng và chạm đến nhiều người hơn.</p>
+                                <p class="text-base md:text-lg leading-relaxed text-slate-600 font-medium">Bạn có kiến thức, có trải nghiệm và muốn đứng trước đám đông để chia sẻ nó? You Can Club chính là bệ phóng để những giá trị bên trong bạn không chỉ dừng lại ở suy nghĩ, mà được cất tiếng và chạm đến nhiều người hơn.</p>
                             </div>
                         </div>
 
                         <!-- Thẻ 2 -->
-                        <div class="bg-sky-50/80 p-6 md:p-8 rounded-2xl border border-sky-100 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow group">
-                            <div class="absolute -right-4 -top-4 text-sky-200/50 transform group-hover:scale-110 transition-transform pointer-events-none">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.15.68 4.14 1.82 5.76L3 22l4.24-1.18C8.86 21.32 10.85 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"/></svg>
+                        <div class="bg-gradient-to-br from-sky-50/80 via-white/80 to-sky-50/50 p-6 md:p-8 rounded-2xl border border-sky-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden hover:shadow-[0_8px_30px_rgb(14,165,233,0.12)] hover:-translate-y-1 transition-all duration-500 group">
+                            <!-- Hiệu ứng ánh sáng nền (Blob) -->
+                            <div class="absolute -top-10 -left-10 w-32 h-32 bg-sky-400/10 rounded-full blur-2xl group-hover:bg-sky-400/20 transition-colors duration-500 pointer-events-none"></div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-sky-300/10 rounded-full blur-2xl group-hover:bg-sky-300/20 transition-colors duration-500 pointer-events-none"></div>
+                            
+                            <!-- Icon mờ (Cộng đồng - Cùng tần số) -->
+                            <div class="absolute -right-6 -bottom-6 text-sky-500/10 transform rotate-12 group-hover:scale-110 group-hover:rotate-0 transition-transform duration-700 pointer-events-none">
+                                <svg class="w-32 h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 11a4 4 0 100-8 4 4 0 000 8zM18 13a3 3 0 100-6 3 3 0 000 6zM6 13a3 3 0 100-6 3 3 0 000 6zM12 13c-3.315 0-6 2.685-6 6v1h12v-1c0-3.315-2.685-6-6-6zM18.5 14c-1.895 0-3.5 1.5-3.5 3.5V19h7v-1.5c0-1.933-1.567-3.5-3.5-3.5zM5.5 14c-1.933 0-3.5 1.567-3.5 3.5V19h7v-1.5C9 15.5 7.395 14 5.5 14z"/>
+                                </svg>
                             </div>
+                            
                             <div class="relative z-10">
-                                <h3 class="text-xl md:text-2xl font-bold font-title text-sky-900 mb-3 flex items-center gap-3">
-                                    <span class="text-2xl md:text-3xl text-sky-500 drop-shadow-sm">🤝</span> 
+                                <h3 class="text-xl md:text-2xl font-bold font-title text-sky-900 mb-3">
                                     2. Bạn tìm kiếm những người "cùng tần số"?
                                 </h3>
-                                <p class="text-base md:text-lg leading-relaxed text-slate-600">Một không gian để trò chuyện về những điều mình yêu thích, được lắng nghe một cách chân thành và bàn luận đa chiều. You Can Club là nơi những người trẻ kết nối, sẻ chia và đồng hành cùng nhau qua từng buổi sinh hoạt cuối tuần.</p>
+                                <p class="text-base md:text-lg leading-relaxed text-slate-600 font-medium">Một không gian để trò chuyện về những điều mình yêu thích, được lắng nghe một cách chân thành và bàn luận đa chiều. You Can Club là nơi những người trẻ kết nối, sẻ chia và đồng hành cùng nhau qua từng buổi sinh hoạt cuối tuần.</p>
                             </div>
                         </div>
 
                         <!-- Thẻ 3 -->
-                        <div class="bg-indigo-50/80 p-6 md:p-8 rounded-2xl border border-indigo-100 shadow-sm relative overflow-hidden hover:shadow-md transition-shadow group">
-                            <div class="absolute -right-4 -top-4 text-indigo-200/50 transform group-hover:scale-110 transition-transform pointer-events-none">
-                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0v8"/></svg>
+                        <div class="bg-gradient-to-br from-indigo-50/80 via-white/80 to-indigo-50/50 p-6 md:p-8 rounded-2xl border border-indigo-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden hover:shadow-[0_8px_30px_rgb(99,102,241,0.12)] hover:-translate-y-1 transition-all duration-500 group">
+                            <!-- Hiệu ứng ánh sáng nền (Blob) -->
+                            <div class="absolute -top-10 -left-10 w-32 h-32 bg-indigo-400/10 rounded-full blur-2xl group-hover:bg-indigo-400/20 transition-colors duration-500 pointer-events-none"></div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-indigo-300/10 rounded-full blur-2xl group-hover:bg-indigo-300/20 transition-colors duration-500 pointer-events-none"></div>
+                            
+                            <!-- Icon mờ (Microphone - Rèn luyện giao tiếp) -->
+                            <div class="absolute -right-6 -bottom-6 text-indigo-500/10 transform -rotate-12 group-hover:scale-110 group-hover:rotate-0 transition-transform duration-700 pointer-events-none">
+                                <svg class="w-32 h-32 md:w-40 md:h-40" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 14a4 4 0 004-4V6a4 4 0 10-8 0v4a4 4 0 004 4z" />
+                                    <path d="M19 10v1a7 7 0 01-14 0v-1H3v1a9 9 0 008 8.945V23h2v-3.055A9 9 0 0021 11v-1h-2z" />
+                                </svg>
                             </div>
+                            
                             <div class="relative z-10">
-                                <h3 class="text-xl md:text-2xl font-bold font-title text-indigo-900 mb-3 flex items-center gap-3">
-                                    <span class="text-2xl md:text-3xl text-indigo-500 drop-shadow-sm">🎤</span> 
+                                <h3 class="text-xl md:text-2xl font-bold font-title text-indigo-900 mb-3">
                                     3. Bạn muốn rèn luyện kỹ năng giao tiếp?
                                 </h3>
-                                <p class="text-base md:text-lg leading-relaxed text-slate-600">Dù bạn đang rụt rè muốn vượt qua nỗi sợ đám đông hay muốn nâng tầm tư duy phản biện — đây là môi trường an toàn tuyệt đối để bạn bắt đầu: dám bước ra khỏi vùng an toàn, dám thử, dám sai và dám cất lời.</p>
+                                <p class="text-base md:text-lg leading-relaxed text-slate-600 font-medium">Dù bạn đang rụt rè muốn vượt qua nỗi sợ đám đông hay muốn nâng tầm tư duy phản biện — đây là môi trường an toàn tuyệt đối để bạn bắt đầu: dám bước ra khỏi vùng an toàn, dám thử, dám sai và dám cất lời.</p>
                             </div>
                         </div>
 
