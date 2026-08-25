@@ -192,6 +192,15 @@
         .animate-bounce-x {
             animation: bounce-x 2s infinite;
         }
+
+        /* Pop up animation cho nút Chat */
+        @keyframes custom-ping {
+            0% { transform: scale(1); opacity: 0.4; }
+            75%, 100% { transform: scale(1.5); opacity: 0; }
+        }
+        .animate-custom-ping {
+            animation: custom-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -460,6 +469,26 @@
             </div>
             <div class="h-20 w-full shrink-0"></div>
         </div>
+    </div>
+
+    <!-- Nút nhắn tin Messenger nổi (Floating Action Button) -->
+    <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none group/chat">
+        <!-- Bubble Chat (Pop up text) -->
+        <div class="bg-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-blue-50 text-sm font-medium text-slate-700 pointer-events-auto transform transition-all duration-300 origin-bottom-right translate-y-2 opacity-0 group-hover/chat:translate-y-0 group-hover/chat:opacity-100 flex items-center gap-2 max-w-[200px] md:max-w-none text-center md:text-left">
+            <span>Cần hỗ trợ? Nhắn cho CLB nhé! 👋</span>
+            <!-- Tam giác trỏ xuống dưới góc -->
+            <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white transform rotate-45 border-b border-r border-blue-50 shadow-[4px_4px_10px_rgba(0,0,0,0.02)]"></div>
+        </div>
+
+        <!-- Nút tròn có link tới Messenger -->
+        <a href="https://m.me/61578363805571" target="_blank" rel="noopener noreferrer" title="Nhắn tin với You Can Club" class="w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-[0_10px_25px_rgba(37,99,235,0.4)] hover:bg-blue-700 hover:scale-105 transition-all duration-300 pointer-events-auto relative cursor-pointer">
+            <!-- Vòng sáng pulse (Hiệu ứng thu hút) -->
+            <div class="absolute inset-0 rounded-full bg-blue-500 animate-custom-ping pointer-events-none"></div>
+            <!-- Icon Messenger -->
+            <svg class="w-7 h-7 md:w-8 md:h-8 relative z-10" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.13 2 11.23c0 2.87 1.48 5.43 3.79 7.07v3.5l3.44-1.89c1.23.34 2.56.52 3.95.52 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.2 12.3l-2.67-2.85-5.23 2.85 5.76-6.15 2.75 2.85 5.15-2.85-5.76 6.15z"/>
+            </svg>
+        </a>
     </div>
 
     <script>
