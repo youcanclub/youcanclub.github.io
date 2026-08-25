@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Prompt - You Can Club</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            text-align: center; 
+            margin-top: 20vh; 
+            background-color: #f9f9f9; 
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h2 { color: #2c3e50; font-size: 22px; margin-bottom: 10px; }
+        p { color: #7f8c8d; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
+        button { 
+            padding: 15px 30px; 
+            font-size: 16px; 
+            font-weight: bold;
+            cursor: pointer; 
+            background-color: #007bff; 
+            color: white; 
+            border: none; 
+            border-radius: 8px;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:active { background-color: #0056b3; }
+        #status { 
+            margin-top: 20px; 
+            color: #27ae60; 
+            font-weight: bold; 
+            font-size: 14px;
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Prompt Kiểm Duyệt Kịch Bản</h2>
+        <p>Nhấn vào nút bên dưới để sao chép nhanh Prompt của You Can Club, sau đó dán vào AI (Gemini/ChatGPT) nhé!</p>
+        
+        <button onclick="copyPrompt()" id="copyBtn">📋 Nhấn để Copy Prompt</button>
+        <p id="status">✅ Đã sao chép thành công! Hãy dán vào AI ngay thôi.</p>
+    </div>
+
+    <script>
+        function copyPrompt() {
+            // Nội dung prompt sử dụng dấu backtick (`) để hỗ trợ xuống dòng
+            const promptText = `Bạn là một Giám khảo và Cố vấn chuyên môn tận tâm của You Can Club - một CLB Thuyết trình và Tranh biện dành cho học sinh THPT. Nhiệm vụ của bạn là kiểm duyệt và góp ý cho chủ đề, kịch bản thuyết trình của tôi để đảm bảo nó phù hợp với môi trường học đường. 
+
+Dưới đây là 5 tiêu chí kiểm duyệt của CLB:
+1. Chuẩn mực học đường: Không bạo lực, không tệ nạn, không chứa nội dung 18+.
+2. Giá trị thông điệp: Mang ý nghĩa tích cực, truyền cảm hứng hoặc cung cấp kiến thức/góc nhìn hữu ích cho học sinh cấp 3.
+3. Tôn trọng & Khách quan: Không công kích cá nhân, không thù ghét, không vi phạm các vấn đề nhạy cảm.
+4. Ngôn từ văn minh: Lịch sự, không thô tục, không lạm dụng tiếng lóng phản cảm.
+5. Cấu trúc logic: Dàn ý/kịch bản rõ ràng, lập luận chặt chẽ.
+
+Dưới đây là bài làm của tôi:
+- Chủ đề: [ĐIỀN CHỦ ĐỀ CỦA BẠN VÀO ĐÂY]
+- Kịch bản/Dàn ý: [ĐIỀN NỘI DUNG/KỊCH BẢN CỦA BẠN VÀO ĐÂY]
+
+Dựa vào 5 tiêu chí trên, hãy đánh giá bài làm của tôi theo cấu trúc sau:
+1. Đánh giá Mức độ phù hợp (Từng tiêu chí một: Đạt / Không Đạt / Cần xem xét lại).
+2. Điểm sáng của kịch bản.
+3. Vấn đề cần khắc phục.
+4. Kết luận kiểm duyệt: [Đủ điều kiện / Cần chỉnh sửa / Từ chối].
+5. Gợi ý nâng cấp (2-3 gợi ý cụ thể để làm cho thông điệp sâu sắc, thân thiện hơn).`;
+
+            navigator.clipboard.writeText(promptText).then(() => {
+                document.getElementById("status").style.display = "block";
+                document.getElementById("copyBtn").style.backgroundColor = "#27ae60";
+                document.getElementById("copyBtn").innerHTML = "Đã Copy! 🚀";
+                setTimeout(() => {
+                    document.getElementById("status").style.display = "none";
+                    document.getElementById("copyBtn").style.backgroundColor = "#007bff";
+                    document.getElementById("copyBtn").innerHTML = "📋 Nhấn để Copy lại";
+                }, 4000);
+            }).catch(err => {
+                alert("Rất tiếc, trình duyệt của bạn không hỗ trợ copy tự động. Vui lòng copy thủ công nhé!");
+            });
+        }
+    </script>
+</body>
+</html>
