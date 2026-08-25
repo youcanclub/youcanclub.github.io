@@ -18,39 +18,109 @@
             pointer-events: none;
             opacity: 0.8;
         }
+        /* Tùy chỉnh thanh cuộn cho đẹp hơn */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4 sm:p-8">
 
-    <!-- Container chính: Thẻ Card nổi bật -->
-    <div class="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] max-w-md w-full border border-gray-100 text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+    <!-- Wrapper giới hạn chiều rộng -->
+    <div class="w-full max-w-md flex flex-col gap-6">
         
-        <!-- Logo / Icon trang trí -->
-        <div class="w-20 h-20 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
-            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
+        <!-- Card 1: Vùng thao tác chính -->
+        <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-blue-900/5 border border-white flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-1">
+            
+            <!-- Icon nổi bật -->
+            <div class="w-16 h-16 bg-gradient-to-tr from-blue-100 to-indigo-50 text-blue-600 rounded-2xl flex items-center justify-center mb-5 shadow-inner">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+            </div>
+
+            <!-- Tiêu đề và Mô tả -->
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2 tracking-tight">Prompt Kiểm Duyệt</h1>
+            <p class="text-sm text-gray-500 mb-8 px-4"></p>
+            
+            <!-- Nút Copy -->
+            <button onclick="handleCopy()" id="copyBtn" class="group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-600/20">
+                <!-- Icon Copy -->
+                <svg id="btnIcon" class="w-6 h-6 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                </svg>
+                <span id="btnText">Sao chép Prompt</span>
+            </button>
+
+            <!-- Thông báo trạng thái -->
+            <div id="statusMessage" class="mt-5 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 h-6">
+                <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span id="statusText" class="text-sm font-medium text-emerald-600">Đã lưu vào bộ nhớ tạm!</span>
+            </div>
         </div>
 
-        <!-- Tiêu đề và Mô tả -->
-        <h2 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">Prompt Kiểm Duyệt</h2>
-        
-        <!-- Nút Copy -->
-        <button onclick="handleCopy()" id="copyBtn" class="group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-500/30">
-            <!-- Icon Copy -->
-            <svg id="btnIcon" class="w-6 h-6 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-            </svg>
-            <span id="btnText">Sao chép Prompt</span>
-        </button>
+        <!-- Card 2: Bảng hướng dẫn sử dụng -->
+        <div class="bg-white/70 backdrop-blur-xl p-6 rounded-[2rem] shadow-lg shadow-gray-200/50 border border-white text-left transition-all duration-300 hover:bg-white/90">
+            <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <span class="text-xl">💡</span> Hướng dẫn nhanh
+            </h3>
+            
+            <div class="space-y-5">
+                <!-- Bước 1 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 shadow-sm border border-blue-50">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800 mt-1">1. Sao chép</p>
+                        <p class="text-sm text-gray-500 mt-1">Nhấn nút Copy màu xanh ở thẻ phía trên.</p>
+                    </div>
+                </div>
 
-        <!-- Thông báo trạng thái (Ẩn mặc định) -->
-        <div id="statusMessage" class="mt-6 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 h-6">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-            </svg>
-            <span id="statusText" class="text-sm font-medium text-emerald-600">Đã lưu vào bộ nhớ tạm!</span>
+                <!-- Bước 2 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center shrink-0 shadow-sm border border-purple-50">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    </div>
+                    <div class="w-full">
+                        <p class="text-sm font-semibold text-gray-800 mt-1">2. Dán & Điền nội dung</p>
+                        <p class="text-sm text-gray-500 mt-1 mb-3">Dán vào AI (ChatGPT/Gemini) và thay 2 dòng sau:</p>
+                        
+                        <!-- Box cấu trúc (Mô phỏng code) -->
+                        <div class="bg-gray-50/80 rounded-xl p-3 border border-gray-200">
+                            <div class="mb-2">
+                                <span class="inline-block bg-purple-100 text-purple-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider mb-1">Chủ đề</span>
+                                <p class="text-xs text-gray-700 font-mono whitespace-nowrap overflow-hidden text-ellipsis">- Chủ đề: <span class="text-purple-600">[Điền tên chủ đề]</span></p>
+                            </div>
+                            <div>
+                                <span class="inline-block bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider mb-1">Kịch bản</span>
+                                <p class="text-xs text-gray-700 font-mono whitespace-nowrap overflow-hidden text-ellipsis">- Kịch bản: <span class="text-blue-600">[Dán nội dung vào đây]</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bước 3 -->
+                <div class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 shadow-sm border border-emerald-50">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800 mt-1">3. Nhận đánh giá</p>
+                        <p class="text-sm text-gray-500 mt-1">Bấm gửi để AI kiểm duyệt kịch bản giúp bạn!</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -75,45 +145,46 @@ Dưới đây là bài làm của tôi:
 - Chủ đề: [ĐIỀN CHỦ ĐỀ CỦA BẠN VÀO ĐÂY]
 - Kịch bản/Dàn ý: [ĐIỀN NỘI DUNG/KỊCH BẢN CỦA BẠN VÀO ĐÂY]`;
 
-        // Hàm sao chép tương thích đa trình duyệt (kể cả trong iframe)
+        // Hàm fallback dùng document.execCommand để đảm bảo luôn copy được
         function fallbackCopyTextToClipboard(text) {
             var textArea = document.createElement("textarea");
             textArea.value = text;
-            
-            // Đảm bảo textarea không hiển thị trên màn hình
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
-            textArea.style.opacity = "0";
-
+            textArea.style.position = "fixed"; 
+            textArea.style.top = "-9999px"; 
+            textArea.style.left = "-9999px"; 
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
 
-            try {
-                var successful = document.execCommand('copy');
-                return successful ? Promise.resolve() : Promise.reject('Không thể copy');
-            } catch (err) {
-                return Promise.reject(err);
-            } finally {
-                document.body.removeChild(textArea);
-            }
+            return new Promise((resolve, reject) => {
+                try {
+                    var successful = document.execCommand('copy');
+                    if (successful) {
+                        resolve();
+                    } else {
+                        reject(new Error('Lệnh copy trả về false'));
+                    }
+                } catch (err) {
+                    reject(err);
+                } finally {
+                    document.body.removeChild(textArea);
+                }
+            });
         }
 
+        // Hàm xử lý copy chính
         function copyToClipboard(text) {
-            // Thử dùng Clipboard API hiện đại trước
-            if (navigator.clipboard) {
+            if (navigator.clipboard && window.isSecureContext) {
                 return navigator.clipboard.writeText(text).catch(function(err) {
-                    // Nếu bị lỗi (thường do chạy trong iframe bị chặn quyền), dùng ngay cách dự phòng
-                    console.log("Clipboard API bị chặn, đang dùng phương pháp dự phòng...");
+                    console.log("Clipboard API lỗi, dùng fallback...", err);
                     return fallbackCopyTextToClipboard(text);
                 });
+            } else {
+                return fallbackCopyTextToClipboard(text);
             }
-            // Nếu trình duyệt cũ hoàn toàn không hỗ trợ API mới, dùng cách dự phòng
-            return fallbackCopyTextToClipboard(text);
         }
 
-        // Xử lý sự kiện click
+        // Xử lý sự kiện click trên nút
         function handleCopy() {
             const btn = document.getElementById("copyBtn");
             const btnText = document.getElementById("btnText");
@@ -121,64 +192,50 @@ Dưới đây là bài làm của tôi:
             const statusMessage = document.getElementById("statusMessage");
             const statusText = document.getElementById("statusText");
 
-            // Đổi trạng thái nút thành Đang xử lý
+            // UI Đang load
             btn.classList.add("btn-loading");
-            btnText.innerHTML = "Đang sao chép...";
+            btnText.innerHTML = "Đang xử lý...";
 
             copyToClipboard(promptText)
                 .then(() => {
-                    // Thành công: Thay đổi giao diện nút
-                    btn.classList.remove("bg-blue-600", "hover:bg-blue-700", "focus:ring-blue-100", "shadow-blue-500/30");
-                    btn.classList.add("bg-emerald-500", "hover:bg-emerald-600", "focus:ring-emerald-100", "shadow-emerald-500/30");
-                    
+                    // UI Thành công
+                    btn.className = "group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-emerald-500 hover:bg-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100 transition-all duration-200 shadow-lg shadow-emerald-500/20";
                     btnText.innerHTML = "Đã Copy Thành Công!";
-                    // Đổi icon sang icon Check
                     btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>`;
                     
-                    // Hiện thông báo
                     statusText.innerText = "Sẵn sàng để dán vào AI!";
                     statusText.className = "text-sm font-medium text-emerald-600";
                     statusMessage.classList.remove("opacity-0");
                     statusMessage.classList.add("opacity-100");
 
-                    // Reset lại sau 3 giây
-                    setTimeout(() => {
-                        resetUI();
-                    }, 3000);
+                    setTimeout(() => resetUI(), 3500);
                 })
                 .catch(err => {
-                    // Thất bại
-                    btn.classList.remove("bg-blue-600", "hover:bg-blue-700", "focus:ring-blue-100", "shadow-blue-500/30");
-                    btn.classList.add("bg-rose-500", "hover:bg-rose-600", "focus:ring-rose-100", "shadow-rose-500/30");
-                    
-                    btnText.innerHTML = "Lỗi sao chép!";
-                    // Đổi icon sang icon X
+                    // UI Thất bại
+                    btn.className = "group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-4 focus:ring-rose-100 transition-all duration-200 shadow-lg shadow-rose-500/20";
+                    btnText.innerHTML = "Chưa thể sao chép";
                     btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`;
                     
-                    statusText.innerText = "Vui lòng copy thủ công.";
+                    statusText.innerText = "Lỗi trình duyệt, vui lòng thử lại.";
                     statusText.className = "text-sm font-medium text-rose-600";
                     statusMessage.classList.remove("opacity-0");
                     statusMessage.classList.add("opacity-100");
 
-                    setTimeout(() => {
-                        resetUI();
-                    }, 3000);
+                    setTimeout(() => resetUI(), 3500);
                 })
                 .finally(() => {
                     btn.classList.remove("btn-loading");
                 });
         }
 
-        // Hàm Reset lại giao diện nút về ban đầu
+        // Khôi phục nút về trạng thái ban đầu
         function resetUI() {
             const btn = document.getElementById("copyBtn");
             const btnText = document.getElementById("btnText");
             const btnIcon = document.getElementById("btnIcon");
             const statusMessage = document.getElementById("statusMessage");
 
-            // Trả lại màu xanh nguyên bản
-            btn.className = "group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-500/30";
-            
+            btn.className = "group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-600/20";
             btnText.innerHTML = "Sao chép lại Prompt";
             btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>`;
             
