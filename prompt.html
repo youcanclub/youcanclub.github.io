@@ -4,61 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Copy Prompt - You Can Club</title>
+    <!-- Tích hợp Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tích hợp Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            text-align: center; 
-            margin-top: 20vh; 
-            background-color: #f9f9f9; 
-            color: #333;
-            padding: 20px;
+        body {
+            font-family: 'Inter', sans-serif;
         }
-        .container {
-            background: white;
-            padding: 30px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        h2 { color: #2c3e50; font-size: 22px; margin-bottom: 10px; }
-        p { color: #7f8c8d; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
-        button { 
-            padding: 15px 30px; 
-            font-size: 16px; 
-            font-weight: bold;
-            cursor: pointer; 
-            background-color: #007bff; 
-            color: white; 
-            border: none; 
-            border-radius: 8px;
-            width: 100%;
-            transition: background-color 0.3s;
-        }
-        button:active { background-color: #0056b3; }
-        #status { 
-            margin-top: 20px; 
-            color: #27ae60; 
-            font-weight: bold; 
-            font-size: 14px;
-            display: none; 
+        /* Hiệu ứng loading nhẹ cho nút */
+        .btn-loading {
+            pointer-events: none;
+            opacity: 0.8;
         }
     </style>
 </head>
-<body>
 
-    <div class="container">
-        <h2>Prompt Kiểm Duyệt Kịch Bản</h2>
-        <p>Nhấn vào nút bên dưới để sao chép nhanh Prompt của You Can Club, sau đó dán vào AI (Gemini/ChatGPT) nhé!</p>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center p-4">
+
+    <!-- Container chính: Thẻ Card nổi bật -->
+    <div class="bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] max-w-md w-full border border-gray-100 text-center transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
         
-        <button onclick="copyPrompt()" id="copyBtn">📋 Nhấn để Copy Prompt</button>
-        <p id="status">✅ Đã sao chép thành công! Hãy dán vào AI ngay thôi.</p>
+        <!-- Logo / Icon trang trí -->
+        <div class="w-20 h-20 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6 shadow-inner">
+            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+            </svg>
+        </div>
+
+        <!-- Tiêu đề và Mô tả -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-3 tracking-tight">Prompt Kiểm Duyệt</h2>
+        
+        <!-- Nút Copy -->
+        <button onclick="handleCopy()" id="copyBtn" class="group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-500/30">
+            <!-- Icon Copy -->
+            <svg id="btnIcon" class="w-6 h-6 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+            </svg>
+            <span id="btnText">Sao chép Prompt</span>
+        </button>
+
+        <!-- Thông báo trạng thái (Ẩn mặc định) -->
+        <div id="statusMessage" class="mt-6 flex items-center justify-center gap-2 opacity-0 transition-opacity duration-300 h-6">
+            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span id="statusText" class="text-sm font-medium text-emerald-600">Đã lưu vào bộ nhớ tạm!</span>
+        </div>
     </div>
 
     <script>
-        function copyPrompt() {
-            // Nội dung prompt sử dụng dấu backtick (`) để hỗ trợ xuống dòng
-            const promptText = `Bạn là một Giám khảo và Cố vấn chuyên môn tận tâm của You Can Club - một CLB Thuyết trình và Tranh biện dành cho học sinh THPT. Nhiệm vụ của bạn là kiểm duyệt và góp ý cho chủ đề, kịch bản thuyết trình của tôi để đảm bảo nó phù hợp với môi trường học đường. 
+        const promptText = `Bạn là một Giám khảo và Cố vấn chuyên môn tận tâm của You Can Club - một CLB Thuyết trình và Tranh biện dành cho học sinh THPT. Nhiệm vụ của bạn là kiểm duyệt và góp ý cho chủ đề, kịch bản thuyết trình của tôi để đảm bảo nó phù hợp với môi trường học đường. 
 
 Dưới đây là 5 tiêu chí kiểm duyệt của CLB:
 1. Chuẩn mực học đường: Không bạo lực, không tệ nạn, không chứa nội dung 18+.
@@ -67,29 +64,126 @@ Dưới đây là 5 tiêu chí kiểm duyệt của CLB:
 4. Ngôn từ văn minh: Lịch sự, không thô tục, không lạm dụng tiếng lóng phản cảm.
 5. Cấu trúc logic: Dàn ý/kịch bản rõ ràng, lập luận chặt chẽ.
 
-Dưới đây là bài làm của tôi:
-- Chủ đề: [ĐIỀN CHỦ ĐỀ CỦA BẠN VÀO ĐÂY]
-- Kịch bản/Dàn ý: [ĐIỀN NỘI DUNG/KỊCH BẢN CỦA BẠN VÀO ĐÂY]
-
 Dựa vào 5 tiêu chí trên, hãy đánh giá bài làm của tôi theo cấu trúc sau:
 1. Đánh giá Mức độ phù hợp (Từng tiêu chí một: Đạt / Không Đạt / Cần xem xét lại).
 2. Điểm sáng của kịch bản.
 3. Vấn đề cần khắc phục.
 4. Kết luận kiểm duyệt: [Đủ điều kiện / Cần chỉnh sửa / Từ chối].
-5. Gợi ý nâng cấp (2-3 gợi ý cụ thể để làm cho thông điệp sâu sắc, thân thiện hơn).`;
+5. Gợi ý nâng cấp (2-3 gợi ý cụ thể để làm cho thông điệp sâu sắc, thân thiện hơn).
 
-            navigator.clipboard.writeText(promptText).then(() => {
-                document.getElementById("status").style.display = "block";
-                document.getElementById("copyBtn").style.backgroundColor = "#27ae60";
-                document.getElementById("copyBtn").innerHTML = "Đã Copy! 🚀";
-                setTimeout(() => {
-                    document.getElementById("status").style.display = "none";
-                    document.getElementById("copyBtn").style.backgroundColor = "#007bff";
-                    document.getElementById("copyBtn").innerHTML = "📋 Nhấn để Copy lại";
-                }, 4000);
-            }).catch(err => {
-                alert("Rất tiếc, trình duyệt của bạn không hỗ trợ copy tự động. Vui lòng copy thủ công nhé!");
-            });
+Dưới đây là bài làm của tôi:
+- Chủ đề: [ĐIỀN CHỦ ĐỀ CỦA BẠN VÀO ĐÂY]
+- Kịch bản/Dàn ý: [ĐIỀN NỘI DUNG/KỊCH BẢN CỦA BẠN VÀO ĐÂY]`;
+
+        // Hàm sao chép tương thích đa trình duyệt (kể cả trong iframe)
+        function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            
+            // Đảm bảo textarea không hiển thị trên màn hình
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+                return successful ? Promise.resolve() : Promise.reject('Không thể copy');
+            } catch (err) {
+                return Promise.reject(err);
+            } finally {
+                document.body.removeChild(textArea);
+            }
+        }
+
+        function copyToClipboard(text) {
+            // Thử dùng Clipboard API hiện đại trước
+            if (navigator.clipboard) {
+                return navigator.clipboard.writeText(text).catch(function(err) {
+                    // Nếu bị lỗi (thường do chạy trong iframe bị chặn quyền), dùng ngay cách dự phòng
+                    console.log("Clipboard API bị chặn, đang dùng phương pháp dự phòng...");
+                    return fallbackCopyTextToClipboard(text);
+                });
+            }
+            // Nếu trình duyệt cũ hoàn toàn không hỗ trợ API mới, dùng cách dự phòng
+            return fallbackCopyTextToClipboard(text);
+        }
+
+        // Xử lý sự kiện click
+        function handleCopy() {
+            const btn = document.getElementById("copyBtn");
+            const btnText = document.getElementById("btnText");
+            const btnIcon = document.getElementById("btnIcon");
+            const statusMessage = document.getElementById("statusMessage");
+            const statusText = document.getElementById("statusText");
+
+            // Đổi trạng thái nút thành Đang xử lý
+            btn.classList.add("btn-loading");
+            btnText.innerHTML = "Đang sao chép...";
+
+            copyToClipboard(promptText)
+                .then(() => {
+                    // Thành công: Thay đổi giao diện nút
+                    btn.classList.remove("bg-blue-600", "hover:bg-blue-700", "focus:ring-blue-100", "shadow-blue-500/30");
+                    btn.classList.add("bg-emerald-500", "hover:bg-emerald-600", "focus:ring-emerald-100", "shadow-emerald-500/30");
+                    
+                    btnText.innerHTML = "Đã Copy Thành Công!";
+                    // Đổi icon sang icon Check
+                    btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>`;
+                    
+                    // Hiện thông báo
+                    statusText.innerText = "Sẵn sàng để dán vào AI!";
+                    statusText.className = "text-sm font-medium text-emerald-600";
+                    statusMessage.classList.remove("opacity-0");
+                    statusMessage.classList.add("opacity-100");
+
+                    // Reset lại sau 3 giây
+                    setTimeout(() => {
+                        resetUI();
+                    }, 3000);
+                })
+                .catch(err => {
+                    // Thất bại
+                    btn.classList.remove("bg-blue-600", "hover:bg-blue-700", "focus:ring-blue-100", "shadow-blue-500/30");
+                    btn.classList.add("bg-rose-500", "hover:bg-rose-600", "focus:ring-rose-100", "shadow-rose-500/30");
+                    
+                    btnText.innerHTML = "Lỗi sao chép!";
+                    // Đổi icon sang icon X
+                    btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>`;
+                    
+                    statusText.innerText = "Vui lòng copy thủ công.";
+                    statusText.className = "text-sm font-medium text-rose-600";
+                    statusMessage.classList.remove("opacity-0");
+                    statusMessage.classList.add("opacity-100");
+
+                    setTimeout(() => {
+                        resetUI();
+                    }, 3000);
+                })
+                .finally(() => {
+                    btn.classList.remove("btn-loading");
+                });
+        }
+
+        // Hàm Reset lại giao diện nút về ban đầu
+        function resetUI() {
+            const btn = document.getElementById("copyBtn");
+            const btnText = document.getElementById("btnText");
+            const btnIcon = document.getElementById("btnIcon");
+            const statusMessage = document.getElementById("statusMessage");
+
+            // Trả lại màu xanh nguyên bản
+            btn.className = "group relative w-full flex items-center justify-center gap-3 py-4 px-6 text-base font-semibold rounded-2xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-100 transition-all duration-200 active:scale-[0.98] shadow-lg shadow-blue-500/30";
+            
+            btnText.innerHTML = "Sao chép lại Prompt";
+            btnIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>`;
+            
+            statusMessage.classList.remove("opacity-100");
+            statusMessage.classList.add("opacity-0");
         }
     </script>
 </body>
