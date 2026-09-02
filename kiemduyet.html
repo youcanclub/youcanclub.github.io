@@ -124,6 +124,28 @@
     <script>
     const WORKER_URL = "https://youcanclub-gemini-proxy.clbyoucan.workers.dev/";
 
+    // --- (NẾU PROMPT NẰM Ở GIAO DIỆN) CẬP NHẬT LẠI SYSTEM_PROMPT ---
+    // Chú ý: Đã đổi số thứ tự phần "Cấu trúc sau" thành số La Mã (I, II, III, IV, V)
+    const SYSTEM_PROMPT = `BẮT BUỘC:
+1. TRẢ LỜI 100% BẰNG TIẾNG VIỆT. KHÔNG DÙNG TIẾNG ANH. KHÔNG ĐẾM TỪ BẰNG TIẾNG ANH.
+2. Xưng hô "mình" và gọi người dùng là "bạn". 
+3. KHÔNG chào hỏi vòng vo.
+4. Dòng đầu tiên luôn luôn bắt đầu bằng: "*Lưu ý: Kết quả kiểm duyệt sau đây chỉ mang tính chất tham khảo. Bạn vẫn có thể nộp biểu mẫu bình thường và Ban Nội dung sẽ là người duyệt bài chính thức.*"
+
+Nhiệm vụ: Kiểm duyệt kịch bản dựa trên 5 tiêu chí:
+1. Chuẩn mực học đường: Không bạo lực, 18+, tệ nạn.
+2. Giá trị thông điệp: Tích cực, hữu ích cho cấp 3.
+3. Tôn trọng & Khách quan: Không công kích, thù ghét.
+4. Ngôn từ văn minh: Lịch sự, không lóng phản cảm.
+5. Cấu trúc logic & Thời lượng: Rõ ràng, hợp 5 phút.
+
+Hãy đánh giá theo đúng cấu trúc sau (BẮT BUỘC DÙNG SỐ LA MÃ CHO TIÊU ĐỀ LỚN):
+I. ĐÁNH GIÁ MỨC ĐỘ PHÙ HỢP (Từng tiêu chí đánh số 1-5, ghi: Đạt / Không Đạt / Cần xem xét lại)
+II. ĐIỂM SÁNG CỦA KỊCH BẢN
+III. VẤN ĐỀ CẦN KHẮC PHỤC
+IV. KẾT LUẬN KIỂM DUYỆT: [Đủ điều kiện / Cần chỉnh sửa / Từ chối]
+V. GỢI Ý NÂNG CẤP`;
+
     const inputTopic = document.getElementById("topic-input");
     const inputScript = document.getElementById("script-input");
     const charCountEl = document.getElementById("char-count");
@@ -249,7 +271,7 @@
         return result;
     }
 
-    // ĐÃ CẬP NHẬT HÀM formatAIResponse TẠI ĐÂY ĐỂ ĐỊNH DẠNG ĐÚNG NHƯ BẠN MONG MUỐN
+    // --- HÀM FORMAT CẬP NHẬT: NHẬN DIỆN SỐ LA MÃ & IN ĐẬM TÊN TIÊU CHÍ ---
     function formatAIResponse(text) {
         let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
         let html = "";
@@ -257,13 +279,13 @@
 
         function closeList() {
             if (inList) {
-                html += "</div>"; // Đóng thẻ div bao ngoài danh sách
+                html += "</div>";
                 inList = false;
             }
         }
 
-        // Hàm hỗ trợ: Kiểm tra xem chuỗi có phải viết hoa toàn bộ không (bỏ qua số và dấu câu)
-        function isAllCapsTitle(str) {
+        // Kiểm tra xem chuỗi có phải là chữ viết hoa (cho phép có dấu câu)
+        function isAllCaps(str) {
             let letters = str.replace(/[^\p{L}]/gu, "");
             if (letters.length < 2) return false;
             return letters === letters.toUpperCase() && letters !== letters.toLowerCase();
@@ -282,7 +304,7 @@
                 continue;
             }
 
-            // 1. Nhận diện Dòng "Lưu ý:" -> Đưa vào Box Cảnh báo
+            // 1. Dòng Lưu ý
             if (line.includes("Lưu ý:")) {
                 closeList();
                 let noteText = formatInline(line.replace(/\*Lưu ý:\s*/, '').replace(/Lưu ý:\s*/, '').replace(/\*/g, ''));
@@ -294,7 +316,7 @@
                 continue;
             }
 
-            // Tiêu đề ### / ## / #
+            // Tiêu đề Markdown ###
             if (/^#{1,3}\s+/.test(line)) {
                 closeList();
                 let title = line.replace(/^#{1,3}\s+/, "");
@@ -302,7 +324,7 @@
                 continue;
             }
 
-            // Bullet point (- * •)
+            // Bullet point
             if (/^[-*•]\s+/.test(line)) {
                 if (!inList) {
                     html += `<div class="space-y-3 mb-6 mt-2 ml-1">`;
@@ -317,49 +339,53 @@
                 continue;
             }
 
-            // Danh sách số (1. 2. 3.)
+            // 2. Tiêu đề lớn dùng số La Mã (VD: I. ĐÁNH GIÁ MỨC ĐỘ PHÙ HỢP)
+            // Regex nhận diện số La Mã: I, II, III, IV, V, VI...
+            let romanMatch = line.match(/^(IV|V?I{0,3})\.\s+(.+)$/i); 
+            if (romanMatch && isAllCaps(romanMatch[2])) {
+                closeList();
+                let romanNum = romanMatch[1].toUpperCase();
+                let titleContent = romanMatch[2];
+                html += `
+                <div class="mt-8 mb-5 first:mt-0 pb-2 border-b border-slate-700/50 flex items-center">
+                    <span class="text-[var(--accent)] mr-3 font-title font-bold text-xl drop-shadow-sm">${romanNum}.</span>
+                    <h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)] uppercase tracking-wider">${formatInline(titleContent)}</h4>
+                </div>`;
+                continue;
+            }
+
+            // 3. Danh sách 5 tiêu chí (1. Chuẩn mực học đường: Đạt...)
             let numMatch = line.match(/^(\d+)\.\s+(.+)$/);
             if (numMatch) {
                 let num = numMatch[1];
                 let content = numMatch[2];
 
-                // Nếu nội dung đằng sau số là chữ VIẾT HOA -> Xử lý như Tiêu đề lớn
-                if (isAllCapsTitle(content)) {
-                    closeList();
-                    html += `
-                    <div class="mt-8 mb-5 first:mt-0 pb-2 border-b border-slate-700/50 flex items-center">
-                        <span class="text-[var(--accent)] mr-3 font-title font-bold text-xl drop-shadow-sm">${num}.</span>
-                        <h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)] uppercase tracking-wider">${formatInline(content)}</h4>
-                    </div>`;
-                } else {
-                    // Nếu là danh sách số bình thường (như 5 tiêu chí)
-                    if (!inList) {
-                        html += `<div class="space-y-4 mb-6 mt-2">`;
-                        inList = true;
-                    }
-
-                    // Tách tên tiêu chí và nội dung (nếu có dấu hai chấm)
-                    let formattedContent = formatInline(content);
-                    let colonIndex = formattedContent.indexOf(':');
-                    
-                    if (colonIndex !== -1) {
-                        // In đậm phần tên tiêu chí (trước dấu hai chấm)
-                        let criterionName = formattedContent.substring(0, colonIndex + 1);
-                        let criterionDesc = formattedContent.substring(colonIndex + 1);
-                        formattedContent = `<strong class="text-white">${criterionName}</strong>${criterionDesc}`;
-                    }
-
-                    // Tự động tô màu kết quả đánh giá (Đạt / Không Đạt / Cần xem xét)
-                    formattedContent = formattedContent.replace(/(Đạt)(?=[.,\s]|$)/g, '<span class="text-emerald-400 font-bold bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20 shadow-sm">Đạt</span>');
-                    formattedContent = formattedContent.replace(/(Không Đạt)(?=[.,\s]|$)/g, '<span class="text-rose-400 font-bold bg-rose-400/10 px-1.5 py-0.5 rounded border border-rose-400/20 shadow-sm">Không Đạt</span>');
-                    formattedContent = formattedContent.replace(/(Cần xem xét( lại)?)(?=[.,\s]|$)/g, '<span class="text-amber-400 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 shadow-sm">Cần xem xét</span>');
-
-                    html += `
-                    <div class="flex items-start gap-2 group">
-                        <span class="font-bold text-[var(--accent)] min-w-[20px] pt-0.5">${num}.</span>
-                        <span class="leading-relaxed flex-1 text-slate-300 block pt-0.5">${formattedContent}</span>
-                    </div>`;
+                if (!inList) {
+                    html += `<div class="space-y-4 mb-6 mt-2">`;
+                    inList = true;
                 }
+
+                let formattedContent = formatInline(content);
+                
+                // In đậm tên tiêu chí (nằm trước dấu hai chấm)
+                let colonIndex = formattedContent.indexOf(':');
+                if (colonIndex !== -1) {
+                    let criterionName = formattedContent.substring(0, colonIndex + 1);
+                    let criterionDesc = formattedContent.substring(colonIndex + 1);
+                    formattedContent = `<strong class="text-white">${criterionName}</strong>${criterionDesc}`;
+                }
+
+                // Tô màu Đạt/Không đạt
+                formattedContent = formattedContent.replace(/(Đạt)(?=[.,\s]|$)/g, '<span class="text-emerald-400 font-bold bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20 shadow-sm">Đạt</span>');
+                formattedContent = formattedContent.replace(/(Không Đạt)(?=[.,\s]|$)/g, '<span class="text-rose-400 font-bold bg-rose-400/10 px-1.5 py-0.5 rounded border border-rose-400/20 shadow-sm">Không Đạt</span>');
+                formattedContent = formattedContent.replace(/(Cần xem xét( lại)?)(?=[.,\s]|$)/g, '<span class="text-amber-400 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 shadow-sm">Cần xem xét</span>');
+
+                // Bỏ background/khung của số thứ tự, chỉ để text xanh sáng
+                html += `
+                <div class="flex items-start gap-2 group">
+                    <span class="font-title font-bold text-[var(--accent)] min-w-[20px] pt-0.5 drop-shadow-sm">${num}.</span>
+                    <span class="leading-relaxed flex-1 text-slate-300 block pt-0.5">${formattedContent}</span>
+                </div>`;
                 continue;
             }
 
