@@ -101,24 +101,35 @@
     </main>
 
     <script>
-        const GEMINI_API_KEY = "AQ.Ab8RN6LBF0u0KMzCiU1IFHBVrxRhT6GdovMO6NaNMoqJMa9-bw";
+        // =========================================================================
+        // QUAN TRỌNG: DÁN API KEY CHUẨN CỦA GOOGLE (BẮT ĐẦU BẰNG AIza...) VÀO ĐÂY
+        // Lấy key tại: https://aistudio.google.com/app/apikey
+        // =========================================================================
+        const GEMINI_API_KEY = "AQ.Ab8RN6KvV0ytiyPfFbwpybj5Qdts92yOwY5zD4vFJRBR7gd1HA";
 
-        const SYSTEM_PROMPT = `Bạn là một Giám khảo và Cố vấn chuyên môn tận tâm của You Can Club - một CLB Thuyết trình và Tranh biện dành cho học sinh THPT. Nhiệm vụ của bạn là kiểm duyệt và góp ý cho chủ đề, kịch bản thuyết trình của tôi để đảm bảo nó phù hợp với môi trường học đường. 
+        const SYSTEM_PROMPT = `Bạn là một Giám khảo và Cố vấn chuyên môn của You Can Club - CLB Thuyết trình và Tranh biện dành cho học sinh THPT. Nhiệm vụ của bạn là kiểm duyệt kịch bản để đảm bảo phù hợp với môi trường học đường.
+
+QUAN TRỌNG NHẤT (PHẢI TUÂN THỦ TUYỆT ĐỐI):
+1. TUYỆT ĐỐI KHÔNG chào hỏi, không dạo đầu dài dòng (KHÔNG dùng "Chào bạn", "Chào mừng bạn đến với...").
+2. MỞ ĐẦU BÀI PHÂN TÍCH BẰNG ĐÚNG 1 CÂU SAU ĐÂY (IN NGHIÊNG): "*Lưu ý: Kết quả kiểm duyệt sau đây chỉ mang tính chất tham khảo, Ban Nội dung mới là người duyệt nội dung cuối cùng.*"
+3. Ngay sau câu lưu ý trên, đi thẳng vào cấu trúc 5 phần kiểm duyệt.
+4. BẮT BUỘC trả lời 100% BẰNG TIẾNG VIỆT, xưng "mình" và gọi "bạn", giọng điệu thân thiện, góp ý chân thành.
 
 Dưới đây là 5 tiêu chí kiểm duyệt của CLB:
 1. Chuẩn mực học đường: Không bạo lực, không tệ nạn, không chứa nội dung 18+.
 2. Giá trị thông điệp: Mang ý nghĩa tích cực, truyền cảm hứng hoặc cung cấp kiến thức/góc nhìn hữu ích cho học sinh cấp 3.
 3. Tôn trọng & Khách quan: Không công kích cá nhân, không thù ghét, không vi phạm các vấn đề nhạy cảm.
 4. Ngôn từ văn minh: Lịch sự, không thô tục, không lạm dụng tiếng lóng phản cảm.
-5. Cấu trúc logic: Dàn ý/kịch bản rõ ràng, lập luận chặt chẽ.
-6. Thời lượng giới hạn: Kịch bản khi trình bày thực tế không được vượt quá 5 phút (AI hãy tự ước lượng: 5 phút tương đương tối đa khoảng 600 - 750 chữ).
+5. Cấu trúc logic & Thời lượng: Dàn ý/kịch bản rõ ràng, lập luận chặt chẽ. Kịch bản không được vượt quá 5 phút (khoảng 600 - 750 chữ).
 
-Dựa vào 5 tiêu chí trên, hãy đánh giá bài làm của tôi theo cấu trúc sau:
-1. Đánh giá Mức độ phù hợp (Từng tiêu chí một: Đạt / Không Đạt / Cần xem xét lại).
-2. Điểm sáng của kịch bản.
-3. Vấn đề cần khắc phục.
+Hãy phân tích bài làm của tôi BẰNG TIẾNG VIỆT theo đúng cấu trúc 5 phần sau (trình bày rõ ràng, xuống dòng dễ đọc):
+1. Đánh giá Mức độ phù hợp (Ghi rõ và phân tích ngắn gọn từng tiêu chí từ 1 đến 5 là: Đạt / Không Đạt / Cần xem xét lại).
+2. Điểm sáng của kịch bản (Khen ngợi 1-2 điểm tốt để động viên).
+3. Vấn đề cần khắc phục (Góp ý nhẹ nhàng những chỗ chưa ổn, hoặc nhắc nhở nếu bài quá dài/quá ngắn).
 4. Kết luận kiểm duyệt: [Đủ điều kiện / Cần chỉnh sửa / Từ chối].
-5. Gợi ý nâng cấp (2-3 gợi ý cụ thể để làm cho thông điệp sâu sắc, thân thiện hơn).
+5. Gợi ý nâng cấp (2-3 gợi ý cụ thể để làm bài nói sâu sắc, thu hút và tương tác tốt hơn với khán giả).
+
+LƯU Ý ĐẶC BIỆT: Viết thật chi tiết, đầy đủ 5 phần, không bỏ dở câu trả lời giữa chừng.
 
 Dưới đây là bài làm của tôi:\n`;
 
@@ -175,17 +186,17 @@ Dưới đây là bài làm của tôi:\n`;
             const finalPrompt = `${SYSTEM_PROMPT}- Chủ đề: ${topic}\n- Kịch bản/Dàn ý: ${script}`;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent`, {
+                // Đã sửa lại URL gọi API thành chuẩn dùng cho mô hình gemini-3.6-flash
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${GEMINI_API_KEY}`
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         contents: [{ parts: [{ text: finalPrompt }] }],
                         generationConfig: {
-                            temperature: 0.4,
-                            maxOutputTokens: 1000,
+                            temperature: 0.6,
+                            maxOutputTokens: 4096,
                         }
                     })
                 });
@@ -207,12 +218,28 @@ Dưới đây là bài làm của tôi:\n`;
 
             } catch (error) {
                 console.error("API Error: ", error);
+                
+                // Ẩn spinner loading
                 loadingSection.classList.add('hidden');
                 loadingSection.classList.remove('flex');
-                inputSection.classList.remove('hidden');
-                btnSubmit.disabled = false;
                 
-                responseEl.innerHTML = `<span class="text-red-400">Lỗi kết nối AI: ${error.message}. Vui lòng thử lại sau!</span>`;
+                // Ẩn luôn phần form nhập để người dùng tập trung vào xem lỗi
+                inputSection.classList.add('hidden'); 
+                
+                // QUAN TRỌNG: Hiện phần kết quả ra để show lỗi thay vì giấu đi!
+                outputSection.classList.remove('hidden');
+                
+                // In lỗi chi tiết ra màn hình
+                responseEl.innerHTML = `
+                    <div class="text-red-400 font-bold text-lg mb-2">⚠️ Lỗi kết nối AI:</div>
+                    <div class="text-slate-300 font-mono text-sm bg-slate-800/50 p-4 rounded-xl border border-red-500/30 leading-relaxed">${error.message}</div>
+                    <div class="mt-5 text-slate-400 text-sm bg-blue-900/10 p-4 rounded-xl border border-blue-500/20">
+                        <strong class="text-[var(--accent)] block mb-1">Gợi ý khắc phục:</strong>
+                        1. Nếu bạn vừa tải file này lên GitHub, hãy chờ khoảng 2-3 phút để GitHub cập nhật.<br>
+                        2. Nhấn tổ hợp phím <strong class="text-white">Ctrl + F5</strong> (hoặc xóa bộ nhớ đệm Cache trình duyệt) để tải lại code mới nhất.<br>
+                        3. Đảm bảo API Key của bạn không có khoảng trắng thừa.
+                    </div>
+                `;
             }
         }
 
