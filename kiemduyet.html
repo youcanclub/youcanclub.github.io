@@ -6,6 +6,7 @@
     <title>AI Duyệt Kịch Bản | You Can Club</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg-color: #070b14;
@@ -18,6 +19,7 @@
             font-family: 'Lora', serif;
             color: #cbd5e1;
             background-image: radial-gradient(circle at 50% 0%, rgba(106, 210, 255, 0.1), transparent 50%);
+            min-height: 100vh;
         }
         .font-title { font-family: 'Playfair Display', serif; }
         .glass-card {
@@ -29,37 +31,41 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        
         .loading-spinner {
             border: 3px solid rgba(106, 210, 255, 0.2);
             border-top-color: var(--accent);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
+            width: 32px;
+            height: 32px;
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-12 px-4 sm:px-6">
+<body class="flex flex-col items-center py-12 px-4 sm:px-6">
 
-    <header class="text-center mb-10 w-full max-w-3xl">
-        <div class="inline-block relative mb-4">
-            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="Logo" class="w-20 h-20 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] shadow-[0_0_15px_rgba(106,210,255,0.3)]">
+    <header class="text-center mb-10 w-full max-w-3xl relative z-10">
+        <div class="inline-block relative mb-4 group">
+            <div class="absolute inset-0 bg-[var(--accent)] rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
+            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="Logo" class="w-20 h-20 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] relative z-10" onerror="this.src='https://placehold.co/150x150/070b14/6ad2ff?text=YCC'">
         </div>
         <h1 class="text-3xl md:text-4xl font-title font-bold text-white mb-2">Trợ lý AI Kiểm duyệt</h1>
-        <p class="text-slate-400 text-sm md:text-base">Dán kịch bản của bạn vào đây để AI phân tích theo 5 tiêu chí của CLB.</p>
+        <p class="text-slate-400 text-sm md:text-base">Công cụ hỗ trợ rà soát kịch bản theo chuẩn mực của You Can Club.</p>
     </header>
 
-    <main class="w-full max-w-3xl glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
+    <main class="w-full max-w-3xl glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden z-10">
+        
+        <!-- Màn hình Input -->
         <div id="input-section">
-            <div class="mb-4">
-                <label for="topic-input" class="block text-white font-bold font-title tracking-wide mb-2">Chủ đề bài nói:</label>
-                <input type="text" id="topic-input" placeholder="Ví dụ: Tầm quan trọng của việc tự học..." 
-                    class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 rounded-xl p-3 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all shadow-inner">
+            <div class="mb-5">
+                <label class="text-white font-bold font-title tracking-wide block mb-2">Chủ đề bài nói:</label>
+                <input type="text" id="topic-input" placeholder="Ví dụ: Áp lực đồng trang lứa..." 
+                    class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 rounded-xl p-3 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all">
             </div>
 
-            <div class="flex justify-between items-end mb-2">
-                <label for="script-input" class="text-white font-bold font-title tracking-wide">Nội dung kịch bản / Dàn ý:</label>
+            <div class="mb-2 flex justify-between items-end">
+                <label class="text-white font-bold font-title tracking-wide">Nội dung kịch bản/dàn ý:</label>
                 <span id="char-count" class="text-xs text-slate-500">0 / 5000 ký tự</span>
             </div>
             
@@ -67,32 +73,46 @@
                 class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 rounded-xl p-4 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all resize-y shadow-inner"></textarea>
             
             <div class="mt-6 text-center">
-                <button id="btn-submit" onclick="reviewScript()" class="bg-[var(--accent)] text-slate-900 font-bold font-title text-lg px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(106,210,255,0.4)] flex items-center justify-center gap-2 mx-auto cursor-pointer">
+                <button id="btn-submit" onclick="reviewScript()" class="bg-[var(--accent)] text-slate-900 font-bold font-title text-lg px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(106,210,255,0.4)] inline-flex items-center gap-2 cursor-pointer">
                     <span>Phân tích Kịch bản</span>
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                 </button>
             </div>
         </div>
 
-        <div id="loading-section" class="hidden flex-col items-center justify-center py-10">
-            <div class="loading-spinner mb-4"></div>
-            <p class="text-[var(--accent)] font-medium animate-pulse">Trợ lý AI đang đối chiếu với 5 tiêu chí của CLB...</p>
+        <!-- Màn hình Loading -->
+        <div id="loading-section" class="hidden flex-col items-center justify-center py-12">
+            <div class="loading-spinner mb-5"></div>
+            <p class="text-[var(--accent)] font-medium animate-pulse text-lg">Đang phân tích kịch bản...</p>
+            <p class="text-slate-400 text-sm mt-2">Quá trình này có thể mất khoảng 5 - 10 giây</p>
         </div>
 
-        <div id="output-section" class="hidden mt-6 border-t border-slate-700/50 pt-6">
-            <h3 class="text-xl font-title font-bold text-[var(--accent)] mb-4 flex items-center gap-2">
+        <!-- Màn hình Báo Lỗi -->
+        <div id="error-section" class="hidden bg-red-500/10 border border-red-500/50 rounded-xl p-6 text-center">
+            <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-red-400 font-bold text-xl font-title mb-2">Đã xảy ra lỗi!</h3>
+            <p id="error-message" class="text-slate-300 text-sm mb-6 break-words bg-slate-900/50 p-3 rounded-lg"></p>
+            <button onclick="resetForm()" class="px-6 py-2.5 rounded-full bg-slate-800 text-slate-300 border border-slate-600 hover:bg-slate-700 transition-colors font-medium cursor-pointer">Quay lại</button>
+        </div>
+
+        <!-- Màn hình Kết quả -->
+        <div id="output-section" class="hidden mt-4">
+            <h3 class="text-xl md:text-2xl font-title font-bold text-[var(--accent)] mb-4 flex items-center gap-2">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 Kết quả kiểm duyệt
             </h3>
             
-            <div id="ai-response" class="bg-slate-900/50 border border-slate-700 rounded-xl p-5 text-slate-300 text-sm md:text-base leading-relaxed whitespace-pre-wrap h-auto max-h-[400px] overflow-y-auto mb-6 shadow-inner">
+            <div id="ai-response" class="bg-slate-900/60 border border-slate-700 rounded-xl p-5 md:p-6 text-slate-300 text-base leading-relaxed whitespace-pre-wrap mb-6 shadow-inner">
+                <!-- Nội dung AI sẽ đổ vào đây -->
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="resetForm()" class="px-6 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 border-t border-slate-700/50 pt-6">
+                <button onclick="resetForm()" class="px-6 py-3 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
                     Sửa lại kịch bản
                 </button>
-                <a href="https://forms.gle/8f8Y9xqN1WWTqfUi9" target="_blank" class="px-6 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-colors font-bold font-title text-center flex items-center justify-center gap-2 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                <a href="https://forms.gle/8f8Y9xqN1WWTqfUi9" target="_blank" class="px-6 py-3 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-colors font-bold font-title text-center flex items-center justify-center gap-2">
                     Nộp biểu mẫu chính thức
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
@@ -101,12 +121,10 @@
     </main>
 
     <script>
-        // =========================================================================
-        // QUAN TRỌNG: DÁN API KEY CHUẨN CỦA GOOGLE (BẮT ĐẦU BẰNG AIza...) VÀO ĐÂY
-        // Lấy key tại: https://aistudio.google.com/app/apikey
-        // =========================================================================
-        const GEMINI_API_KEY = "AQ.Ab8RN6KvV0ytiyPfFbwpybj5Qdts92yOwY5zD4vFJRBR7gd1HA";
+        // MÃ API TỪ ẢNH CỦA BẠN
+        const GEMINI_API_KEY = "AQ.Ab8RN6Ln5UH8-034SKYib5UgTZ97DjoDgGGGMo73jEGjzgrJvQ";
 
+        // CÂU LỆNH HƯỚNG DẪN AI CHUYÊN MÔN
         const SYSTEM_PROMPT = `Bạn là một Giám khảo và Cố vấn chuyên môn của You Can Club - CLB Thuyết trình và Tranh biện dành cho học sinh THPT. 
 
 [BƯỚC 1: LÁ CHẮN BẢO VỆ TÀI NGUYÊN - BẮT BUỘC KIỂM TRA TRƯỚC TIÊN]
@@ -141,123 +159,104 @@ LƯU Ý ĐẶC BIỆT: Viết thật chi tiết, đầy đủ 5 phần, không b
 
 Dưới đây là bài làm của tôi:\n`;
 
-        const topicInput = document.getElementById('topic-input');
-        const scriptInput = document.getElementById('script-input');
+        const inputTopic = document.getElementById('topic-input');
+        const inputScript = document.getElementById('script-input');
         const charCountEl = document.getElementById('char-count');
-        const btnSubmit = document.getElementById('btn-submit');
+        
         const inputSection = document.getElementById('input-section');
         const loadingSection = document.getElementById('loading-section');
+        const errorSection = document.getElementById('error-section');
         const outputSection = document.getElementById('output-section');
+        
         const responseEl = document.getElementById('ai-response');
+        const errorMsgEl = document.getElementById('error-message');
 
-        scriptInput.addEventListener('input', () => {
-            const length = scriptInput.value.length;
-            charCountEl.innerText = `${length} / 5000 ký tự`;
-            if(length > 5000) {
-                charCountEl.classList.add('text-red-400');
-            } else {
-                charCountEl.classList.remove('text-red-400');
-            }
+        // Cập nhật số ký tự
+        inputScript.addEventListener('input', () => {
+            const len = inputScript.value.length;
+            charCountEl.innerText = `${len} / 5000 ký tự`;
+            if(len > 5000) charCountEl.classList.add('text-red-400');
+            else charCountEl.classList.remove('text-red-400');
         });
 
-        async function reviewScript() {
-            const topic = topicInput.value.trim();
-            const script = scriptInput.value.trim();
-            
-            if (!topic) {
-                const originalText = btnSubmit.innerHTML;
-                btnSubmit.innerHTML = '<span class="text-amber-300">Vui lòng nhập Chủ đề!</span>';
-                setTimeout(() => { btnSubmit.innerHTML = originalText; }, 2000);
-                topicInput.focus();
-                return;
-            }
-            if (!script) {
-                const originalText = btnSubmit.innerHTML;
-                btnSubmit.innerHTML = '<span class="text-amber-300">Vui lòng nhập Kịch bản!</span>';
-                setTimeout(() => { btnSubmit.innerHTML = originalText; }, 2000);
-                scriptInput.focus();
-                return;
-            }
-            if (script.length > 5000) {
-                const originalText = btnSubmit.innerHTML;
-                btnSubmit.innerHTML = '<span class="text-amber-300">Kịch bản quá 5000 ký tự!</span>';
-                setTimeout(() => { btnSubmit.innerHTML = originalText; }, 2000);
-                return;
-            }
-
-            btnSubmit.disabled = true;
+        // Hàm thay thế alert() bằng giao diện lỗi có sẵn
+        function showValidationError(message) {
+            errorMsgEl.innerText = message;
             inputSection.classList.add('hidden');
+            errorSection.classList.remove('hidden');
+        }
+
+        async function reviewScript() {
+            const topic = inputTopic.value.trim();
+            const text = inputScript.value.trim();
+            
+            if (!topic) { showValidationError("Vui lòng nhập Chủ đề bài nói!"); return; }
+            if (!text) { showValidationError("Vui lòng dán nội dung kịch bản!"); return; }
+            if (text.length > 5000) { showValidationError("Kịch bản dài quá 5000 ký tự, hãy thu gọn lại nhé!"); return; }
+
+            // Chuyển sang màn hình Loading
+            inputSection.classList.add('hidden');
+            errorSection.classList.add('hidden');
             outputSection.classList.add('hidden');
             loadingSection.classList.remove('hidden');
             loadingSection.classList.add('flex');
 
-            const finalPrompt = `${SYSTEM_PROMPT}- Chủ đề: ${topic}\n- Kịch bản/Dàn ý: ${script}`;
+            const fullPrompt = SYSTEM_PROMPT + `\nChủ đề: ${topic}\nKịch bản:\n${text}`;
 
             try {
-                // Đã sửa lại URL gọi API thành chuẩn dùng cho mô hình gemini-3.6-flash
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                // SỬ DỤNG MÔ HÌNH GEMINI-2.5-FLASH MỚI NHẤT
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json'
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-goog-api-key': GEMINI_API_KEY
                     },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: finalPrompt }] }],
+                        contents: [{ parts: [{ text: fullPrompt }] }],
                         generationConfig: {
                             temperature: 0.6,
-                            maxOutputTokens: 4096,
+                            maxOutputTokens: 2048,
                         }
                     })
                 });
 
                 const data = await response.json();
                 
-                if(data.error) {
-                    throw new Error(data.error.message);
+                if(!response.ok) {
+                    throw new Error(data.error?.message || "Lỗi không xác định từ Google API");
                 }
 
-                let rawText = data.candidates[0].content.parts[0].text;
-                rawText = rawText.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
-
-                responseEl.innerHTML = rawText;
-                
-                loadingSection.classList.add('hidden');
-                loadingSection.classList.remove('flex');
-                outputSection.classList.remove('hidden');
+                if(data.candidates && data.candidates[0].content) {
+                    let rawText = data.candidates[0].content.parts[0].text;
+                    // Format chữ in đậm
+                    rawText = rawText.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
+                    
+                    responseEl.innerHTML = rawText;
+                    
+                    // Hiện kết quả
+                    loadingSection.classList.add('hidden');
+                    loadingSection.classList.remove('flex');
+                    outputSection.classList.remove('hidden');
+                } else {
+                    throw new Error("AI không trả về kết quả hợp lệ.");
+                }
 
             } catch (error) {
-                console.error("API Error: ", error);
-                
-                // Ẩn spinner loading
+                console.error(error);
                 loadingSection.classList.add('hidden');
                 loadingSection.classList.remove('flex');
                 
-                // Ẩn luôn phần form nhập để người dùng tập trung vào xem lỗi
-                inputSection.classList.add('hidden'); 
-                
-                // QUAN TRỌNG: Hiện phần kết quả ra để show lỗi thay vì giấu đi!
-                outputSection.classList.remove('hidden');
-                
-                // In lỗi chi tiết ra màn hình
-                responseEl.innerHTML = `
-                    <div class="text-red-400 font-bold text-lg mb-2">⚠️ Lỗi kết nối AI:</div>
-                    <div class="text-slate-300 font-mono text-sm bg-slate-800/50 p-4 rounded-xl border border-red-500/30 leading-relaxed">${error.message}</div>
-                    <div class="mt-5 text-slate-400 text-sm bg-blue-900/10 p-4 rounded-xl border border-blue-500/20">
-                        <strong class="text-[var(--accent)] block mb-1">Gợi ý khắc phục:</strong>
-                        1. Nếu bạn vừa tải file này lên GitHub, hãy chờ khoảng 2-3 phút để GitHub cập nhật.<br>
-                        2. Nhấn tổ hợp phím <strong class="text-white">Ctrl + F5</strong> (hoặc xóa bộ nhớ đệm Cache trình duyệt) để tải lại code mới nhất.<br>
-                        3. Đảm bảo API Key của bạn không có khoảng trắng thừa.
-                    </div>
-                `;
+                errorMsgEl.innerText = "Lỗi kỹ thuật: " + error.message;
+                errorSection.classList.remove('hidden');
             }
         }
 
         function resetForm() {
+            errorSection.classList.add('hidden');
             outputSection.classList.add('hidden');
             loadingSection.classList.add('hidden');
             loadingSection.classList.remove('flex');
             inputSection.classList.remove('hidden');
-            btnSubmit.disabled = false;
-            topicInput.focus();
         }
     </script>
 </body>
