@@ -104,7 +104,8 @@
                 Kết quả kiểm duyệt
             </h3>
             
-            <div id="ai-response" class="bg-slate-900/60 border border-slate-700 rounded-xl p-5 md:p-6 text-slate-300 text-base leading-relaxed whitespace-pre-wrap mb-6 shadow-inner">
+            <!-- Đã loại bỏ whitespace-pre-wrap tại đây -->
+            <div id="ai-response" class="bg-slate-900/60 border border-slate-700 rounded-xl p-5 md:p-6 text-slate-300 text-base leading-relaxed mb-6 shadow-inner">
                 <!-- Nội dung AI sẽ đổ vào đây -->
             </div>
 
@@ -121,16 +122,7 @@
     </main>
 
     <script>
-    // ============================================================
-    // CẤU HÌNH
-    // ============================================================
-
-    const WORKER_URL =
-        "https://youcanclub-gemini-proxy.clbyoucan.workers.dev/";
-
-    // ============================================================
-    // DOM
-    // ============================================================
+    const WORKER_URL = "https://youcanclub-gemini-proxy.clbyoucan.workers.dev/";
 
     const inputTopic = document.getElementById("topic-input");
     const inputScript = document.getElementById("script-input");
@@ -145,16 +137,9 @@
     const errorMsgEl = document.getElementById("error-message");
     const submitButton = document.getElementById("btn-submit");
 
-
-    // ============================================================
-    // ĐẾM KÝ TỰ
-    // ============================================================
-
     inputScript.addEventListener("input", () => {
         const len = inputScript.value.length;
-
         charCountEl.innerText = `${len} / 5000 ký tự`;
-
         if (len > 5000) {
             charCountEl.classList.add("text-red-400");
         } else {
@@ -162,27 +147,14 @@
         }
     });
 
-
-    // ============================================================
-    // HIỂN THỊ LỖI
-    // ============================================================
-
     function showValidationError(message) {
         errorMsgEl.innerText = message;
-
         inputSection.classList.add("hidden");
         loadingSection.classList.add("hidden");
         loadingSection.classList.remove("flex");
         outputSection.classList.add("hidden");
-
         errorSection.classList.remove("hidden");
     }
-
-
-    // ============================================================
-    // ESCAPE HTML
-    // Bảo vệ nội dung AI trước khi đưa vào innerHTML
-    // ============================================================
 
     function escapeHTML(text) {
         return text
@@ -193,25 +165,8 @@
             .replace(/'/g, "&#039;");
     }
 
-
-    // ============================================================
-    // FORMAT KẾT QUẢ AI
-    //
-    // Mục tiêu:
-    // - Không còn ### 
-    // - Không còn ---
-    // - Bullet đẹp
-    // - Tiêu đề rõ
-    // - Bold / italic hoạt động
-    // ============================================================
-
     function formatAIResponse(text) {
-
-        let lines = text
-            .replace(/\r\n/g, "\n")
-            .replace(/\r/g, "\n")
-            .split("\n");
-
+        let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
         let html = "";
         let inList = false;
 
@@ -223,193 +178,82 @@
         }
 
         for (let i = 0; i < lines.length; i++) {
-
             let line = lines[i].trim();
-
-            // ----------------------------------------------------
-            // Bỏ dòng trống
-            // ----------------------------------------------------
 
             if (!line) {
                 closeList();
                 continue;
             }
 
-
-            // ----------------------------------------------------
-            // Bỏ đường kẻ Markdown ---
-            // ----------------------------------------------------
-
             if (/^-{3,}$/.test(line)) {
                 closeList();
                 continue;
             }
 
-
-            // ----------------------------------------------------
             // Tiêu đề ### / ## / #
-            // ----------------------------------------------------
-
             if (/^#{1,3}\s+/.test(line)) {
-
                 closeList();
-
                 let title = line.replace(/^#{1,3}\s+/, "");
-
-                title = formatInline(title);
-
-                html += `
-                    <div class="mt-7 mb-3 first:mt-0">
-                        <h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)]">
-                            ${title}
-                        </h4>
-                    </div>
-                `;
-
+                html += `<div class="mt-6 mb-3 first:mt-0"><h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)]">${formatInline(title)}</h4></div>`;
                 continue;
             }
 
-
-            // ----------------------------------------------------
-            // Bullet - / * / •
-            // ----------------------------------------------------
-
+            // Bullet point (- * •)
             if (/^[-*•]\s+/.test(line)) {
-
                 if (!inList) {
-                    html += `
-                        <ul class="space-y-2 my-3">
-                    `;
-
+                    html += `<ul class="space-y-2 my-3">`;
                     inList = true;
                 }
-
                 let item = line.replace(/^[-*•]\s+/, "");
-
-                html += `
-                    <li class="flex gap-2 items-start">
-                        <span class="text-[var(--accent)] mt-1.5">•</span>
-                        <span>${formatInline(item)}</span>
-                    </li>
-                `;
-
+                // Dùng dot CSS tròn thay cho ký tự font chữ
+                html += `<li class="flex gap-2.5 items-start"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2.5 shrink-0"></span><span>${formatInline(item)}</span></li>`;
                 continue;
             }
 
-
-            // ----------------------------------------------------
-            // Số thứ tự
-            // Ví dụ: 1. Nội dung
-            // ----------------------------------------------------
-
+            // Danh sách số (1. 2. 3.)
             if (/^\d+\.\s+/.test(line)) {
-
                 closeList();
-
                 let match = line.match(/^(\d+)\.\s+(.+)$/);
-
                 if (match) {
-
-                    html += `
-                        <div class="flex gap-3 mb-3">
-                            <span class="font-bold text-[var(--accent)] min-w-[24px]">
-                                ${match[1]}.
-                            </span>
-
-                            <span>
-                                ${formatInline(match[2])}
-                            </span>
-                        </div>
-                    `;
-
+                    html += `<div class="flex gap-2 mb-3 mt-4"><span class="font-bold text-[var(--accent)] min-w-[20px]">${match[1]}.</span><span>${formatInline(match[2])}</span></div>`;
                     continue;
                 }
             }
 
-
-            // ----------------------------------------------------
-            // Dòng bình thường
-            // ----------------------------------------------------
-
+            // Đoạn văn thông thường
             closeList();
-
-            html += `
-                <p class="mb-3">
-                    ${formatInline(line)}
-                </p>
-            `;
+            html += `<p class="mb-3">${formatInline(line)}</p>`;
         }
 
         closeList();
-
         return html;
     }
 
-
-    // ============================================================
-    // FORMAT INLINE
-    // Xử lý **đậm**, *nghiêng*
-    // ============================================================
-
     function formatInline(text) {
-
         let result = escapeHTML(text);
-
-        // Bold
-        result = result.replace(
-            /\*\*(.*?)\*\*/g,
-            '<strong class="text-white font-bold">$1</strong>'
-        );
-
-        // Italic
-        result = result.replace(
-            /\*(.*?)\*/g,
-            '<em class="text-slate-300">$1</em>'
-        );
-
+        result = result.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-bold">$1</strong>');
+        result = result.replace(/\*(.*?)\*/g, '<em class="text-slate-300">$1</em>');
         return result;
     }
 
-
-    // ============================================================
-    // REVIEW SCRIPT
-    // ============================================================
-
     async function reviewScript() {
-
         const topic = inputTopic.value.trim();
         const text = inputScript.value.trim();
 
-
-        // --------------------------------------------------------
-        // VALIDATION
-        // --------------------------------------------------------
-
         if (!topic) {
-            showValidationError(
-                "Vui lòng nhập Chủ đề bài nói!"
-            );
+            showValidationError("Vui lòng nhập Chủ đề bài nói!");
             return;
         }
 
         if (!text) {
-            showValidationError(
-                "Vui lòng dán nội dung kịch bản!"
-            );
+            showValidationError("Vui lòng dán nội dung kịch bản!");
             return;
         }
 
         if (text.length > 5000) {
-            showValidationError(
-                "Kịch bản dài quá 5000 ký tự, hãy thu gọn lại nhé!"
-            );
+            showValidationError("Kịch bản dài quá 5000 ký tự, hãy thu gọn lại nhé!");
             return;
         }
-
-
-        // --------------------------------------------------------
-        // LOADING
-        // --------------------------------------------------------
 
         inputSection.classList.add("hidden");
         errorSection.classList.add("hidden");
@@ -418,181 +262,75 @@
         loadingSection.classList.remove("hidden");
         loadingSection.classList.add("flex");
 
-        // Khóa nút để tránh gửi nhiều request
         if (submitButton) {
             submitButton.disabled = true;
             submitButton.classList.add("opacity-60");
             submitButton.classList.remove("cursor-pointer");
         }
 
-
         try {
-
-            // ----------------------------------------------------
-            // GỌI CLOUDFLARE WORKER
-            // ----------------------------------------------------
-
             const response = await fetch(WORKER_URL, {
-
                 method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    topic: topic,
-                    script: text
-                })
-
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ topic: topic, script: text })
             });
 
-
-            // ----------------------------------------------------
-            // Đọc JSON an toàn
-            // ----------------------------------------------------
-
             let data;
-
             try {
                 data = await response.json();
             } catch (jsonError) {
-
-                throw new Error(
-                    "Máy chủ trả về dữ liệu không hợp lệ."
-                );
+                throw new Error("Máy chủ trả về dữ liệu không hợp lệ.");
             }
-
-
-            // ----------------------------------------------------
-            // API ERROR
-            // ----------------------------------------------------
 
             if (!response.ok || data.error) {
-
-                throw new Error(
-                    data.error ||
-                    `Máy chủ trả về lỗi HTTP ${response.status}.`
-                );
+                throw new Error(data.error || `Máy chủ trả về lỗi HTTP ${response.status}.`);
             }
 
-
-            // ----------------------------------------------------
-            // KIỂM TRA KẾT QUẢ
-            // ----------------------------------------------------
-
-            if (
-                !data.text ||
-                typeof data.text !== "string" ||
-                !data.text.trim()
-            ) {
-
-                throw new Error(
-                    "AI không trả về kết quả hợp lệ."
-                );
+            if (!data.text || typeof data.text !== "string" || !data.text.trim()) {
+                throw new Error("AI không trả về kết quả hợp lệ.");
             }
 
-
-            // ----------------------------------------------------
-            // HIỂN THỊ KẾT QUẢ
-            // ----------------------------------------------------
-
-            responseEl.innerHTML =
-                formatAIResponse(data.text);
-
-
-            // ----------------------------------------------------
-            // CHUYỂN SANG OUTPUT
-            // ----------------------------------------------------
+            responseEl.innerHTML = formatAIResponse(data.text);
 
             loadingSection.classList.add("hidden");
             loadingSection.classList.remove("flex");
-
             outputSection.classList.remove("hidden");
 
-
-            // Cuộn tới kết quả
             setTimeout(() => {
-                outputSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
+                outputSection.scrollIntoView({ behavior: "smooth", block: "start" });
             }, 100);
 
-
         } catch (error) {
-
-            console.error(
-                "AI Review Error:",
-                error
-            );
-
-
-            // ----------------------------------------------------
-            // TẮT LOADING
-            // ----------------------------------------------------
+            console.error("AI Review Error:", error);
 
             loadingSection.classList.add("hidden");
             loadingSection.classList.remove("flex");
 
-
-            // ----------------------------------------------------
-            // HIỂN THỊ LỖI
-            // ----------------------------------------------------
-
-            errorMsgEl.innerText =
-                "Mình chưa thể hoàn thành việc kiểm duyệt lần này.\n\n" +
-                error.message +
-                "\n\nBạn hãy thử lại sau một chút nhé.";
-
+            errorMsgEl.innerText = "Mình chưa thể hoàn thành việc kiểm duyệt lần này.\n\n" + error.message + "\n\nBạn hãy thử lại sau một chút nhé.";
             errorSection.classList.remove("hidden");
 
-
         } finally {
-
-            // ----------------------------------------------------
-            // MỞ KHÓA NÚT
-            // ----------------------------------------------------
-
             if (submitButton) {
-
                 submitButton.disabled = false;
-
                 submitButton.classList.remove("opacity-60");
-
                 submitButton.classList.add("cursor-pointer");
             }
         }
     }
 
-
-    // ============================================================
-    // RESET
-    // ============================================================
-
     function resetForm() {
-
         errorSection.classList.add("hidden");
-
         outputSection.classList.add("hidden");
-
         loadingSection.classList.add("hidden");
         loadingSection.classList.remove("flex");
-
         inputSection.classList.remove("hidden");
 
-        // Xóa kết quả cũ
         responseEl.innerHTML = "";
 
-        // Cuộn về đầu form
         setTimeout(() => {
-            inputSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
+            inputSection.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 100);
     }
-
 </script>
 </body>
 </html>
