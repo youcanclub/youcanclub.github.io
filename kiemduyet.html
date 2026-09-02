@@ -165,69 +165,82 @@
             .replace(/'/g, "&#039;");
     }
 
-    function formatAIResponse(text) {
-        let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
-        let html = "";
-        let inList = false;
+   function formatAIResponse(text) {
+    let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+    let html = "";
+    let inList = false;
 
-        function closeList() {
-            if (inList) {
-                html += "</ul>";
-                inList = false;
-            }
+    function closeList() {
+        if (inList) {
+            html += "</ul>";
+            inList = false;
         }
-
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i].trim();
-
-            if (!line) {
-                closeList();
-                continue;
-            }
-
-            if (/^-{3,}$/.test(line)) {
-                closeList();
-                continue;
-            }
-
-            // Tiêu đề ### / ## / #
-            if (/^#{1,3}\s+/.test(line)) {
-                closeList();
-                let title = line.replace(/^#{1,3}\s+/, "");
-                html += `<div class="mt-6 mb-3 first:mt-0"><h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)]">${formatInline(title)}</h4></div>`;
-                continue;
-            }
-
-            // Bullet point (- * •)
-            if (/^[-*•]\s+/.test(line)) {
-                if (!inList) {
-                    html += `<ul class="space-y-2 my-3">`;
-                    inList = true;
-                }
-                let item = line.replace(/^[-*•]\s+/, "");
-                // Dùng dot CSS tròn thay cho ký tự font chữ
-                html += `<li class="flex gap-2.5 items-start"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2.5 shrink-0"></span><span>${formatInline(item)}</span></li>`;
-                continue;
-            }
-
-            // Danh sách số (1. 2. 3.)
-            if (/^\d+\.\s+/.test(line)) {
-                closeList();
-                let match = line.match(/^(\d+)\.\s+(.+)$/);
-                if (match) {
-                    html += `<div class="flex gap-2 mb-3 mt-4"><span class="font-bold text-[var(--accent)] min-w-[20px]">${match[1]}.</span><span>${formatInline(match[2])}</span></div>`;
-                    continue;
-                }
-            }
-
-            // Đoạn văn thông thường
-            closeList();
-            html += `<p class="mb-3">${formatInline(line)}</p>`;
-        }
-
-        closeList();
-        return html;
     }
+
+    // Kiểm tra một chuỗi có phải viết HOA toàn bộ không (bỏ qua số, dấu câu)
+    // Dùng để nhận diện 5 tiêu đề lớn (luôn viết HOA theo system prompt)
+    function isAllCapsTitle(str) {
+        let letters = str.replace(/[^\p{L}]/gu, "");
+        if (letters.length < 2) return false; // tránh nhận nhầm chuỗi quá ngắn
+        return letters === letters.toUpperCase() && letters !== letters.toLowerCase();
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+
+        if (!line) {
+            closeList();
+            continue;
+        }
+
+        if (/^-{3,}$/.test(line)) {
+            closeList();
+            continue;
+        }
+
+        // Tiêu đề ### / ## / #
+        if (/^#{1,3}\s+/.test(line)) {
+            closeList();
+            let title = line.replace(/^#{1,3}\s+/, "");
+            html += `<div class="mt-6 mb-3 first:mt-0"><h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)]">${formatInline(title)}</h4></div>`;
+            continue;
+        }
+
+        // Bullet point (- * •)
+        if (/^[-*•]\s+/.test(line)) {
+            if (!inList) {
+                html += `<ul class="space-y-2 my-3">`;
+                inList = true;
+            }
+            let item = line.replace(/^[-*•]\s+/, "");
+            html += `<li class="flex gap-2.5 items-start"><span class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] mt-2.5 shrink-0"></span><span>${formatInline(item)}</span></li>`;
+            continue;
+        }
+
+        // Danh sách số (1. 2. 3.)
+        let numMatch = line.match(/^(\d+)\.\s+(.+)$/);
+        if (numMatch) {
+            closeList();
+            let content = numMatch[2];
+
+            if (isAllCapsTitle(content)) {
+                // Tiêu đề lớn (1. ĐÁNH GIÁ MỨC ĐỘ PHÙ HỢP, 2. ĐIỂM SÁNG...)
+                html += `<div class="mt-6 mb-3 first:mt-0 pb-2 border-b border-slate-700/50"><h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)] flex items-center gap-2"><span class="flex items-center justify-center w-7 h-7 rounded-full bg-[var(--accent)]/15 text-sm shrink-0">${numMatch[1]}</span>${formatInline(content)}</h4></div>`;
+            } else {
+                // Mục con đánh số bên trong một tiêu đề (Chuẩn mực học đường, Giá trị thông điệp...)
+                html += `<div class="flex gap-3 mb-3 pl-2"><span class="font-bold text-[var(--accent)] min-w-[22px]">${numMatch[1]}.</span><span>${formatInline(content)}</span></div>`;
+            }
+            continue;
+        }
+
+        // Đoạn văn thông thường
+        closeList();
+        html += `<p class="mb-3">${formatInline(line)}</p>`;
+    }
+
+    closeList();
+    return html;
+}
 
     function formatInline(text) {
         let result = escapeHTML(text);
