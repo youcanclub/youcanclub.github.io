@@ -200,7 +200,10 @@
                 loadingSection.classList.add('hidden');
                 loadingSection.classList.remove('flex');
                 
-                errorMsgEl.innerText = "Lỗi kỹ thuật: " + error.message;
+                errorMsgEl.innerText =
+    "Mình chưa thể hoàn thành việc kiểm duyệt lần này.\n\n" +
+    error.message +
+    "\n\nBạn hãy thử bấm lại hoặc gửi lại kịch bản nhé.";
                 errorSection.classList.remove('hidden');
             }
         }
