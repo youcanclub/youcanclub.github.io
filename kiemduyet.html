@@ -249,7 +249,7 @@
         return result;
     }
 
-    // ĐÃ THAY THẾ HÀM formatAIResponse TẠI ĐÂY ĐỂ ĐỊNH DẠNG ĐẸP HƠN
+    // ĐÃ CẬP NHẬT HÀM formatAIResponse TẠI ĐÂY ĐỂ ĐỊNH DẠNG ĐÚNG NHƯ BẠN MONG MUỐN
     function formatAIResponse(text) {
         let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
         let html = "";
@@ -328,26 +328,35 @@
                     closeList();
                     html += `
                     <div class="mt-8 mb-5 first:mt-0 pb-2 border-b border-slate-700/50 flex items-center">
-                        <span class="text-slate-500 mr-3 opacity-50 font-title font-bold text-xl">${num}.</span>
+                        <span class="text-[var(--accent)] mr-3 font-title font-bold text-xl drop-shadow-sm">${num}.</span>
                         <h4 class="text-lg md:text-xl font-title font-bold text-[var(--accent)] uppercase tracking-wider">${formatInline(content)}</h4>
                     </div>`;
                 } else {
-                    // Nếu là danh sách số bình thường bên trong một mục
+                    // Nếu là danh sách số bình thường (như 5 tiêu chí)
                     if (!inList) {
                         html += `<div class="space-y-4 mb-6 mt-2">`;
                         inList = true;
                     }
 
+                    // Tách tên tiêu chí và nội dung (nếu có dấu hai chấm)
                     let formattedContent = formatInline(content);
+                    let colonIndex = formattedContent.indexOf(':');
                     
+                    if (colonIndex !== -1) {
+                        // In đậm phần tên tiêu chí (trước dấu hai chấm)
+                        let criterionName = formattedContent.substring(0, colonIndex + 1);
+                        let criterionDesc = formattedContent.substring(colonIndex + 1);
+                        formattedContent = `<strong class="text-white">${criterionName}</strong>${criterionDesc}`;
+                    }
+
                     // Tự động tô màu kết quả đánh giá (Đạt / Không Đạt / Cần xem xét)
                     formattedContent = formattedContent.replace(/(Đạt)(?=[.,\s]|$)/g, '<span class="text-emerald-400 font-bold bg-emerald-400/10 px-1.5 py-0.5 rounded border border-emerald-400/20 shadow-sm">Đạt</span>');
                     formattedContent = formattedContent.replace(/(Không Đạt)(?=[.,\s]|$)/g, '<span class="text-rose-400 font-bold bg-rose-400/10 px-1.5 py-0.5 rounded border border-rose-400/20 shadow-sm">Không Đạt</span>');
                     formattedContent = formattedContent.replace(/(Cần xem xét( lại)?)(?=[.,\s]|$)/g, '<span class="text-amber-400 font-bold bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20 shadow-sm">Cần xem xét</span>');
 
                     html += `
-                    <div class="flex items-start gap-3.5 group">
-                        <span class="font-title font-bold text-[var(--accent)] bg-[var(--accent)]/10 w-7 h-7 flex items-center justify-center rounded border border-[var(--accent)]/30 shrink-0 text-sm mt-0.5 shadow-sm group-hover:bg-[var(--accent)]/20 transition-colors">${num}</span>
+                    <div class="flex items-start gap-2 group">
+                        <span class="font-bold text-[var(--accent)] min-w-[20px] pt-0.5">${num}.</span>
                         <span class="leading-relaxed flex-1 text-slate-300 block pt-0.5">${formattedContent}</span>
                     </div>`;
                 }
