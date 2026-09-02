@@ -151,7 +151,60 @@
             inputSection.classList.add('hidden');
             errorSection.classList.remove('hidden');
         }
+function formatAIResponse(text) {
+    // 1. Escape HTML để nội dung AI không thể chèn HTML/JS nguy hiểm
+    let html = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
 
+    // 2. Tiêu đề lớn: ### Tiêu đề
+    html = html.replace(
+        /^###\s*(.+)$/gm,
+        '<h4 class="text-lg font-title font-bold text-[var(--accent)] mt-6 mb-3">$1</h4>'
+    );
+
+    // 3. Tiêu đề ## Tiêu đề
+    html = html.replace(
+        /^##\s*(.+)$/gm,
+        '<h4 class="text-lg font-title font-bold text-[var(--accent)] mt-6 mb-3">$1</h4>'
+    );
+
+    // 4. Bold **text**
+    html = html.replace(
+        /\*\*(.*?)\*\*/g,
+        '<strong class="text-white font-bold">$1</strong>'
+    );
+
+    // 5. Italic *text*
+    html = html.replace(
+        /(?<!\*)\*(?!\s)(.*?)(?<!\s)\*(?!\*)/g,
+        '<em class="text-slate-400">$1</em>'
+    );
+
+    // 6. Bullet list "- text" hoặc "* text"
+    html = html.replace(
+        /^[\-\*]\s+(.+)$/gm,
+        '<li class="ml-5 mb-2 list-disc">$1</li>'
+    );
+
+    // 7. Đường kẻ ---
+    html = html.replace(
+        /^---+$/gm,
+        '<div class="border-t border-slate-700/60 my-5"></div>'
+    );
+
+    // 8. Xuống dòng
+    html = html.replace(/\n/g, '<br>');
+
+    // 9. Gom các bullet liên tiếp vào cùng một danh sách
+    html = html.replace(
+        /((?:<li.*?<\/li><br>?)+)/g,
+        '<ul class="my-3">$1</ul>'
+    );
+
+    return html;
+}
         async function reviewScript() {
             const topic = inputTopic.value.trim();
             const text = inputScript.value.trim();
@@ -182,10 +235,13 @@
                     throw new Error(data.error || "Lỗi không xác định từ máy chủ");
                 }
 
-                if (data.text) {
-                    // Format chữ in đậm
-                    const rawText = data.text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
-                    responseEl.innerHTML = rawText;
+               if (data.text) {
+    responseEl.innerHTML = formatAIResponse(data.text);
+
+    loadingSection.classList.add('hidden');
+    loadingSection.classList.remove('flex');
+    outputSection.classList.remove('hidden');
+}
 
                     // Hiện kết quả
                     loadingSection.classList.add('hidden');
