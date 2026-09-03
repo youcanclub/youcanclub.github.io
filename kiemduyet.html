@@ -41,6 +41,16 @@
             animation: spin 1s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        /* Hiệu ứng nhịp đập nhẹ cho các Badge Kết Luận */
+        @keyframes subtle-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .animate-subtle-pulse {
+            animation: subtle-pulse 2s infinite ease-in-out;
+            display: inline-block;
+        }
     </style>
 </head>
 <body class="flex flex-col items-center py-12 px-4 sm:px-6">
@@ -271,7 +281,7 @@ V. GỢI Ý NÂNG CẤP`;
         return result;
     }
 
-    // --- HÀM FORMAT CẬP NHẬT: NHẬN DIỆN SỐ LA MÃ & IN ĐẬM TÊN TIÊU CHÍ ---
+    // --- HÀM FORMAT CẬP NHẬT: NHẬN DIỆN SỐ LA MÃ LINH HOẠT HƠN ---
     function formatAIResponse(text) {
         let lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
         let html = "";
@@ -282,13 +292,6 @@ V. GỢI Ý NÂNG CẤP`;
                 html += "</div>";
                 inList = false;
             }
-        }
-
-        // Kiểm tra xem chuỗi có phải là chữ viết hoa (cho phép có dấu câu)
-        function isAllCaps(str) {
-            let letters = str.replace(/[^\p{L}]/gu, "");
-            if (letters.length < 2) return false;
-            return letters === letters.toUpperCase() && letters !== letters.toLowerCase();
         }
 
         for (let i = 0; i < lines.length; i++) {
@@ -339,10 +342,10 @@ V. GỢI Ý NÂNG CẤP`;
                 continue;
             }
 
-            // 2. Tiêu đề lớn dùng số La Mã (VD: I. ĐÁNH GIÁ MỨC ĐỘ PHÙ HỢP)
-            // Regex nhận diện số La Mã: I, II, III, IV, V, VI...
+            // 2. Tiêu đề lớn dùng số La Mã (VD: I. Đánh giá mức độ phù hợp)
+            // Đã BỎ điều kiện isAllCaps. Chỉ cần bắt đầu bằng I., II., III., IV., V.
             let romanMatch = line.match(/^(IV|V?I{0,3})\.\s+(.+)$/i); 
-            if (romanMatch && isAllCaps(romanMatch[2])) {
+            if (romanMatch) {
                 closeList();
                 let romanNum = romanMatch[1].toUpperCase();
                 let titleContent = romanMatch[2];
@@ -393,10 +396,12 @@ V. GỢI Ý NÂNG CẤP`;
             closeList();
             let pContent = formatInline(line);
             
-            // Tự động tô màu Kết luận
-            pContent = pContent.replace(/(Đủ điều kiện)(?=[.,\s]|$)/gi, '<span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/10 px-2.5 py-1 rounded border border-emerald-400/30 inline-block shadow-sm">ĐỦ ĐIỀU KIỆN</span>');
-            pContent = pContent.replace(/(Từ chối)(?=[.,\s]|$)/gi, '<span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/10 px-2.5 py-1 rounded border border-rose-400/30 inline-block shadow-sm">TỪ CHỐI</span>');
-            pContent = pContent.replace(/(Cần chỉnh sửa)(?=[.,\s]|$)/gi, '<span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/10 px-2.5 py-1 rounded border border-amber-400/30 inline-block shadow-sm">CẦN CHỈNH SỬA</span>');
+            // Tự động tô màu và tạo hiệu ứng cho Kết luận
+            pContent = pContent.replace(/(Đủ điều kiện)(?=[.,\s]|$)/gi, '<span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-3 py-1.5 rounded-lg border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse mx-1">ĐỦ ĐIỀU KIỆN</span>');
+            
+            pContent = pContent.replace(/(Từ chối)(?=[.,\s]|$)/gi, '<span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-3 py-1.5 rounded-lg border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse mx-1">TỪ CHỐI</span>');
+            
+            pContent = pContent.replace(/(Cần chỉnh sửa)(?=[.,\s]|$)/gi, '<span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-3 py-1.5 rounded-lg border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse mx-1">CẦN CHỈNH SỬA</span>');
 
             html += `<p class="mb-4 leading-relaxed text-slate-300">${pContent}</p>`;
         }
