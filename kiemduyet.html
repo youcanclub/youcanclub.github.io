@@ -231,7 +231,8 @@ LƯU Ý ĐẶC BIỆT VỀ ĐỘ DÀI VÀ TRÌNH BÀY:
   IV. KẾT LUẬN KIỂM DUYỆT
   V. GỢI Ý NÂNG CẤP
 
-Mục tiêu: một học sinh THPT có thể đọc toàn bộ kết quả trong khoảng 1-2 phút và nhanh chóng hiểu mình cần sửa gì.`;
+Mục tiêu: một học sinh THPT có thể đọc toàn bộ kết quả trong khoảng 1-2 phút và nhanh chóng hiểu mình cần sửa gì.
+Tuyệt đối không sử dụng các ký hiệu markdown in đậm () hoặc danh sách (-) bên trong các phần trả lời (ngoại trừ cấu trúc được yêu cầu)`;
 
     const inputTopic = document.getElementById("topic-input");
     const inputScript = document.getElementById("script-input");
@@ -399,11 +400,16 @@ Mục tiêu: một học sinh THPT có thể đọc toàn bộ kết quả trong
             let pContent = formatInline(line);
             
             // Tạo huy hiệu phát sáng CHO CHỮ NẰM TRONG NGOẶC VUÔNG, sau đó XÓA NGOẶC VUÔNG đi
-            pContent = pContent.replace(/\[(?:\s*)(Đủ điều kiện)(?:\s*)\]/gi, '<br><span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-3 py-1.5 rounded-lg border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse my-2">ĐỦ ĐIỀU KIỆN</span><br>');
+            // Cải tiến: Xóa luôn dấu chấm/phẩy (nếu có) bám sát ngay sau dấu ngoặc vuông đóng ]
+            pContent = pContent.replace(/\[(?:\s*)(Đủ điều kiện)(?:\s*)\][.,;]?/gi, '<br><span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-3 py-1.5 rounded-lg border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse my-2">ĐỦ ĐIỀU KIỆN</span><br>');
             
-            pContent = pContent.replace(/\[(?:\s*)(Từ chối)(?:\s*)\]/gi, '<br><span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-3 py-1.5 rounded-lg border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse my-2">TỪ CHỐI</span><br>');
+            pContent = pContent.replace(/\[(?:\s*)(Từ chối)(?:\s*)\][.,;]?/gi, '<br><span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-3 py-1.5 rounded-lg border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse my-2">TỪ CHỐI</span><br>');
             
-            pContent = pContent.replace(/\[(?:\s*)(Cần chỉnh sửa)(?:\s*)\]/gi, '<br><span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-3 py-1.5 rounded-lg border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse my-2">CẦN CHỈNH SỬA</span><br>');
+            pContent = pContent.replace(/\[(?:\s*)(Cần chỉnh sửa)(?:\s*)\][.,;]?/gi, '<br><span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-3 py-1.5 rounded-lg border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse my-2">CẦN CHỈNH SỬA</span><br>');
+
+            // Loại bỏ hoàn toàn markdown in đậm (**) thừa thãi ở đầu các đoạn văn bản (đặc biệt là mục Gợi ý nâng cấp)
+            // Chỉ giữ lại định dạng in đậm do code tự xử lý ở mục Danh sách 5 tiêu chí.
+            pContent = pContent.replace(/\*\*/g, '');
 
             html += `<p class="mb-4 leading-relaxed text-slate-300">${pContent}</p>`;
         }
