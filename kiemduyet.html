@@ -394,21 +394,18 @@ Tuyệt đối không sử dụng các ký hiệu markdown in đậm () hoặc d
                 </div>`;
                 continue;
             }
-
-            // Đoạn văn thông thường
+            // 5. Xử lý đoạn văn bản thông thường (Paragraphs)
             closeList();
             let pContent = formatInline(line);
             
-            // Tạo huy hiệu phát sáng CHO CHỮ NẰM TRONG NGOẶC VUÔNG, sau đó XÓA NGOẶC VUÔNG đi
-            // Cải tiến: Xóa luôn dấu chấm/phẩy (nếu có) bám sát ngay sau dấu ngoặc vuông đóng ]
-            pContent = pContent.replace(/\[(?:\s*)(Đủ điều kiện)(?:\s*)\][.,;]?/gi, '<br><span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-3 py-1.5 rounded-lg border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse my-2">ĐỦ ĐIỀU KIỆN</span><br>');
+            // XÓA THẺ <br> Ở TRƯỚC HUY HIỆU ĐỂ HẾT BỊ TRỐNG DÒNG, CHỈ GIỮ <br> Ở SAU
+            pContent = pContent.replace(/\[(?:\s*)(Đủ điều kiện)(?:\s*)\][.,;]?/gi, '<span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-3 py-1.5 rounded-lg border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse mb-3 mt-1">ĐỦ ĐIỀU KIỆN</span><br>');
             
-            pContent = pContent.replace(/\[(?:\s*)(Từ chối)(?:\s*)\][.,;]?/gi, '<br><span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-3 py-1.5 rounded-lg border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse my-2">TỪ CHỐI</span><br>');
+            pContent = pContent.replace(/\[(?:\s*)(Từ chối)(?:\s*)\][.,;]?/gi, '<span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-3 py-1.5 rounded-lg border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse mb-3 mt-1">TỪ CHỐI</span><br>');
             
-            pContent = pContent.replace(/\[(?:\s*)(Cần chỉnh sửa)(?:\s*)\][.,;]?/gi, '<br><span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-3 py-1.5 rounded-lg border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse my-2">CẦN CHỈNH SỬA</span><br>');
+            pContent = pContent.replace(/\[(?:\s*)(Cần chỉnh sửa)(?:\s*)\][.,;]?/gi, '<span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-3 py-1.5 rounded-lg border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse mb-3 mt-1">CẦN CHỈNH SỬA</span><br>');
 
-            // Loại bỏ hoàn toàn markdown in đậm (**) thừa thãi ở đầu các đoạn văn bản (đặc biệt là mục Gợi ý nâng cấp)
-            // Chỉ giữ lại định dạng in đậm do code tự xử lý ở mục Danh sách 5 tiêu chí.
+            // Loại bỏ hoàn toàn markdown in đậm (**) thừa thãi
             pContent = pContent.replace(/\*\*/g, '');
 
             html += `<p class="mb-4 leading-relaxed text-slate-300">${pContent}</p>`;
