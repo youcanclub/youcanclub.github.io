@@ -2,18 +2,19 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Duyệt Kịch Bản | You Can Club</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-color: #070b14;
-            --accent: #6ad2ff;
-            --card-bg: rgba(15, 23, 42, 0.6);
-            --card-border: rgba(51, 65, 85, 0.5);
-        }
+        // 5. Xử lý đoạn văn bản bình thường (Paragraphs)
+        closeList();
+        let pContent = formatInline(line);
+        
+        // --- CHỈNH SỬA: CHỈ BẮT CHỮ TRONG NGOẶC VUÔNG [...] VÀ TẠO HIỆU ỨNG ---
+        pContent = pContent.replace(/\[\s*(Đủ điều kiện)\s*\]/gi, '<span class="text-emerald-400 font-bold uppercase tracking-wider bg-emerald-400/15 px-4 py-2 rounded-xl border-2 border-emerald-400/50 inline-block shadow-[0_0_15px_rgba(16,185,129,0.3)] animate-subtle-pulse mx-1 mb-2">ĐỦ ĐIỀU KIỆN</span><br>');
+        
+        pContent = pContent.replace(/\[\s*(Từ chối)\s*\]/gi, '<span class="text-rose-400 font-bold uppercase tracking-wider bg-rose-400/15 px-4 py-2 rounded-xl border-2 border-rose-400/50 inline-block shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-subtle-pulse mx-1 mb-2">TỪ CHỐI</span><br>');
+        
+        pContent = pContent.replace(/\[\s*(Cần chỉnh sửa)\s*\]/gi, '<span class="text-amber-400 font-bold uppercase tracking-wider bg-amber-400/15 px-4 py-2 rounded-xl border-2 border-amber-400/50 inline-block shadow-[0_0_15px_rgba(251,191,36,0.3)] animate-subtle-pulse mx-1 mb-2">CẦN CHỈNH SỬA</span><br>');
+
+        html += `<p class="mb-4 leading-relaxed text-slate-300">${pContent}</p>`;
+    }
         body {
             background-color: var(--bg-color);
             font-family: 'Lora', serif;
