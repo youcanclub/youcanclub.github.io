@@ -88,162 +88,218 @@
     <!-- Hiệu ứng nền không gian -->
     <div id="particles-container" class="fixed inset-0 z-0 pointer-events-none overflow-hidden"></div>
 
-    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 py-16 md:py-24 flex-grow flex flex-col">
+    <div class="relative z-10 w-full max-w-5xl mx-auto px-4 py-8 sm:py-12 md:py-24 flex-grow flex flex-col gap-10 md:gap-14">
         
         <!-- Header -->
-        <header class="text-center mb-16 relative">
+        <header class="text-center relative">
             <!-- Vòng tròn hào quang sau logo -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[var(--accent)]/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40 bg-[var(--accent)]/20 rounded-full blur-3xl -z-10 pointer-events-none"></div>
             
-            <div class="inline-block relative mb-6 group">
+            <div class="inline-block relative mb-4 md:mb-6 group">
                 <div class="absolute inset-0 bg-[var(--accent)] rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
-                <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="You Can Club Logo" class="w-24 h-24 md:w-28 md:h-28 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] relative z-10 shadow-[0_0_20px_rgba(106,210,255,0.3)]">
+                <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="You Can Club Logo" class="w-20 h-20 md:w-28 md:h-28 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] relative z-10 shadow-[0_0_20px_rgba(106,210,255,0.3)]">
             </div>
             
-            <h1 class="text-4xl md:text-6xl font-title font-bold text-white mb-4 tracking-wide drop-shadow-md">
+            <h1 class="text-3xl sm:text-4xl md:text-6xl font-title font-bold text-white mb-3 md:mb-4 tracking-wide drop-shadow-md">
                 Công cụ nội bộ
             </h1>
-            <div class="flex items-center justify-center gap-4 mb-6 text-[var(--accent)]">
-                <div class="w-12 h-[1px] bg-gradient-to-r from-transparent to-[var(--accent)]"></div>
-                <span class="font-medium tracking-[0.2em] uppercase text-xs md:text-sm">You Can Club</span>
-                <div class="w-12 h-[1px] bg-gradient-to-l from-transparent to-[var(--accent)]"></div>
+            <div class="flex items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6 text-[var(--accent)]">
+                <div class="w-8 md:w-12 h-[1px] bg-gradient-to-r from-transparent to-[var(--accent)]"></div>
+                <span class="font-medium tracking-[0.15em] md:tracking-[0.2em] uppercase text-[10px] md:text-sm">You Can Club</span>
+                <div class="w-8 md:w-12 h-[1px] bg-gradient-to-l from-transparent to-[var(--accent)]"></div>
             </div>
-            <p class="text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
-                Hệ sinh thái công cụ hỗ trợ vận hành nội bộ. Nơi kết nối, theo dõi tiến độ và duy trì nhịp đập hoạt động của toàn bộ câu lạc bộ.
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg leading-relaxed px-2">
+                Các công cụ hỗ trợ vận hành nội bộ. Nơi kết nối, theo dõi tiến độ và duy trì nhịp đập hoạt động của toàn bộ câu lạc bộ.
             </p>
         </header>
 
-        <!-- Công cụ Quản lý chính (Ngang hàng) -->
-        <div class="max-w-5xl mx-auto w-full mb-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Google Sheets -->
-            <a href="https://docs.google.com/spreadsheets/d/1zkEjW0tTtvEAdsjZhELCXuZVUpbMjdKsDZKKoczLrFI/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 md:p-8 flex flex-col relative overflow-hidden group">
+        <!-- ƯU TIÊN 1: Google Sheets (Card trải ngang, nổi bật nhất) -->
+        <section class="w-full">
+            <a href="https://docs.google.com/spreadsheets/d/1zkEjW0tTtvEAdsjZhELCXuZVUpbMjdKsDZKKoczLrFI/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl md:rounded-3xl p-5 md:p-10 flex flex-col md:flex-row items-start md:items-center gap-5 md:gap-8 relative overflow-hidden group border-emerald-500/30 hover:border-emerald-400/60 shadow-[0_10px_40px_rgba(16,185,129,0.1)] hover:shadow-[0_15px_50px_rgba(16,185,129,0.2)]">
                 <!-- Hiệu ứng nền thẻ -->
-                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full transition-transform duration-500 group-hover:scale-150 -z-10"></div>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl transition-transform duration-700 group-hover:scale-150 -z-10 translate-x-1/4 -translate-y-1/4"></div>
+                <div class="absolute bottom-0 left-0 w-40 h-40 bg-emerald-600/10 rounded-full blur-2xl transition-transform duration-700 group-hover:scale-125 -z-10 -translate-x-1/4 translate-y-1/4"></div>
                 
-                <div class="flex items-start justify-between mb-6">
-                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)] group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold uppercase tracking-wider rounded-full border border-emerald-500/20">Cơ sở dữ liệu</span>
+                <div class="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all duration-300 shrink-0">
+                    <svg class="w-7 h-7 md:w-10 md:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                 </div>
                 
-                <h2 class="text-2xl md:text-3xl font-title font-bold text-white mb-3 group-hover:text-emerald-300 transition-colors">Bảng Tính Tổng Hợp</h2>
-                <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-                    Hệ thống lưu trữ trung tâm: Quản lý thông tin thành viên, tự động cập nhật bảng xếp hạng điểm số và theo dõi hồ sơ vi phạm kỷ luật.
-                </p>
-                
-                <div class="flex items-center text-emerald-400 font-medium text-sm gap-2 mt-auto">
-                    <span>Mở Google Sheets</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </div>
-            </a>
-
-            <!-- Form Đăng ký Thuyết trình (Được đưa lên ngang hàng) -->
-            <a href="https://forms.gle/8f8Y9xqN1WWTqfUi9" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-6 md:p-8 flex flex-col relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full transition-transform duration-500 group-hover:scale-150 -z-10"></div>
-                
-                <div class="flex items-start justify-between mb-6">
-                    <div class="w-14 h-14 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:scale-110 transition-transform duration-300">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-2 md:mb-3">
+                        <span class="px-2 py-0.5 md:px-3 md:py-1 bg-slate-800/80 text-slate-300 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full border border-slate-600">Cơ sở dữ liệu</span>
                     </div>
-                    <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-wider rounded-full border border-blue-500/20">Biểu mẫu</span>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-title font-bold text-white mb-2 md:mb-4 group-hover:text-emerald-300 transition-colors">Google Sheets</h2>
+                    <p class="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed max-w-2xl">
+                        Hệ thống lưu trữ trung tâm: Quản lý thông tin thành viên, điểm số, bảng xếp hạng và thông tin vi phạm.
+                    </p>
                 </div>
                 
-                <h2 class="text-2xl md:text-3xl font-title font-bold text-white mb-3 group-hover:text-blue-300 transition-colors">Đăng ký Thuyết trình</h2>
-                <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-6 flex-grow">
-                    Gửi kịch bản bài nói đã được duyệt qua AI để Ban Nội dung xếp lịch sinh hoạt.
-                </p>
+                <div class="mt-2 md:mt-0 flex items-center justify-center px-4 py-3 md:px-6 md:py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-semibold group-hover:bg-emerald-500/20 group-hover:shadow-[0_0_15px_rgba(16,185,129,0.3)] transition-all duration-300 shrink-0 w-full md:w-auto text-sm md:text-base">
+                    Mở Google Sheets
+                    <svg class="w-4 h-4 md:w-5 md:h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </div>
+            </a>
+        </section>
+
+        <!-- ƯU TIÊN 2 & 3: Quy trình Thuyết trình (AI & Form) -->
+        <section class="w-full">
+            <!-- Section Tiêu đề -->
+            <div class="mb-4 md:mb-6 flex items-center gap-3 md:gap-4">
+                <h3 class="text-lg sm:text-xl md:text-2xl font-title font-bold text-white">Đăng ký Thuyết trình</h3>
+                <div class="h-px bg-slate-700/50 flex-grow"></div>
+            </div>
+
+            <div class="flex flex-col md:grid md:grid-cols-2 gap-5 md:gap-6 relative">
                 
-                <div class="flex items-center text-blue-400 font-medium text-sm gap-2 mt-auto">
-                    <span>Mở Biểu mẫu</span>
-                    <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                <!-- Nút mũi tên chỉ hướng (Chỉ hiện trên Desktop) -->
+                <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#070b14] rounded-full border border-slate-700 items-center justify-center z-10 text-slate-400 shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </div>
-            </a>
-            
-        </div>
 
-        <!-- Section Tiêu đề Biểu mẫu -->
-        <div class="max-w-4xl mx-auto w-full mt-8 mb-6 flex items-center gap-4">
-            <h3 class="text-xl md:text-2xl font-title font-bold text-white">Biểu mẫu khác</h3>
-            <div class="h-px bg-slate-700 flex-grow"></div>
-        </div>
-
-        <!-- Các Biểu mẫu còn lại (2 Cột) -->
-        <div class="max-w-4xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            <!-- Form 1 -->
-            <a href="https://forms.gle/NL35oPLHLaaTHe4C9" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-5 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                <!-- AI Kiểm duyệt Kịch bản -->
+                <a href="https://youcanclub.github.io/kiemduyet.html" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-5 md:p-8 flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-cyan-500/10 rounded-bl-full transition-transform duration-500 group-hover:scale-150 -z-10"></div>
+                    
+                    <div class="flex items-start justify-between mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)] group-hover:scale-110 transition-transform duration-300">
+                            <!-- Sparkles Icon cho AI -->
+                            <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"></path>
+                            </svg>
+                        </div>
+                        <span class="px-2 py-0.5 md:px-3 md:py-1 bg-cyan-500/10 text-cyan-400 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full border border-cyan-500/20">Bước 1</span>
                     </div>
-                    <h4 class="text-lg font-title font-bold text-white leading-tight">Biểu mẫu<br><span class="text-purple-300 text-sm md:text-base">Xin Rời CLB</span></h4>
-                </div>
-                <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Dành cho các thành viên có nguyện vọng xin phép dừng hoạt động tại câu lạc bộ.</p>
-            </a>
-
-            <!-- Form 3 -->
-            <a href="https://forms.gle/JRBKQzP4oQtdH2xT8" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-5 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20 group-hover:bg-amber-500/20 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    
+                    <h2 class="text-xl md:text-3xl font-title font-bold text-white mb-2 md:mb-3 group-hover:text-cyan-300 transition-colors">AI Kiểm Duyệt</h2>
+                    <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-4 md:mb-6 flex-grow">
+                        Giúp hỗ trợ rà soát, đánh giá và gợi ý hoàn thiện kịch bản thuyết trình của bạn nhanh chóng.
+                    </p>
+                    
+                    <div class="flex items-center text-cyan-400 font-medium text-xs md:text-sm gap-2 mt-auto">
+                        <span>Mở Công cụ AI</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </div>
-                    <h4 class="text-lg font-title font-bold text-white leading-tight">Biểu mẫu<br><span class="text-amber-300 text-sm md:text-base">Góp ý & Khiếu nại</span></h4>
-                </div>
-                <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Nơi gửi các phản hồi, ý kiến đóng góp xây dựng CLB.</p>
-            </a>
+                </a>
 
-        </div>
-
-        <!-- Section Tiêu đề Zalo -->
-        <div class="mt-10 mb-6 flex items-center gap-4">
-            <h3 class="text-xl md:text-2xl font-title font-bold text-white">Kênh Zalo</h3>
-            <div class="h-px bg-slate-700 flex-grow"></div>
-        </div>
-
-        <!-- Các Kênh Zalo (3 Cột) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <!-- Zalo Kênh Chung -->
-            <a href="https://zalo.me/g/mluwme013" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-5 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20 group-hover:bg-sky-500/20 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                <!-- Mũi tên kết nối (Chỉ hiện trên Mobile) -->
+                <div class="flex md:hidden justify-center -my-3 relative z-10">
+                    <div class="w-8 h-8 bg-[#070b14] rounded-full border border-slate-700 flex items-center justify-center text-slate-400 shadow-[0_0_10px_rgba(0,0,0,0.5)]">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                     </div>
-                    <h4 class="text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-sky-300 text-sm md:text-base">Kênh Chung</span></h4>
                 </div>
-                <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Nơi giao lưu, trò chuyện và trao đổi thông tin chung của tất cả thành viên.</p>
-            </a>
 
-            <!-- Zalo Thông báo (Đã đổi sang màu xanh lá) -->
-            <a href="https://zalo.me/g/boqslt763" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-5 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center shrink-0 border border-green-500/20 group-hover:bg-green-500/20 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <!-- Form Đăng ký Thuyết trình -->
+                <a href="https://forms.gle/8f8Y9xqN1WWTqfUi9" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-5 md:p-8 flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-blue-500/10 rounded-bl-full transition-transform duration-500 group-hover:scale-150 -z-10"></div>
+                    
+                    <div class="flex items-start justify-between mb-4 md:mb-6">
+                        <div class="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center border border-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)] group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                        </div>
+                        <span class="px-2 py-0.5 md:px-3 md:py-1 bg-blue-500/10 text-blue-400 text-[10px] md:text-xs font-bold uppercase tracking-wider rounded-full border border-blue-500/20">Bước 2</span>
                     </div>
-                    <h4 class="text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-green-300 text-sm md:text-base">Kênh Thông báo</span></h4>
-                </div>
-                <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Cập nhật nhanh nhất các thông báo, lịch sinh hoạt và sự kiện quan trọng.</p>
-            </a>
-
-            <!-- Zalo Vi phạm -->
-            <a href="https://zalo.me/g/grpfxv003" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-5 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-2 transition-transform duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/20 group-hover:bg-rose-500/20 transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    
+                    <h2 class="text-xl md:text-3xl font-title font-bold text-white mb-2 md:mb-3 group-hover:text-blue-300 transition-colors">Đăng ký Thuyết trình</h2>
+                    <p class="text-slate-400 text-sm md:text-base leading-relaxed mb-4 md:mb-6 flex-grow">
+                        Gửi kịch bản bài nói đã được duyệt qua AI để Ban Nội dung kiểm tra lần cuối và tiến hành xếp lịch sinh hoạt.
+                    </p>
+                    
+                    <div class="flex items-center text-blue-400 font-medium text-xs md:text-sm gap-2 mt-auto">
+                        <span>Mở Biểu mẫu</span>
+                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </div>
-                    <h4 class="text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-rose-300 text-sm md:text-base">Kênh Vi phạm</span></h4>
-                </div>
-                <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Nơi ghi nhận và thông báo các trường hợp vi phạm nội quy để chấn chỉnh.</p>
-            </a>
+                </a>
 
-        </div>
+            </div>
+        </section>
+
+        <!-- Các công cụ phụ trợ (Còn lại) -->
+        <section class="w-full">
+            <!-- Section Tiêu đề Biểu mẫu khác -->
+            <div class="mb-4 md:mb-6 flex items-center gap-3 md:gap-4">
+                <h3 class="text-lg sm:text-xl md:text-2xl font-title font-bold text-white">Biểu mẫu khác</h3>
+                <div class="h-px bg-slate-700/50 flex-grow"></div>
+            </div>
+
+            <!-- Các Biểu mẫu còn lại (2 Cột) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                
+                <!-- Form Xin rời -->
+                <a href="https://forms.gle/NL35oPLHLaaTHe4C9" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-4 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0 border border-purple-500/20 group-hover:bg-purple-500/20 transition-colors">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-title font-bold text-white leading-tight">Biểu mẫu<br><span class="text-purple-300 text-xs sm:text-sm md:text-base">Xin Rời CLB</span></h4>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Dành cho các thành viên có nguyện vọng xin phép dừng hoạt động.</p>
+                </a>
+
+                <!-- Form Góp ý -->
+                <a href="https://forms.gle/JRBKQzP4oQtdH2xT8" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-4 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20 group-hover:bg-amber-500/20 transition-colors">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-title font-bold text-white leading-tight">Biểu mẫu<br><span class="text-amber-300 text-xs sm:text-sm md:text-base">Góp ý & Khiếu nại</span></h4>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Nơi gửi các phản hồi, ý kiến đóng góp xây dựng CLB.</p>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- Kênh Zalo -->
+        <section class="w-full">
+            <!-- Section Tiêu đề Zalo -->
+            <div class="mb-4 md:mb-6 flex items-center gap-3 md:gap-4">
+                <h3 class="text-lg sm:text-xl md:text-2xl font-title font-bold text-white">Kênh Zalo</h3>
+                <div class="h-px bg-slate-700/50 flex-grow"></div>
+            </div>
+
+            <!-- Các Kênh Zalo (3 Cột) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+                
+                <!-- Zalo Kênh Chung -->
+                <a href="https://zalo.me/g/mluwme013" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-4 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20 group-hover:bg-sky-500/20 transition-colors">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-sky-300 text-xs sm:text-sm md:text-base">Kênh Chung</span></h4>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Nơi giao lưu, trò chuyện và trao đổi thông tin chung.</p>
+                </a>
+
+                <!-- Zalo Thông báo -->
+                <a href="https://zalo.me/g/boqslt763" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-4 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-green-500/10 text-green-400 flex items-center justify-center shrink-0 border border-green-500/20 group-hover:bg-green-500/20 transition-colors">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-green-300 text-xs sm:text-sm md:text-base">Kênh Thông báo</span></h4>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Cập nhật nhanh nhất các thông báo, sự kiện quan trọng.</p>
+                </a>
+
+                <!-- Zalo Vi phạm -->
+                <a href="https://zalo.me/g/grpfxv003" target="_blank" rel="noopener noreferrer" class="glass-card rounded-xl p-4 md:p-6 flex flex-col relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="flex items-center gap-3 md:gap-4 mb-2 md:mb-3">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center shrink-0 border border-rose-500/20 group-hover:bg-rose-500/20 transition-colors">
+                            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <h4 class="text-base sm:text-lg font-title font-bold text-white leading-tight">Zalo<br><span class="text-rose-300 text-xs sm:text-sm md:text-base">Kênh Vi phạm</span></h4>
+                    </div>
+                    <p class="text-slate-400 text-xs md:text-sm m-0 line-clamp-2">Ghi nhận các trường hợp vi phạm nội quy để chấn chỉnh.</p>
+                </a>
+
+            </div>
+        </section>
 
     </div>
 
