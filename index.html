@@ -2,7 +2,9 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Đã bỏ maximum-scale/user-scalable=no để người dùng vẫn có thể phóng to (trợ năng) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F0F9FF">
     
     <!-- ========================================== -->
     <!-- PHẦN 1: BẢO TỒN VÀ NÂNG CẤP DỮ LIỆU SEO    -->
@@ -49,6 +51,10 @@
       gtag('config', 'G-45FT033QP8');
     </script>
     
+    <!-- Kết nối sớm tới các CDN để tải nhanh hơn -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
+    <link rel="preconnect" href="https://youcanclub.github.io" crossorigin>
+
     <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -70,20 +76,36 @@
             --accent: #6ad2ff; /* Màu nhấn chủ đạo (Xanh ngọc) */
         }
 
+        html {
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             background-color: var(--bg-color);
             background-image: radial-gradient(circle at top center, #ffffff, #F0F9FF);
-            font-family: 'Lora', serif;
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
             /* Ban đầu khóa cuộn thư, chỉ mở sau khi nắp đã lật */
             overflow-y: hidden;
             overscroll-behavior: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        img { max-width: 100%; }
+
+        /* Dùng dvh để không bị lệch khi thanh địa chỉ trình duyệt di động ẩn/hiện */
+        @supports (height: 100dvh) {
+            .min-h-screen { min-height: 100dvh; }
         }
 
         .font-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
         }
 
         /* * CLIP-PATH CHO TÚI PHONG BÌ: 
@@ -98,6 +120,12 @@
         /* Hình dáng nắp phong bì: Khớp hoàn hảo với nếp gấp ngang */
         .flap-shape {
             clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+        }
+
+        /* Đẩy các lớp phong bì lên GPU để cuộn mượt hơn */
+        #env-back-wrapper, #env-front-wrapper, #env-flap-wrapper, #letter-card {
+            will-change: transform;
+            backface-visibility: hidden;
         }
 
         /* Hoa văn nền giấy thư thanh lịch */
@@ -129,6 +157,13 @@
         .fade-transition {
             transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
         }
+
+        /* Lớp phủ: không cuộn xuyên xuống trang phía sau, không hiện viền focus khi focus bằng JS */
+        #chapter-view, #conclusion-view {
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            outline: none;
+        }
         
         /* --- NÂNG CẤP GIAO DIỆN SÁCH (BOOK UI) --- */
         .book-page {
@@ -141,8 +176,11 @@
         }
 
         .book-text {
-            font-family: 'Lora', serif;
+            font-family: 'Lora', Georgia, 'Times New Roman', serif;
             text-align: justify;
+            -webkit-hyphens: auto;
+            hyphens: auto;
+            overflow-wrap: break-word;
             line-height: 1.8;
             color: #cbd5e1; /* slate-300 */
         }
@@ -155,7 +193,7 @@
             line-height: 0.8;
             padding-right: 0.5rem;
             padding-top: 0.2rem;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Playfair Display', Georgia, serif;
             color: var(--accent);
             font-weight: bold;
         }
@@ -175,6 +213,13 @@
         /* Tùy chỉnh ẩn thanh cuộn cho slider ngang */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Slider ngang: cho phép vuốt ngang mượt, không chặn cuộn dọc trên cảm ứng */
+        #process-slider {
+            touch-action: pan-x pan-y;
+            overscroll-behavior-x: contain;
+            -webkit-overflow-scrolling: touch;
+        }
         
         /* Giao diện thẻ thuộc tính Game Card */
         .game-card-attr {
@@ -182,6 +227,13 @@
             border: 1px solid rgba(59, 130, 246, 0.3);
             box-shadow: inset 0 0 10px rgba(59, 130, 246, 0.1);
             backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        /* Thẻ vai trò: chỉ animate các thuộc tính cần thiết */
+        .role-card {
+            will-change: transform, opacity;
+            touch-action: pan-y;
         }
 
         /* Animation kéo ngang */
@@ -200,6 +252,22 @@
         }
         .animate-custom-ping {
             animation: custom-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        /* Viền focus rõ ràng khi điều hướng bằng bàn phím */
+        a:focus-visible, button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 3px;
+        }
+
+        /* Tôn trọng người dùng bật "giảm chuyển động" */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
@@ -220,7 +288,7 @@
             <!-- [LỚP 2 - Z:20/30]: TÚI CHỨA THƯ VÀ LÁ THƯ -->
             <div id="letter-wrapper" class="absolute inset-0 z-20 clip-pocket pointer-events-none">
                 <!-- Lá thư: Khởi tạo nằm sâu trong túi (translateY = 240px) -->
-                <div id="letter-card" class="absolute left-2 right-2 md:left-4 md:right-4 bg-white rounded-xl p-8 md:p-12 shadow-[0_-5px_25px_rgba(0,0,0,0.1)] letter-pattern border border-gray-200 pointer-events-auto transform translate-y-[260px]" style="will-change: transform;">
+                <div id="letter-card" class="absolute left-2 right-2 md:left-4 md:right-4 bg-white rounded-xl p-8 md:p-12 shadow-[0_-5px_25px_rgba(0,0,0,0.1)] letter-pattern border border-gray-200 pointer-events-auto transform translate-y-[260px]">
                     
                     <div class="max-w-prose mx-auto pb-8">
                         <div class="text-center mb-10 pt-2">
@@ -233,6 +301,7 @@
                         <div class="space-y-6 text-base md:text-lg leading-relaxed font-medium italic text-slate-700">
                             <p>
                                 Tôi là Khang - người sáng lập You Can Club, cũng là người viết những dòng đầu tiên này. Cảm ơn bạn vì đã dành sự quan tâm cho You Can Club để có thể đến được đây. Chỉ riêng điều đó thôi, bạn đã hoàn toàn xứng đáng để nhận lấy món quà này rồi.
+                            </p>
                             <p>
                                 Đây là "di sản cuối cùng" mà chúng tôi để lại, trước khi tạm biệt mái trường Khánh Lâm thân yêu.
                             </p>
@@ -256,9 +325,9 @@
 
                         <!-- Nút điều hướng chuyển sang Không gian Đọc các Chương -->
                         <div class="mt-16 mb-4 text-center">
-                            <button id="btn-start-journey" onclick="openChapter(0)" class="inline-flex items-center gap-3 px-8 py-4 text-slate-900 font-title text-lg md:text-xl rounded-full transition-all duration-300 shadow-lg transform hover:-translate-y-1 hover:brightness-110 cursor-pointer font-bold" style="background-color: var(--accent);">
+                            <button id="btn-start-journey" type="button" onclick="openChapter(0)" class="inline-flex items-center gap-3 px-8 py-4 text-slate-900 font-title text-lg md:text-xl rounded-full transition-all duration-300 shadow-lg transform hover:-translate-y-1 hover:brightness-110 cursor-pointer font-bold" style="background-color: var(--accent);">
                                 <span>BẮT ĐẦU</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             </button>
@@ -289,7 +358,7 @@
                         </div>
                         <!-- Vòng tròn nền logo và viền logo -->
                         <div class="w-14 h-14 md:w-16 md:h-16 bg-[var(--accent)] rounded-full p-0.5 shadow-lg transform hover:scale-105 transition-transform overflow-hidden shrink-0 border-2 border-[var(--accent)]">
-                            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="You Can Club Logo" class="w-full h-full object-cover rounded-full">
+                            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="You Can Club Logo" width="64" height="64" decoding="async" class="w-full h-full object-cover rounded-full">
                         </div>
                     </div>
 
@@ -306,13 +375,13 @@
     </div>
 
     <!-- Giao diện Đọc Sách (Chế độ Dark Mode Sách Cổ Điển) -->
-    <div id="chapter-view" class="fixed inset-0 bg-[#070b14] z-50 overflow-y-auto opacity-0 pointer-events-none fade-transition">
+    <div id="chapter-view" role="dialog" aria-modal="true" aria-label="Nội dung các chương" tabindex="-1" inert aria-hidden="true" class="fixed inset-0 bg-[#070b14] z-50 overflow-y-auto opacity-0 pointer-events-none fade-transition">
         <div class="min-h-screen py-8 md:py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col justify-center">
             
             <!-- Nút quay lại thư mở đầu -->
             <div class="mb-4 w-full flex justify-start z-10 relative">
-                <button onclick="closeChapterView()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-[var(--accent)] rounded-full hover:bg-slate-700 hover:text-white transition-all font-medium text-sm md:text-base border border-slate-700 cursor-pointer shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button type="button" onclick="closeChapterView()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-[var(--accent)] rounded-full hover:bg-slate-700 hover:text-white transition-all font-medium text-sm md:text-base border border-slate-700 cursor-pointer shadow-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     <span>Trở về</span>
@@ -329,7 +398,7 @@
                 <!-- Phần tiêu đề động -->
                 <header class="text-center pb-10 border-b border-slate-700 mb-10 content-fade-enter flex flex-col items-center relative z-10" id="chapter-header-anim">
                     <div class="relative mb-6">
-                        <img src="https://youcanclub.github.io/9F53C0D4-52BC-426F-961C-79AE4CF8748D.PNG" alt="You Can Club" class="w-20 h-20 md:w-24 md:h-24 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-slate-900 z-10 relative drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
+                        <img src="https://youcanclub.github.io/9F53C0D4-52BC-426F-961C-79AE4CF8748D.PNG" alt="You Can Club" width="96" height="96" decoding="async" class="w-20 h-20 md:w-24 md:h-24 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-slate-900 z-10 relative drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
                         <!-- Đường ngang trang trí -->
                         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250%] h-px bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-40 -z-0"></div>
                     </div>
@@ -353,11 +422,11 @@
                 <!-- Điều hướng giữa các chương (Cố định ở dưới cùng trang sách) -->
                 <div class="pt-10 mt-12 border-t border-slate-700 flex flex-col sm:flex-row justify-between items-center gap-4 relative z-10 w-full">
                     
-                    <button id="btn-prev" onclick="prevChapter()" class="px-6 py-3 bg-slate-800 text-slate-300 font-medium rounded-full hover:bg-slate-700 transition-all duration-200 border border-slate-600 cursor-pointer w-full sm:w-auto flex items-center justify-center gap-2 active:scale-95 group">
+                    <button id="btn-prev" type="button" onclick="prevChapter()" class="px-6 py-3 bg-slate-800 text-slate-300 font-medium rounded-full hover:bg-slate-700 transition-all duration-200 border border-slate-600 cursor-pointer w-full sm:w-auto flex items-center justify-center gap-2 active:scale-95 group">
                         <span class="transform group-hover:-translate-x-1 transition-transform">&larr;</span> Chương trước
                     </button>
 
-                    <button id="btn-next" onclick="nextChapter()" class="px-8 py-3 text-slate-900 font-title font-bold rounded-full hover:brightness-110 transition-all duration-200 cursor-pointer w-full sm:w-auto flex justify-center items-center gap-2 active:scale-95 shadow-[0_0_20px_rgba(106,210,255,0.2)] text-lg" style="background-color: var(--accent);">
+                    <button id="btn-next" type="button" onclick="nextChapter()" class="px-8 py-3 text-slate-900 font-title font-bold rounded-full hover:brightness-110 transition-all duration-200 cursor-pointer w-full sm:w-auto flex justify-center items-center gap-2 active:scale-95 shadow-[0_0_20px_rgba(106,210,255,0.2)] text-lg" style="background-color: var(--accent);">
                         <span id="btn-next-text">Chương tiếp theo</span> 
                         <span class="next-arrow transform transition-transform">&rarr;</span>
                     </button>
@@ -371,13 +440,13 @@
     </div>
 
     <!-- Giao diện Kết thúc (Giao diện sáng như lá thư) -->
-    <div id="conclusion-view" class="fixed inset-0 z-[60] overflow-y-auto opacity-0 pointer-events-none fade-transition" style="background-color: var(--bg-color); background-image: radial-gradient(circle at top center, #ffffff, #F0F9FF);">
+    <div id="conclusion-view" role="dialog" aria-modal="true" aria-label="Lời kết" tabindex="-1" inert aria-hidden="true" class="fixed inset-0 z-[60] overflow-y-auto opacity-0 pointer-events-none fade-transition" style="background-color: var(--bg-color); background-image: radial-gradient(circle at top center, #ffffff, #F0F9FF);">
         <div class="min-h-screen py-8 md:py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex flex-col justify-center">
 
             <!-- Nút quay lại chương cuối -->
             <div class="mb-4 w-full flex justify-start z-10 relative">
-                <button onclick="closeConclusionView()" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-[var(--text-accent)] rounded-full hover:bg-blue-50 transition-all font-medium text-sm md:text-base border border-blue-200 cursor-pointer shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button type="button" onclick="closeConclusionView()" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-[var(--text-accent)] rounded-full hover:bg-blue-50 transition-all font-medium text-sm md:text-base border border-blue-200 cursor-pointer shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     <span>Trở về</span>
@@ -404,7 +473,7 @@
                             
                             <!-- Icon Nền chìm (Loa phát thanh - Lan tỏa) -->
                             <div class="absolute -right-2 -bottom-2 text-blue-100/60 transform rotate-12 group-hover:rotate-0 group-hover:scale-110 group-hover:text-blue-100/80 transition-all duration-500 ease-out z-0">
-                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
                             </div>
                             
                             <div class="relative z-10">
@@ -422,7 +491,7 @@
                             
                             <!-- Icon Nền chìm (Mạng lưới cộng đồng - Cùng tần số) -->
                             <div class="absolute -right-2 -bottom-2 text-sky-100/60 transform -rotate-12 group-hover:rotate-0 group-hover:scale-110 group-hover:text-sky-100/80 transition-all duration-500 ease-out z-0">
-                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             </div>
                             
                             <div class="relative z-10">
@@ -440,7 +509,7 @@
                             
                             <!-- Icon Nền chìm (Microphone - Giao tiếp) -->
                             <div class="absolute -right-2 -bottom-2 text-indigo-100/60 transform rotate-12 group-hover:rotate-0 group-hover:scale-110 group-hover:text-indigo-100/80 transition-all duration-500 ease-out z-0">
-                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
                             </div>
                             
                             <div class="relative z-10">
@@ -458,9 +527,9 @@
 
                     <!-- Nút Đăng ký -->
                     <div class="mt-8 text-center relative z-20">
-                        <a href="https://forms.gle/JE3vRsCyef8bAx16A" target="_blank" class="inline-flex items-center justify-center gap-3 px-8 py-4 text-slate-900 font-title text-lg md:text-xl rounded-full transition-all duration-300 shadow-[0_10px_25px_rgba(106,210,255,0.4)] transform hover:-translate-y-1 hover:brightness-110 cursor-pointer font-bold w-full sm:w-auto" style="background-color: var(--accent);">
+                        <a href="https://forms.gle/JE3vRsCyef8bAx16A" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 px-8 py-4 text-slate-900 font-title text-lg md:text-xl rounded-full transition-all duration-300 shadow-[0_10px_25px_rgba(106,210,255,0.4)] transform hover:-translate-y-1 hover:brightness-110 cursor-pointer font-bold w-full sm:w-auto" style="background-color: var(--accent);">
                             <span>ĐĂNG KÝ THÀNH VIÊN</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
                             </svg>
                         </a>
@@ -474,18 +543,18 @@
     <!-- Nút nhắn tin Messenger nổi (Floating Action Button) -->
     <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none group/chat">
         <!-- Bubble Chat (Pop up text) -->
-        <div class="bg-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-blue-50 text-sm font-medium text-slate-700 pointer-events-auto transform transition-all duration-300 origin-bottom-right translate-y-2 opacity-0 group-hover/chat:translate-y-0 group-hover/chat:opacity-100 flex items-center gap-2 max-w-[200px] md:max-w-none text-center md:text-left">
+        <div class="bg-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-blue-50 text-sm font-medium text-slate-700 pointer-events-auto transform transition-all duration-300 origin-bottom-right translate-y-2 opacity-0 group-hover/chat:translate-y-0 group-hover/chat:opacity-100 group-focus-within/chat:translate-y-0 group-focus-within/chat:opacity-100 flex items-center gap-2 max-w-[200px] md:max-w-none text-center md:text-left">
             <span>Cần hỗ trợ? Nhắn cho CLB nhé!</span>
             <!-- Tam giác trỏ xuống dưới góc -->
             <div class="absolute -bottom-2 right-6 w-4 h-4 bg-white transform rotate-45 border-b border-r border-blue-50 shadow-[4px_4px_10px_rgba(0,0,0,0.02)]"></div>
         </div>
 
         <!-- Nút tròn có link tới Messenger -->
-        <a href="https://m.me/61578363805571" target="_blank" rel="noopener noreferrer" title="Nhắn tin với You Can Club" class="w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-[0_10px_25px_rgba(37,99,235,0.4)] hover:bg-blue-700 hover:scale-105 transition-all duration-300 pointer-events-auto relative cursor-pointer">
+        <a href="https://m.me/61578363805571" target="_blank" rel="noopener noreferrer" title="Nhắn tin với You Can Club" aria-label="Nhắn tin với You Can Club qua Messenger" class="w-14 h-14 md:w-16 md:h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-[0_10px_25px_rgba(37,99,235,0.4)] hover:bg-blue-700 hover:scale-105 transition-all duration-300 pointer-events-auto relative cursor-pointer">
             <!-- Vòng sáng pulse (Hiệu ứng thu hút) -->
             <div class="absolute inset-0 rounded-full bg-blue-500 animate-custom-ping pointer-events-none"></div>
             <!-- Icon Messenger -->
-            <svg class="w-7 h-7 md:w-8 md:h-8 relative z-10" fill="currentColor" viewBox="0 0 24 24">
+            <svg class="w-7 h-7 md:w-8 md:h-8 relative z-10" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M12 2C6.48 2 2 6.13 2 11.23c0 2.87 1.48 5.43 3.79 7.07v3.5l3.44-1.89c1.23.34 2.56.52 3.95.52 5.52 0 10-4.13 10-9.23S17.52 2 12 2zm1.2 12.3l-2.67-2.85-5.23 2.85 5.76-6.15 2.75 2.85 5.15-2.85-5.76 6.15z"/>
             </svg>
         </a>
@@ -502,59 +571,45 @@
                 subtitle: "\"Mục đích và lý do tồn tại của You Can Club\"",
                 author: "Hoài Phúc",
                 content: `
-                    <p>Ngày ấy, chúng mình chỉ gặp nhau qua màn hình, cùng nhau học để áp dụng <a href="https://youtu.be/XCd8tC1fei0?si=2PtpygPhARnNovdi" target="_blank" class="text-[var(--accent)] hover:underline font-semibold transition-colors relative z-20">phương pháp Feynman</a> – học bằng cách giảng lại cho người khác. Mỗi người mang đến một góc nhìn, một trải nghiệm, một câu chuyện khác nhau.</p>
-                    
-                    <figure class="my-10 text-center">
-                        <img src="https://youcanclub.github.io/Screenshot%202026-08-02%20204524.png" alt="Cuộc họp zoom những ngày đầu" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
-                    </figure>
-
-                    <p>Sau những buổi đầu tiên đó, chúng mình nhận ra phương pháp này thực sự hiệu quả: nó giúp người học nhớ lâu, hiểu sâu kiến thức hơn nhờ có sự tương tác qua lại. Không chỉ vậy, chúng mình còn nhận ra nó ẩn chứa rất nhiều tiềm năng chưa được khai thác hết.</p>
+                    <p>Ngày ấy, chúng mình chỉ gặp nhau qua màn hình, cùng nhau học theo <a href="https://youtu.be/XCd8tC1fei0?si=2PtpygPhARnNovdi" target="_blank" rel="noopener noreferrer" class="text-[var(--accent)] hover:underline font-semibold transition-colors relative z-20">phương pháp Feynman</a> – học bằng cách giảng lại cho người khác. Mỗi người mang đến một góc nhìn, một câu chuyện khác nhau.</p>
 
                     <figure class="my-10 text-center">
-                        <img src="https://youcanclub.github.io/2aOboQokEvYPVjaK0b2JDl3koJey8tfF7s7qhzjU.jpg" alt="Chụp với thầy Quang" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
-
+                        <img src="https://youcanclub.github.io/Screenshot%202026-08-02%20204524.png" alt="Cuộc họp zoom những ngày đầu" loading="lazy" decoding="async" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
                     </figure>
 
-                    <p>Vì thế, từ một nhóm học trực tuyến, <strong class="text-white font-title tracking-wide">You Can Club</strong> đã ra đời – với mong muốn tạo nên một nơi mà học sinh trường Khánh Lâm có cơ hội áp dụng các phương pháp học tập hiệu quả, từ đó học hỏi thêm kiến thức mới với đa dạng chủ đề hơn. Đồng thời, rèn luyện kỹ năng giao tiếp, thuyết trình hay khả năng tư duy phản biện qua các buổi sinh hoạt cùng nhau hàng tuần.</p>
+                    <p>Chúng mình nhận ra phương pháp này giúp nhớ lâu, hiểu sâu hơn nhờ sự tương tác qua lại, và còn ẩn chứa nhiều tiềm năng chưa khai thác hết. Vì thế, từ một nhóm học trực tuyến, <strong class="text-white font-title tracking-wide">You Can Club</strong> ra đời – nơi học sinh trường Khánh Lâm được áp dụng các phương pháp học hiệu quả, học thêm nhiều chủ đề mới, đồng thời rèn kỹ năng giao tiếp, thuyết trình và tư duy phản biện qua các buổi sinh hoạt hàng tuần.</p>
 
                     <figure class="my-10 text-center">
-                        <img src="https://youcanclub.github.io/sinhhoattuan.jpg" alt="Sinh hoạt tuần ở trường" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
-
+                        <img src="https://youcanclub.github.io/sinhhoattuan.jpg" alt="Sinh hoạt tuần ở trường" loading="lazy" decoding="async" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
                     </figure>
 
-                    <p>Điều giữ chúng mình ở lại không chỉ là kiến thức mới, mà còn là cảm giác được lắng nghe, được chia sẻ, được truyền thêm động lực để bước tiếp. Chúng mình tin rằng: <em class="text-[var(--accent)] font-medium">"một giá trị chỉ thật sự ý nghĩa khi nó được lan tỏa"</em>.</p>
-
-                    <figure class="my-10 text-center">
-                        <img src="https://youcanclub.github.io/nhanthuongclb.jpg" alt="Nhận giấy khen từ nhà trường" class="w-full max-h-[400px] object-cover object-center rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-slate-700/50">
-                    </figure>
-
-                    <p>Cho đến hôm nay, thứ mình trân quý nhất không phải là CLB đã đi được bao xa, mà là sau tất cả, You Can Club vẫn giữ được đúng lý do nó tồn tại: học hỏi từ nhau để tiến bộ, sẻ chia với nhau để trưởng thành.</p>
+                    <p>Điều giữ chúng mình ở lại là cảm giác được lắng nghe, được chia sẻ. Chúng mình tin rằng: <em class="text-[var(--accent)] font-medium">"một giá trị chỉ thật sự ý nghĩa khi nó được lan tỏa"</em>. Và đến hôm nay, You Can Club vẫn giữ đúng lý do nó tồn tại: học hỏi từ nhau để tiến bộ, sẻ chia với nhau để trưởng thành.</p>
 
                     <div class="my-12 p-6 md:p-8 md:px-10 bg-slate-900/40 border border-slate-700/50 rounded-lg relative overflow-hidden shadow-lg">
                         <div class="absolute left-0 top-0 bottom-0 w-1 bg-[var(--accent)]"></div>
                         <h3 class="font-title font-bold text-2xl md:text-3xl text-white mb-6 text-center">GIÁ TRỊ CỐT LÕI</h3>
                         
                         <figure class="my-10 text-center">
-                            <img src="https://youcanclub.github.io/sodologo.png" alt="Sơ đồ phân tích logo You Can Club" class="w-full max-w-sm md:max-w-md mx-auto drop-shadow-sm">
+                            <img src="https://youcanclub.github.io/sodologo.png" alt="Sơ đồ phân tích logo You Can Club" loading="lazy" decoding="async" class="w-full max-w-sm md:max-w-md mx-auto drop-shadow-sm">
                         </figure>
 
-                        <p class="mb-8 text-justify drop-cap">Dù là ở thế hệ nào đi nữa, đây vẫn là ba tinh thần cốt lõi nhất mà You Can Club luôn phải hướng tới và gìn giữ.</p>
+                        <p class="mb-8 text-justify drop-cap">Dù ở thế hệ nào, đây vẫn là ba tinh thần cốt lõi mà You Can Club luôn phải hướng tới và gìn giữ.</p>
                         
                         <ul class="list-none space-y-8">
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">1.</span>
                                 <strong class="text-white text-xl font-title tracking-wide">Dũng cảm cất lời</strong>
-                                <p class="mt-2 text-slate-300">You Can Club chưa bao giờ là nơi dành riêng cho những người giỏi nói. Điều quan trọng nhất là dám "dũng cảm" nói ra suy nghĩ của bản thân. Chỉ khi nói ra, những suy nghĩ đó mới thực sự tồn tại. You Can Club sẽ là nơi mọi người cảm thấy an toàn để thử, để sai, và để trưởng thành sau mỗi lần "cất lời".</p>
+                                <p class="mt-2 text-slate-300">You Can Club không dành riêng cho người giỏi nói, mà dành cho những ai dám nói ra suy nghĩ của mình. Đây là nơi an toàn để thử, để sai và để trưởng thành sau mỗi lần "cất lời".</p>
                             </li>
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">2.</span>
                                 <strong class="text-white text-xl font-title tracking-wide">Cùng nhau tiến bộ</strong>
-                                <p class="mt-2 text-slate-300">Mỗi thành viên vừa là người học, vừa là người dạy - và hai vai trò ấy luôn phải song hành, phải "cùng nhau" thì mới có thể "tiến bộ" được. Mỗi người đều có những điều đáng để người khác học hỏi. You Can Club không chỉ là nơi mọi người chia sẻ góc nhìn, mà còn là nơi để mọi người lắng nghe nhau một cách chân thành nhất. Góc nhìn của một người thì khó mà bao quát hết được.</p>
+                                <p class="mt-2 text-slate-300">Mỗi thành viên vừa là người học, vừa là người dạy. Góc nhìn của một người khó bao quát hết, nên chúng ta cần chia sẻ và lắng nghe nhau một cách chân thành.</p>
                             </li>
                             <li class="pl-10 relative">
                                 <span class="absolute left-0 top-0 text-[var(--accent)] text-2xl font-bold font-title">3.</span>
                                 <strong class="text-white text-xl font-title tracking-wide">Lan tỏa giá trị</strong>
-                                <p class="mt-2 text-slate-300">Nói là để trao đi, nghe là để nhận lại - và chính vòng lặp ấy khiến "giá trị" không mất đi, mà cứ thế được nhân lên. Dù là người nói hay người nghe, giá trị vẫn luôn được tạo ra và lan tỏa đến tất cả. Dù chỉ là một nhóm nhỏ, nhưng chỉ cần tạo ra được giá trị, You Can Club sẽ giúp giá trị ấy được "lan tỏa" khắp nơi.</p>
+                                <p class="mt-2 text-slate-300">Nói là để trao đi, nghe là để nhận lại – vòng lặp ấy khiến giá trị không mất đi mà được nhân lên, và You Can Club sẽ giúp giá trị ấy "lan tỏa" khắp nơi.</p>
                             </li>
                         </ul>
                     </div>
@@ -572,13 +627,13 @@
                     <!-- PHẦN 1: VAI TRÒ (THẺ GAME) -->
                     <h3 class="font-title font-bold text-2xl md:text-3xl text-[var(--accent)] mt-12 mb-6 border-b border-slate-700/50 pb-3">1. Vai trò của các thành viên</h3>
 
-                    <div class="relative w-full max-w-4xl mx-auto mb-10 h-[440px] md:h-[400px] overflow-hidden py-4 perspective-container">
+                    <div class="relative w-full max-w-4xl mx-auto mb-10 h-[440px] md:h-[400px] overflow-hidden py-4 perspective-container" id="role-carousel">
                         
                         <!-- Card 1: Chủ nhiệm -->
                         <div class="role-card absolute left-1/2 top-4 w-[230px] sm:w-[280px] md:w-[320px] h-[390px] sm:h-[360px] md:h-[340px] bg-slate-900 rounded-xl border border-slate-700 shadow-2xl transition-all duration-500 ease-out flex flex-col overflow-hidden origin-center bg-gradient-to-br from-slate-800 to-[#070b14]">
                             <div class="h-28 mt-6 flex justify-center items-center">
                                 <div class="p-4 bg-[var(--accent)]/10 rounded-full border border-[var(--accent)]/30 drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
-                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                 </div>
                             </div>
                             <div class="px-6 flex-grow flex flex-col items-center">
@@ -595,7 +650,7 @@
                         <div class="role-card absolute left-1/2 top-4 w-[230px] sm:w-[280px] md:w-[320px] h-[390px] sm:h-[360px] md:h-[340px] bg-slate-900 rounded-xl border border-slate-700 shadow-2xl transition-all duration-500 ease-out flex flex-col overflow-hidden origin-center bg-gradient-to-br from-slate-800 to-[#070b14]">
                             <div class="h-28 mt-6 flex justify-center items-center">
                                 <div class="p-4 bg-[var(--accent)]/10 rounded-full border border-[var(--accent)]/30 drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
-                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                                 </div>
                             </div>
                             <div class="px-6 flex-grow flex flex-col items-center">
@@ -612,7 +667,7 @@
                         <div class="role-card absolute left-1/2 top-4 w-[230px] sm:w-[280px] md:w-[320px] h-[390px] sm:h-[360px] md:h-[340px] bg-slate-900 rounded-xl border border-slate-700 shadow-2xl transition-all duration-500 ease-out flex flex-col overflow-hidden origin-center bg-gradient-to-br from-slate-800 to-[#070b14]">
                             <div class="h-28 mt-6 flex justify-center items-center">
                                 <div class="p-4 bg-[var(--accent)]/10 rounded-full border border-[var(--accent)]/30 drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
-                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                 </div>
                             </div>
                             <div class="px-6 flex-grow flex flex-col items-center">
@@ -629,7 +684,7 @@
                         <div class="role-card absolute left-1/2 top-4 w-[230px] sm:w-[280px] md:w-[320px] h-[390px] sm:h-[360px] md:h-[340px] bg-slate-900 rounded-xl border border-slate-700 shadow-2xl transition-all duration-500 ease-out flex flex-col overflow-hidden origin-center bg-gradient-to-br from-slate-800 to-[#070b14]">
                             <div class="h-28 mt-6 flex justify-center items-center">
                                 <div class="p-4 bg-[var(--accent)]/10 rounded-full border border-[var(--accent)]/30 drop-shadow-[0_0_15px_rgba(106,210,255,0.4)]">
-                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                                    <svg class="w-12 h-12 text-[var(--accent)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
                                 </div>
                             </div>
                             <div class="px-6 flex-grow flex flex-col items-center">
@@ -642,10 +697,10 @@
                         </div>
 
                         <!-- Navigation Buttons -->
-                        <button onclick="prevRole()" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 hover:bg-[var(--accent)] hover:text-slate-900 text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors border border-slate-600 z-50 cursor-pointer group">
+                        <button type="button" aria-label="Vai trò trước" onclick="prevRole()" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 hover:bg-[var(--accent)] hover:text-slate-900 text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors border border-slate-600 z-50 cursor-pointer group">
                             <span class="transform group-hover:-translate-x-0.5 transition-transform font-bold">&lt;</span>
                         </button>
-                        <button onclick="nextRole()" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 hover:bg-[var(--accent)] hover:text-slate-900 text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors border border-slate-600 z-50 cursor-pointer group">
+                        <button type="button" aria-label="Vai trò tiếp theo" onclick="nextRole()" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-slate-800 hover:bg-[var(--accent)] hover:text-slate-900 text-white rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-colors border border-slate-600 z-50 cursor-pointer group">
                             <span class="transform group-hover:translate-x-0.5 transition-transform font-bold">&gt;</span>
                         </button>
                     </div>
@@ -662,7 +717,7 @@
                         <div class="flex-1 bg-slate-900/60 border border-slate-700/50 rounded-xl p-4 flex items-center gap-4 shadow-lg relative overflow-hidden group">
                             <div class="absolute inset-0 bg-gradient-to-r from-sky-400/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <div class="w-12 h-12 bg-blue-900/40 rounded-full flex items-center justify-center border border-blue-500/30 text-[var(--accent)] shrink-0 z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                             </div>
@@ -676,7 +731,7 @@
                         <div class="flex-1 bg-slate-900/60 border border-slate-700/50 rounded-xl p-4 flex items-center gap-4 shadow-lg relative overflow-hidden group">
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             <div class="w-12 h-12 bg-emerald-900/30 rounded-full flex items-center justify-center border border-emerald-500/30 text-emerald-400 shrink-0 z-10">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                 </svg>
@@ -689,7 +744,7 @@
                     </div>
 
                     <figure class="my-12 text-center w-full max-w-4xl mx-auto relative group z-10">
-                        <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/phongsinhhoat.jpg" alt="Không gian sinh hoạt You Can Club" class="w-full max-h-[450px] object-cover object-center rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.4)] border border-slate-700/50 transition-all duration-500 group-hover:shadow-[0_15px_40px_rgba(106,210,255,0.15)] group-hover:border-slate-500/50">
+                        <img src="https://raw.githubusercontent.com/youcanclub/youcanclub.github.io/refs/heads/main/phongsinhhoat.jpg" alt="Không gian sinh hoạt You Can Club" loading="lazy" decoding="async" class="w-full max-h-[450px] object-cover object-center rounded-xl shadow-[0_15px_40px_rgba(0,0,0,0.4)] border border-slate-700/50 transition-all duration-500 group-hover:shadow-[0_15px_40px_rgba(106,210,255,0.15)] group-hover:border-slate-500/50">
                     </figure>
 
                     <div class="relative w-full max-w-4xl mx-auto my-8">
@@ -702,7 +757,7 @@
                             </div>
                             
                             <div class="flex justify-between items-start relative z-10">
-                                <button onclick="scrollToProcess(0)" id="tab-process-0" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
+                                <button type="button" onclick="scrollToProcess(0)" id="tab-process-0" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
                                     <div class="w-10 h-10 rounded-full bg-[var(--accent)] text-slate-900 font-bold flex items-center justify-center border-4 border-[#070b14] shadow-[0_0_20px_rgba(106,210,255,0.6)] scale-110 transition-all z-10">1</div>
                                     <div class="flex flex-col items-center mt-1">
                                         <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Giai đoạn</span>
@@ -710,7 +765,7 @@
                                     </div>
                                 </button>
                                 
-                                <button onclick="scrollToProcess(1)" id="tab-process-1" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
+                                <button type="button" onclick="scrollToProcess(1)" id="tab-process-1" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
                                     <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center border-4 border-[#070b14] transition-all z-10">2</div>
                                     <div class="flex flex-col items-center mt-1">
                                         <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Giai đoạn</span>
@@ -718,7 +773,7 @@
                                     </div>
                                 </button>
                                 
-                                <button onclick="scrollToProcess(2)" id="tab-process-2" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
+                                <button type="button" onclick="scrollToProcess(2)" id="tab-process-2" class="flex flex-col items-center gap-2 group cursor-pointer w-20 relative">
                                     <div class="w-10 h-10 rounded-full bg-slate-800 text-slate-400 font-bold flex items-center justify-center border-4 border-[#070b14] transition-all z-10">3</div>
                                     <div class="flex flex-col items-center mt-1">
                                         <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Giai đoạn</span>
@@ -750,7 +805,7 @@
                                         <div class="flex items-center gap-3 mb-4 relative z-10">
                                             <!-- Cập nhật nền và viền cho icon Thành viên muốn thuyết trình -->
                                             <div class="p-2 bg-[var(--accent)]/10 rounded-lg text-[var(--accent)] border border-[var(--accent)]/20 shadow-[0_0_15px_rgba(106,210,255,0.1)]">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                                             </div>
                                             <h5 class="text-white font-bold font-title text-lg text-left leading-tight">Thành viên muốn thuyết trình</h5>
                                         </div>
@@ -783,7 +838,7 @@
                                         <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 select-none flex-grow">
                                             <div class="flex items-center gap-3 mb-3">
                                                 <div class="p-2 bg-slate-700/50 rounded-lg text-slate-300 border border-slate-600/50">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                                                 </div>
                                                 <h5 class="text-white font-bold font-title text-lg text-left leading-tight">Thành viên khác</h5>
                                             </div>
@@ -793,11 +848,11 @@
                                         <!-- Card Zalo Thông báo mới -->
                                         <div class="bg-blue-900/20 p-4 md:p-5 rounded-xl border border-blue-500/20 select-none relative overflow-hidden flex items-center">
                                             <div class="absolute -right-2 -bottom-2 text-blue-500/10 pointer-events-none">
-                                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.15.68 4.14 1.82 5.76L3 22l4.24-1.18C8.86 21.32 10.85 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.39 0-2.71-.3-3.88-.83l-2.48.69.69-2.48C5.3 16.21 5 14.89 5 13.5c0-4.69 3.81-8.5 8.5-8.5s8.5 3.81 8.5 8.5-3.81 8.5-8.5 8.5z"/></svg>
+                                                <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 2.15.68 4.14 1.82 5.76L3 22l4.24-1.18C8.86 21.32 10.85 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.39 0-2.71-.3-3.88-.83l-2.48.69.69-2.48C5.3 16.21 5 14.89 5 13.5c0-4.69 3.81-8.5 8.5-8.5s8.5 3.81 8.5 8.5-3.81 8.5-8.5 8.5z"/></svg>
                                             </div>
                                             <div class="flex gap-4 relative z-10 w-full">
                                                 <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/30">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                                                 </div>
                                                 <div>
                                                     <h5 class="text-blue-100 font-bold text-sm md:text-base mb-1">Cập nhật thông tin</h5>
@@ -875,7 +930,7 @@
                                     <!-- Cập nhật điểm -->
                                     <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/70 transition-colors group flex items-center gap-5 select-none">
                                         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-emerald-500/10 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-emerald-500/20 transition-all shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                                            <svg class="w-6 h-6 md:w-7 md:h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path></svg>
+                                            <svg class="w-6 h-6 md:w-7 md:h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4"></path></svg>
                                         </div>
                                         <div>
                                             <h5 class="text-white font-bold text-base md:text-lg mb-1 font-title">Hệ thống thông tin buổi sinh hoạt</h5>
@@ -889,7 +944,7 @@
                                         
                                         <!-- Cập nhật nền và viền cho icon Chuyển đổi thành nội dung số -->
                                         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[var(--accent)]/10 flex items-center justify-center shrink-0 border border-[var(--accent)]/20 group-hover:scale-110 group-hover:bg-[var(--accent)]/20 transition-all shadow-[0_0_15px_rgba(106,210,255,0.1)] z-10">
-                                            <svg class="w-6 h-6 md:w-7 md:h-7 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            <svg class="w-6 h-6 md:w-7 md:h-7 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         </div>
                                         
                                         <div class="z-10">
@@ -903,7 +958,7 @@
                         </div>
                         
                         <div class="text-center mt-4 text-slate-500 text-sm flex items-center justify-center gap-2 select-none">
-                        <svg class="w-4 h-4 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        <svg class="w-4 h-4 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                         <span>Kéo ngang</span>
                     </div>
                 </div>
@@ -919,7 +974,7 @@
                         <!-- Zalo -->
                         <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors group/card flex flex-col">
                             <div class="flex items-center gap-3 mb-3 border-b border-slate-700/50 pb-3">
-                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg></div>
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg></div>
                                 <strong class="text-white text-lg font-title">Zalo</strong>
                             </div>
                             <ul class="text-slate-300 text-sm space-y-2 m-0 pl-1">
@@ -933,7 +988,7 @@
                         <!-- Facebook -->
                         <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors group/card flex flex-col">
                             <div class="flex items-center gap-3 mb-3 border-b border-slate-700/50 pb-3">
-                                <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-600/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg></div>
+                                <div class="w-10 h-10 rounded-xl bg-blue-600/10 text-blue-400 flex items-center justify-center shrink-0 border border-blue-600/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg></div>
                                 <strong class="text-white text-lg font-title">Fanpage Facebook</strong>
                             </div>
                             <ul class="text-slate-300 text-sm space-y-2 m-0 pl-1">
@@ -946,7 +1001,7 @@
                         <!-- Forms -->
                         <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors group/card flex flex-col">
                             <div class="flex items-center gap-3 mb-3 border-b border-slate-700/50 pb-3">
-                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0 border border-purple-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center shrink-0 border border-purple-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
                                 <strong class="text-white text-lg font-title">Google Biểu Mẫu</strong>
                             </div>
                             <ul class="text-slate-300 text-sm space-y-2 m-0 pl-1">
@@ -961,7 +1016,7 @@
                         <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors group/card flex flex-col">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 border-b border-slate-700/50 pb-3">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div>
                                     <strong class="text-white text-lg font-title">Google Bảng Tính</strong>
                                 </div>
                             </div>
@@ -972,6 +1027,18 @@
                                 <li class="flex items-start gap-2"><span class="text-emerald-400 mt-0.5 opacity-80">❖</span> Thông tin vi phạm</li>
                             </ul>
                         </div>
+
+                        <!-- Trí tuệ nhân tạo -->
+                        <div class="md:col-span-2 bg-slate-800/40 p-5 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors group/card flex flex-col">
+                            <div class="flex items-center gap-3 mb-3 border-b border-slate-700/50 pb-3">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20 group-hover/card:scale-110 transition-transform"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg></div>
+                                <strong class="text-white text-lg font-title">Trí tuệ nhân tạo</strong>
+                            </div>
+                            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300 text-sm m-0 pl-1 mt-2">
+                                <li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5 opacity-80">❖</span> Tạo kịch bản nhanh</li>
+                                <li class="flex items-start gap-2"><span class="text-amber-400 mt-0.5 opacity-80">❖</span> Kiểm duyệt kịch bản nhanh</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
@@ -979,9 +1046,9 @@
                 <div class="mt-12 pt-8 border-t border-slate-700/50 text-center">
                     <p class="text-slate-400 mb-4 text-sm md:text-base italic">Chi tiết cơ chế thúc đẩy động lực thành viên và bảo vệ môi trường luôn lành mạnh.</p>
                     
-                    <button id="btn-extra-info" onclick="toggleExtraInfo()" class="inline-flex items-center gap-1.5 px-4 py-1.5 text-slate-900 font-medium font-title text-xs md:text-sm rounded-full shadow-[0_0_10px_rgba(106,210,255,0.2)] hover:scale-105 transition-all duration-300 cursor-pointer mx-auto opacity-80 hover:opacity-100" style="background-color: var(--accent);">
+                    <button id="btn-extra-info" type="button" aria-expanded="false" aria-controls="extra-info" onclick="toggleExtraInfo()" class="inline-flex items-center gap-1.5 px-4 py-1.5 text-slate-900 font-medium font-title text-xs md:text-sm rounded-full shadow-[0_0_10px_rgba(106,210,255,0.2)] hover:scale-105 transition-all duration-300 cursor-pointer mx-auto opacity-80 hover:opacity-100" style="background-color: var(--accent);">
                         <span>Tìm hiểu thêm</span>
-                        <svg id="icon-chevron" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg id="icon-chevron" xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
@@ -994,7 +1061,7 @@
                         <div class="relative z-10 mb-10">
                             <div class="flex items-center justify-between mb-4 flex-wrap gap-2">
                                 <h5 class="text-lg text-[var(--accent)] font-bold font-title flex items-center gap-2">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                                     Hệ thống xếp hạng
                                 </h5>
                                 <span class="text-xs bg-slate-800 text-[var(--accent)] px-2.5 py-1 rounded-md border border-slate-700 font-medium tracking-wide">Chu kỳ: 1 tháng (4 buổi)</span>
@@ -1075,7 +1142,7 @@
                         <!-- 2. Cơ chế điểm -->
                         <div class="relative z-10 mb-4">
                             <h5 class="text-lg text-[var(--accent)] font-bold mb-4 font-title flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
                                 Cơ chế cộng điểm
                             </h5>
                             <p class="text-slate-300 text-sm md:text-base mb-6 ml-0 md:ml-7">Ban Chủ nhiệm sẽ tổng hợp và công khai Bảng xếp hạng nội bộ. Điểm số được tính như sau:</p>
@@ -1085,7 +1152,7 @@
                                 <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-emerald-500/50 hover:shadow-[0_0_20px_rgba(16,185,129,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <div class="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                     </div>
                                     <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Tham gia sinh hoạt</span>
                                     <div class="px-5 py-1.5 bg-emerald-500/10 text-emerald-400 font-bold rounded-xl border border-emerald-500/30 shadow-[0_0_10px_rgba(16,185,129,0.1)] text-base md:text-lg font-title group-hover:bg-emerald-500/20 transition-colors">
@@ -1097,7 +1164,7 @@
                                 <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-sky-500/50 hover:shadow-[0_0_20px_rgba(14,165,233,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-sky-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <div class="w-12 h-12 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-400 border border-sky-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(14,165,233,0.1)]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
                                     </div>
                                     <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Thực hiện Bài nói (Cơ bản)</span>
                                     <div class="px-5 py-1.5 bg-sky-500/10 text-sky-400 font-bold rounded-xl border border-sky-500/30 shadow-[0_0_10px_rgba(14,165,233,0.1)] text-base md:text-lg font-title group-hover:bg-sky-500/20 transition-colors">
@@ -1109,7 +1176,7 @@
                                 <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-purple-500/50 hover:shadow-[0_0_20px_rgba(168,85,247,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <div class="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-400 border border-purple-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
                                     </div>
                                     <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Thực hiện Bài nói (Nâng cao)</span>
                                     <div class="px-5 py-1.5 bg-purple-500/10 text-purple-400 font-bold rounded-xl border border-purple-500/30 shadow-[0_0_10px_rgba(168,85,247,0.1)] text-base md:text-lg font-title group-hover:bg-purple-500/20 transition-colors">
@@ -1121,7 +1188,7 @@
                                 <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-amber-500/50 hover:shadow-[0_0_20px_rgba(245,158,11,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <div class="w-12 h-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400 border border-amber-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(245,158,11,0.1)]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
                                     </div>
                                     <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Nêu quan điểm</span>
                                     <div class="px-5 py-1.5 bg-amber-500/10 text-amber-400 font-bold rounded-xl border border-amber-500/30 shadow-[0_0_10px_rgba(245,158,11,0.1)] text-base md:text-lg font-title group-hover:bg-amber-500/20 transition-colors">
@@ -1133,7 +1200,7 @@
                                 <div class="flex flex-col items-center p-4 md:p-5 bg-gradient-to-b from-slate-800/60 to-slate-900/60 rounded-2xl border border-slate-700/50 hover:border-rose-500/50 hover:shadow-[0_0_20px_rgba(244,63,94,0.15)] hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
                                     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-[2px] bg-gradient-to-r from-transparent via-rose-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     <div class="w-12 h-12 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-400 border border-rose-500/20 mb-3 group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(244,63,94,0.1)]">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
                                     </div>
                                     <span class="text-slate-200 text-xs md:text-sm font-medium text-center mb-4 leading-snug flex-grow flex items-center">Xây dựng quan điểm</span>
                                     <div class="px-5 py-1.5 bg-rose-500/10 text-rose-400 font-bold rounded-xl border border-rose-500/30 shadow-[0_0_10px_rgba(244,63,94,0.1)] text-base md:text-lg font-title group-hover:bg-rose-500/20 transition-colors">
@@ -1144,7 +1211,7 @@
                             
                             <!-- Ghi chú giới hạn điểm -->
                             <div class="ml-0 md:ml-7 p-3 bg-blue-900/20 border border-blue-500/20 rounded-lg text-sm text-blue-200 flex items-start gap-3">
-                                <svg class="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <svg class="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <div class="leading-relaxed">
                                     <strong class="text-[var(--accent)] block mb-1">Lưu ý giới hạn tương tác:</strong>
                                     Điểm nêu quan điểm (+2) được tính tối đa 5 lần/buổi để chia sẻ cơ hội cho người khác. Điểm xây dựng quan điểm (+1) không giới hạn nhằm khuyến khích tinh thần nâng đỡ đồng đội.
@@ -1158,7 +1225,7 @@
                         <!-- 3. Kỷ luật -->
                         <div class="relative z-10">
                             <h5 class="text-lg text-red-400 font-bold mb-4 font-title flex items-center gap-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                 Quy định kỷ luật
                             </h5>
                             <p class="text-slate-300 text-sm md:text-base mb-6 ml-0 md:ml-7">Kỷ luật được đặt ra để duy trì sự tôn trọng và công bằng. Các vi phạm sẽ bị ghi nhận vào hệ thống nội bộ:</p>
@@ -1241,25 +1308,79 @@
         let isReadyToScroll = false;
         let currentScrollY = 0;
         let targetScrollY = 0;
-        
+
         let envDropY = 0;
         let targetEnvDropY = 0;
-        
+
         let isChapterViewOpen = false;
+        let isConclusionOpen = false;
         let currentChapterIndex = 0;
+
+        let rafId = 0;          // Bảo đảm chỉ có DUY NHẤT một vòng requestAnimationFrame chạy
+        let openToken = 0;      // Chống "race condition" khi bấm đổi chương liên tục
+        let extraInfoTimer = 0; // Chống lỗi khi bấm "Tìm hiểu thêm" liên tục
+        let lastFocusedEl = null;
+
+        const PULL_THRESHOLD = 80;
+        const LETTER_PEEK_Y = 60;
+
+        // ==========================================
+        // BẮT CÁC PHẦN TỬ DOM
+        // ==========================================
+        const $ = (id) => document.getElementById(id);
+
+        const sceneEl = $('scene');
+        const envContainer = $('env-container');
+        const envBackWrapper = $('env-back-wrapper');
+        const envFrontWrapper = $('env-front-wrapper');
+        const envFlapWrapper = $('env-flap-wrapper');
+        const envFlap = $('env-flap');
+        const letterWrapper = $('letter-wrapper');
+        const letterCard = $('letter-card');
+        const chapterView = $('chapter-view');
+        const conclusionView = $('conclusion-view');
+
+        const domChapLabel = $('chapter-label');
+        const domChapTitle = $('chapter-title');
+        const domChapSubtitle = $('chapter-subtitle');
+        const domChapAuthor = $('chapter-author');
+        const domChapContent = $('chapter-content');
+        const domChapHeaderAnim = $('chapter-header-anim');
+
+        const btnPrev = $('btn-prev');
+        const btnNext = $('btn-next');
+
+        // ==========================================
+        // TIỆN ÍCH: HIỆN/ẨN LỚP PHỦ (kèm inert + aria để bàn phím/trình đọc màn hình không lọt ra ngoài)
+        // ==========================================
+        function setOverlay(el, open) {
+            el.classList.toggle('opacity-0', !open);
+            el.classList.toggle('pointer-events-none', !open);
+            el.classList.toggle('opacity-100', open);
+            el.classList.toggle('pointer-events-auto', open);
+            if (open) {
+                el.removeAttribute('inert');
+                el.setAttribute('aria-hidden', 'false');
+            } else {
+                el.setAttribute('inert', '');
+                el.setAttribute('aria-hidden', 'true');
+            }
+            // Khi có lớp phủ mở thì cảnh phong bì phía sau không nhận focus
+            sceneEl.inert = isChapterViewOpen || isConclusionOpen;
+        }
 
         // ==========================================
         // CÁC HÀM XỬ LÝ CHƯƠNG 2 (TẠO BIẾN TOÀN CỤC)
         // ==========================================
         let currentRoleIndex = 0;
-        const totalRoles = 4;
 
         window.updateRoleCarousel = function() {
             const cards = document.querySelectorAll('.role-card');
-            if (cards.length === 0) return;
+            const totalRoles = cards.length;
+            if (totalRoles === 0) return;
 
             cards.forEach((card, index) => {
-                let offset = (index - currentRoleIndex + totalRoles) % totalRoles;
+                const offset = (index - currentRoleIndex + totalRoles) % totalRoles;
 
                 if (offset === 0) {
                     card.style.transform = 'translateX(-50%) scale(1)';
@@ -1290,22 +1411,49 @@
         };
 
         window.nextRole = function() {
-            currentRoleIndex = (currentRoleIndex + 1) % totalRoles;
+            const total = document.querySelectorAll('.role-card').length;
+            if (!total) return;
+            currentRoleIndex = (currentRoleIndex + 1) % total;
             updateRoleCarousel();
         };
 
         window.prevRole = function() {
-            currentRoleIndex = (currentRoleIndex - 1 + totalRoles) % totalRoles;
+            const total = document.querySelectorAll('.role-card').length;
+            if (!total) return;
+            currentRoleIndex = (currentRoleIndex - 1 + total) % total;
             updateRoleCarousel();
         };
 
+        // Vuốt ngang trên cảm ứng để đổi thẻ vai trò
+        function bindRoleSwipe() {
+            const box = $('role-carousel');
+            if (!box || box.dataset.swipe) return;
+            box.dataset.swipe = '1';
+            let sx = 0, sy = 0;
+            box.addEventListener('touchstart', (e) => {
+                const t = e.changedTouches[0];
+                sx = t.clientX; sy = t.clientY;
+            }, { passive: true });
+            box.addEventListener('touchend', (e) => {
+                const t = e.changedTouches[0];
+                const dx = t.clientX - sx;
+                const dy = t.clientY - sy;
+                if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                    if (dx < 0) nextRole(); else prevRole();
+                }
+            }, { passive: true });
+        }
+
         window.toggleExtraInfo = function() {
-            const infoDiv = document.getElementById('extra-info');
-            const btnText = document.querySelector('#btn-extra-info span');
-            const icon = document.getElementById('icon-chevron');
-            const chapView = document.getElementById('chapter-view');
-            
-            if (infoDiv.classList.contains('hidden')) {
+            const infoDiv = $('extra-info');
+            const btn = $('btn-extra-info');
+            if (!infoDiv || !btn) return;
+            const btnText = btn.querySelector('span');
+            const icon = $('icon-chevron');
+
+            clearTimeout(extraInfoTimer);
+
+            if (infoDiv.classList.contains('hidden') || infoDiv.classList.contains('opacity-0')) {
                 infoDiv.classList.remove('hidden');
                 // Force reflow
                 void infoDiv.offsetWidth;
@@ -1313,12 +1461,13 @@
                 infoDiv.classList.add('opacity-100');
                 btnText.innerText = "Thu gọn";
                 icon.classList.add('rotate-180');
+                btn.setAttribute('aria-expanded', 'true');
 
                 // Tự động cuộn xuống phần thông tin thêm sau khi nó hiện ra
-                setTimeout(() => {
+                extraInfoTimer = setTimeout(() => {
                     const extraInfoRect = infoDiv.getBoundingClientRect();
-                    chapView.scrollTo({
-                        top: chapView.scrollTop + extraInfoRect.top - 60, // 60px padding
+                    chapterView.scrollTo({
+                        top: chapterView.scrollTop + extraInfoRect.top - 60, // 60px padding
                         behavior: 'smooth'
                     });
                 }, 100);
@@ -1327,85 +1476,85 @@
                 infoDiv.classList.add('opacity-0');
                 infoDiv.classList.remove('opacity-100');
                 icon.classList.remove('rotate-180');
-                setTimeout(() => {
-                    infoDiv.classList.add('hidden');
-                }, 500); 
                 btnText.innerText = "Tìm hiểu thêm";
+                btn.setAttribute('aria-expanded', 'false');
+                extraInfoTimer = setTimeout(() => {
+                    infoDiv.classList.add('hidden');
+                }, 500);
             }
         };
 
         // --- Logic Thanh trượt ngang Timeline ---
         window.scrollToProcess = function(index) {
-            const slider = document.getElementById('process-slider');
-            if(slider) {
+            const slider = $('process-slider');
+            if (slider) {
                 const slideWidth = slider.clientWidth;
                 slider.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
             }
         };
 
+        const TL_CIRCLE_ON  = ['bg-[var(--accent)]', 'text-slate-900', 'shadow-[0_0_20px_rgba(106,210,255,0.6)]', 'scale-110'];
+        const TL_CIRCLE_OFF = ['bg-slate-800', 'text-slate-400'];
+        const TL_MAIN_ON    = ['text-[var(--accent)]', 'font-bold', 'drop-shadow-[0_0_10px_rgba(106,210,255,0.4)]'];
+        const TL_MAIN_OFF   = ['text-slate-400', 'font-medium'];
+        const TL_SUB_ON     = ['text-slate-400'];
+        const TL_SUB_OFF    = ['text-slate-500'];
+
         window.syncTimelineTabs = function(slider) {
             if (!slider) return;
             // Tính toán index dựa trên vị trí cuộn
-            let index = Math.round(slider.scrollLeft / slider.clientWidth);
+            let index = Math.round(slider.scrollLeft / (slider.clientWidth || 1));
             index = Math.max(0, Math.min(2, index)); // Đảm bảo index chỉ từ 0 đến 2
-            
+
+            if (slider.dataset.idx === String(index)) return; // Không đổi thì khỏi cập nhật lại DOM
+            slider.dataset.idx = String(index);
+
             // Cập nhật thanh Track (Width)
-            const progress = document.getElementById('timeline-progress');
-            if(progress) {
+            const progress = $('timeline-progress');
+            if (progress) {
                 const widths = ['0%', '50%', '100%'];
                 progress.style.width = widths[index];
             }
 
             // Đổi màu và hiệu ứng scale cho Nút Mốc (Nodes)
-            for(let i = 0; i < 3; i++) {
-                const tab = document.getElementById('tab-process-' + i);
-                if(!tab) continue;
-                
-                // Lấy vòng tròn (div chứa số)
+            // Dùng add/remove tường minh (thay cho classList.replace) để trạng thái không bao giờ bị lệch
+            for (let i = 0; i < 3; i++) {
+                const tab = $('tab-process-' + i);
+                if (!tab) continue;
+
                 const circle = tab.querySelector('div.rounded-full');
-                
-                // Lấy 2 dòng text span
                 const spans = tab.querySelectorAll('span');
-                
-                // Kiểm tra an toàn trước khi đổi CSS để tránh lỗi null
-                if(!circle || spans.length < 2) continue;
-                
+                if (!circle || spans.length < 2) continue;
+
                 const spanSub = spans[0];
                 const spanMain = spans[1];
-                
-                if(i === index) {
-                    // Trạng thái Active (Đang chọn)
-                    circle.classList.replace('bg-slate-800', 'bg-[var(--accent)]');
-                    circle.classList.replace('text-slate-400', 'text-slate-900');
-                    circle.classList.add('shadow-[0_0_20px_rgba(106,210,255,0.6)]', 'scale-110');
-                    
-                    spanMain.classList.replace('text-slate-400', 'text-[var(--accent)]');
-                    spanMain.classList.replace('font-medium', 'font-bold');
-                    spanMain.classList.add('drop-shadow-[0_0_10px_rgba(106,210,255,0.4)]');
-                    spanSub.classList.replace('text-slate-500', 'text-slate-400');
-                } else {
-                    // Trạng thái Inactive (Chưa chọn/Đã qua)
-                    circle.classList.replace('bg-[var(--accent)]', 'bg-slate-800');
-                    circle.classList.replace('text-slate-900', 'text-slate-400');
-                    circle.classList.remove('shadow-[0_0_20px_rgba(106,210,255,0.6)]', 'scale-110');
-                    
-                    spanMain.classList.replace('text-[var(--accent)]', 'text-slate-400');
-                    spanMain.classList.replace('font-bold', 'font-medium');
-                    spanMain.classList.remove('drop-shadow-[0_0_10px_rgba(106,210,255,0.4)]');
-                    spanSub.classList.replace('text-slate-400', 'text-slate-500');
-                }
+                const active = (i === index);
+
+                circle.classList.remove(...(active ? TL_CIRCLE_OFF : TL_CIRCLE_ON));
+                circle.classList.add(...(active ? TL_CIRCLE_ON : TL_CIRCLE_OFF));
+
+                spanMain.classList.remove(...(active ? TL_MAIN_OFF : TL_MAIN_ON));
+                spanMain.classList.add(...(active ? TL_MAIN_ON : TL_MAIN_OFF));
+
+                spanSub.classList.remove(...(active ? TL_SUB_OFF : TL_SUB_ON));
+                spanSub.classList.add(...(active ? TL_SUB_ON : TL_SUB_OFF));
+
+                if (active) tab.setAttribute('aria-current', 'step');
+                else tab.removeAttribute('aria-current');
             }
         };
 
         // --- Logic kéo ngang (Mouse Dragging) cho Desktop ---
         let sliderIsDown = false;
-        let sliderStartX;
-        let sliderScrollLeft;
+        let sliderStartX = 0;
+        let sliderScrollLeft = 0;
+        const SNAP_CLASSES = ['snap-x', 'snap-mandatory', 'scroll-smooth'];
 
         window.startDrag = function(e, ele) {
+            if (e.button !== undefined && e.button !== 0) return; // Chỉ chuột trái
             sliderIsDown = true;
             ele.classList.add('cursor-grabbing');
-            ele.classList.remove('cursor-grab', 'scroll-smooth'); // Tắt smooth để drag chuẩn xác 1:1
+            ele.classList.remove('cursor-grab', ...SNAP_CLASSES); // Tắt snap + smooth để kéo 1:1, không bị "giật ngược"
             sliderStartX = e.pageX - ele.offsetLeft;
             sliderScrollLeft = ele.scrollLeft;
         };
@@ -1414,11 +1563,11 @@
             if (!sliderIsDown) return;
             sliderIsDown = false;
             ele.classList.remove('cursor-grabbing');
-            ele.classList.add('cursor-grab', 'scroll-smooth');
-            
+            ele.classList.add('cursor-grab', ...SNAP_CLASSES);
+
             // Tự động snap vào tấm thẻ gần nhất
             const slideWidth = ele.clientWidth;
-            const targetIndex = Math.round(ele.scrollLeft / slideWidth);
+            const targetIndex = Math.round(ele.scrollLeft / (slideWidth || 1));
             ele.scrollTo({ left: slideWidth * targetIndex, behavior: 'smooth' });
         };
 
@@ -1430,31 +1579,66 @@
             ele.scrollLeft = sliderScrollLeft - walk;
         };
 
+        // ==========================================
+        // HIỆU ỨNG CUỘN LÁ THƯ (chỉ chạy khi cần, không lặp vô hạn)
+        // ==========================================
+        function updateBodyHeight() {
+            if (!isReadyToScroll) return;
+            document.body.style.height = `${letterCard.offsetHeight + window.innerHeight}px`;
+        }
 
-        // Bắt các phần tử DOM DOM
-        const envContainer = document.getElementById('env-container');
-        const envBackWrapper = document.getElementById('env-back-wrapper');
-        const envFrontWrapper = document.getElementById('env-front-wrapper');
-        const envFlapWrapper = document.getElementById('env-flap-wrapper');
-        const envFlap = document.getElementById('env-flap');
-        const letterWrapper = document.getElementById('letter-wrapper');
-        const letterCard = document.getElementById('letter-card');
-        const chapterView = document.getElementById('chapter-view');
-        const conclusionView = document.getElementById('conclusion-view');
-        
-        // Bắt các DOM của Nội dung Chương
-        const domChapLabel = document.getElementById('chapter-label');
-        const domChapTitle = document.getElementById('chapter-title');
-        const domChapSubtitle = document.getElementById('chapter-subtitle');
-        const domChapAuthor = document.getElementById('chapter-author');
-        const domChapContent = document.getElementById('chapter-content');
-        const domChapHeaderAnim = document.getElementById('chapter-header-anim');
-        
-        const btnPrev = document.getElementById('btn-prev');
-        const btnNext = document.getElementById('btn-next');
+        function requestRender() {
+            if (!rafId) rafId = requestAnimationFrame(renderScroll);
+        }
 
+        function applyTransforms() {
+            const newLetterY = LETTER_PEEK_Y - currentScrollY;
+            letterCard.style.transform = `translate3d(0, ${newLetterY}px, 0)`;
+
+            const dropT = `translate3d(0, ${envDropY}px, 0)`;
+            envBackWrapper.style.transform = dropT;
+            envFrontWrapper.style.transform = dropT;
+            envFlapWrapper.style.transform = dropT;
+
+            letterWrapper.style.clipPath = `polygon(-50% -5000%, 150% -5000%, 150% calc(100% + ${envDropY}px), -50% calc(100% + ${envDropY}px))`;
+        }
+
+        // Hàm Render cuộn (Lerp)
+        function renderScroll() {
+            rafId = 0;
+            if (!isReadyToScroll || isChapterViewOpen || isConclusionOpen) return;
+
+            currentScrollY += (targetScrollY - currentScrollY) * 0.1;
+
+            targetEnvDropY = currentScrollY > PULL_THRESHOLD
+                ? (currentScrollY - PULL_THRESHOLD) * 1.1
+                : 0;
+            envDropY += (targetEnvDropY - envDropY) * 0.1;
+
+            const settled =
+                Math.abs(targetScrollY - currentScrollY) < 0.05 &&
+                Math.abs(targetEnvDropY - envDropY) < 0.05;
+
+            if (settled) {
+                // Chốt đúng giá trị đích rồi dừng vòng lặp để tiết kiệm CPU/pin
+                currentScrollY = targetScrollY;
+                targetEnvDropY = currentScrollY > PULL_THRESHOLD
+                    ? (currentScrollY - PULL_THRESHOLD) * 1.1
+                    : 0;
+                envDropY = targetEnvDropY;
+                applyTransforms();
+                return;
+            }
+
+            applyTransforms();
+            requestRender();
+        }
+
+        // ==========================================
+        // KHỞI TẠO TRANG
+        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
-            
+
             // 1. Trượt phong bì lên giữa màn hình khi mới vào web
             setTimeout(() => {
                 envContainer.classList.remove('translate-y-[150vh]');
@@ -1464,10 +1648,17 @@
             // Tạo cờ để kiểm tra xem thư đã được mở chưa
             let hasOpened = false;
 
+            const OPEN_KEYS = ['Enter', ' ', 'ArrowDown'];
+
             // Hàm xử lý chuỗi sự kiện mở thư
-            const startOpeningSequence = () => {
+            const startOpeningSequence = (e) => {
                 if (hasOpened) return; // Nếu đã mở rồi thì không làm gì nữa
+                if (e && e.type === 'keydown' && !OPEN_KEYS.includes(e.key)) return;
                 hasOpened = true;
+
+                document.removeEventListener('click', startOpeningSequence);
+                document.removeEventListener('touchstart', startOpeningSequence);
+                document.removeEventListener('keydown', startOpeningSequence);
 
                 // 2. Mở lật nắp phong bì lên
                 envFlap.style.transform = 'rotateX(0deg)';
@@ -1475,129 +1666,139 @@
                 // 3. Nhô thư lên 1 chút để tạo sự chú ý (chờ nắp lật xong - khoảng 1000ms)
                 setTimeout(() => {
                     letterCard.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                    letterCard.style.transform = `translateY(60px)`;
+                    letterCard.style.transform = `translate3d(0, ${LETTER_PEEK_Y}px, 0)`;
                 }, 1000);
 
                 // 4. Mở khóa cuộn trang (chờ thư nhô lên xong - cộng thêm khoảng 900ms)
                 setTimeout(() => {
                     letterCard.style.transition = 'none';
-                    
-                    const letterHeight = letterCard.offsetHeight;
-                    document.body.style.height = `${letterHeight + window.innerHeight}px`;
-                    document.body.style.overflowY = 'auto';
 
                     isReadyToScroll = true;
-                    
-                    requestAnimationFrame(renderScroll);
+                    updateBodyHeight();
+                    document.body.style.overflowY = isChapterViewOpen || isConclusionOpen ? 'hidden' : 'auto';
+
+                    // Đồng bộ ngay nếu người dùng đã cuộn sẵn
+                    currentScrollY = window.scrollY;
+                    targetScrollY = window.scrollY;
+                    requestRender();
                 }, 1900);
             };
 
-            // Lắng nghe sự kiện click hoặc chạm trên toàn bộ tài liệu để bắt đầu mở thư
+            // Lắng nghe click / chạm / phím trên toàn bộ tài liệu để bắt đầu mở thư
             document.addEventListener('click', startOpeningSequence);
-            document.addEventListener('touchstart', startOpeningSequence);
+            document.addEventListener('touchstart', startOpeningSequence, { passive: true });
+            document.addEventListener('keydown', startOpeningSequence);
 
             // Sự kiện cuộn
             window.addEventListener('scroll', () => {
-                if (!isReadyToScroll || isChapterViewOpen) return;
+                if (!isReadyToScroll || isChapterViewOpen || isConclusionOpen) return;
                 targetScrollY = window.scrollY;
+                requestRender();
+            }, { passive: true });
+
+            // Cập nhật chiều cao trang khi đổi kích thước cửa sổ / xoay màn hình
+            window.addEventListener('resize', () => {
+                updateBodyHeight();
+                requestRender();
             });
 
-            // Resize body height
-            window.addEventListener('resize', () => {
-                if (isReadyToScroll && !isChapterViewOpen) {
-                    const letterHeight = letterCard.offsetHeight;
-                    document.body.style.height = `${letterHeight + window.innerHeight}px`;
-                }
+            // Chiều cao lá thư có thể đổi khi font tải xong hoặc chữ xuống dòng khác đi
+            if ('ResizeObserver' in window) {
+                new ResizeObserver(() => {
+                    updateBodyHeight();
+                    requestRender();
+                }).observe(letterCard);
+            }
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    updateBodyHeight();
+                    requestRender();
+                });
+            }
+
+            // Phím Esc để quay lại
+            document.addEventListener('keydown', (e) => {
+                if (e.key !== 'Escape') return;
+                if (isConclusionOpen) closeConclusionView();
+                else if (isChapterViewOpen) closeChapterView();
             });
         });
 
-        // Hàm Render cuộn (Lerp)
-        function renderScroll() {
-            if (!isReadyToScroll || isChapterViewOpen) return;
-
-            currentScrollY += (targetScrollY - currentScrollY) * 0.1;
-            let newLetterY = 60 - currentScrollY;
-            letterCard.style.transform = `translateY(${newLetterY}px)`;
-
-            const pullThreshold = 80;
-            if (currentScrollY > pullThreshold) {
-                targetEnvDropY = (currentScrollY - pullThreshold) * 1.1; 
-            } else {
-                targetEnvDropY = 0;
-            }
-
-            envDropY += (targetEnvDropY - envDropY) * 0.1;
-
-            envBackWrapper.style.transform = `translateY(${envDropY}px)`;
-            envFrontWrapper.style.transform = `translateY(${envDropY}px)`;
-            envFlapWrapper.style.transform = `translateY(${envDropY}px)`;
-
-            letterWrapper.style.clipPath = `polygon(-50% -5000%, 150% -5000%, 150% calc(100% + ${envDropY}px), -50% calc(100% + ${envDropY}px))`;
-
-            requestAnimationFrame(renderScroll);
-        }
+        // ==========================================
+        // ĐIỀU HƯỚNG CÁC CHƯƠNG
+        // ==========================================
 
         // Mở một chương cụ thể theo Index (0, 1, 2...)
         function openChapter(index) {
+            const data = chaptersData[index];
+            if (!data) return;
+
             currentChapterIndex = index;
-            
+            const token = ++openToken;
+
             // Xóa class active để chuẩn bị tạo hiệu ứng fade in mới
             domChapHeaderAnim.classList.remove('content-fade-active');
             domChapContent.classList.remove('content-fade-active');
-            
+
             // Cuộn lên đỉnh TỨC THÌ (trước khi nội dung mới render, giúp không bị nhảy khung hình)
             chapterView.scrollTo({ top: 0, behavior: 'instant' });
-            
-            // Reset state cho carousel chương 2
+
+            // Reset trạng thái kéo thanh trượt & carousel
+            sliderIsDown = false;
+            clearTimeout(extraInfoTimer);
             if (index === 1) {
                 currentRoleIndex = 0;
             }
 
-            // Lấy dữ liệu
-            const data = chaptersData[index];
-            
+            // Hiển thị Overlay nếu chưa mở
+            if (!isChapterViewOpen) {
+                lastFocusedEl = document.activeElement;
+                isChapterViewOpen = true;
+                document.body.style.overflowY = 'hidden'; // Khóa trang ngoài
+                setOverlay(chapterView, true);
+                chapterView.focus({ preventScroll: true });
+            }
+
             // Delay 1 chút xíu để DOM render trước khi gắn class Active tạo hiệu ứng mượt
             setTimeout(() => {
+                if (token !== openToken) return; // Đã có lần mở chương mới hơn -> bỏ qua
+
                 // Cập nhật DOM
                 domChapLabel.innerText = data.label;
                 domChapTitle.innerText = data.title;
                 domChapSubtitle.innerText = data.subtitle;
                 domChapAuthor.innerText = "Tác giả: " + data.author;
                 domChapContent.innerHTML = data.content;
-                
+
                 // Cập nhật trạng thái nút bấm
                 updateButtonsState();
 
                 // Cập nhật Carousel NẾU đang ở Chương 2
                 if (index === 1) {
                     updateRoleCarousel();
+                    bindRoleSwipe();
                 }
 
                 // Thêm class active để Fade In lên
                 domChapHeaderAnim.classList.add('content-fade-active');
                 domChapContent.classList.add('content-fade-active');
-                
-            }, 100); // 100ms delay for animation refresh
 
-            // Hiển thị Overlay nếu chưa mở
-            if (!isChapterViewOpen) {
-                isChapterViewOpen = true;
-                document.body.style.overflowY = 'hidden'; // Khóa trang ngoài
-                chapterView.classList.remove('opacity-0', 'pointer-events-none');
-                chapterView.classList.add('opacity-100', 'pointer-events-auto');
-            }
+            }, 100); // 100ms delay for animation refresh
         }
 
         // Đóng giao diện đọc chương
         function closeChapterView() {
             isChapterViewOpen = false;
-            chapterView.classList.remove('opacity-100', 'pointer-events-auto');
-            chapterView.classList.add('opacity-0', 'pointer-events-none');
-            document.body.style.overflowY = 'auto'; // M mở lại trang ngoài
-            
+            setOverlay(chapterView, false);
+            document.body.style.overflowY = 'auto'; // Mở lại trang ngoài
+
             // Khởi động lại vòng lặp cuộn vì đang bị ngắt
-            targetScrollY = window.scrollY; 
-            requestAnimationFrame(renderScroll);
+            targetScrollY = window.scrollY;
+            requestRender();
+
+            if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+                lastFocusedEl.focus({ preventScroll: true });
+            }
         }
 
         // Xử lý nút Next / Prev
@@ -1626,45 +1827,40 @@
                 btnPrev.style.display = 'flex';
             }
 
-            const btnNextText = document.getElementById('btn-next-text');
+            const btnNextText = $('btn-next-text');
             const nextArrow = document.querySelector('.next-arrow');
 
             // Xử lý nút Next (Chương tiếp theo / Hoàn tất)
-            if (currentChapterIndex === chaptersData.length - 1) {
-                // Ở chương cuối: Đổi thành nút chuyển sang Lời kết
-                btnNextText.innerText = "Kết thúc";
-                nextArrow.innerHTML = "&rarr;";
-                btnNext.style.backgroundColor = "var(--accent)";
-                btnNext.style.color = "#0f172a"; 
-            } else {
-                // Trạng thái bình thường
-                btnNextText.innerText = "Chương tiếp theo";
-                nextArrow.innerHTML = "&rarr;";
-                btnNext.style.backgroundColor = "var(--accent)";
-                btnNext.style.color = "#0f172a";
-            }
+            btnNextText.innerText = (currentChapterIndex === chaptersData.length - 1)
+                ? "Kết thúc"            // Ở chương cuối: chuyển sang Lời kết
+                : "Chương tiếp theo";   // Trạng thái bình thường
+            nextArrow.innerHTML = "&rarr;";
+            btnNext.style.backgroundColor = "var(--accent)";
+            btnNext.style.color = "#0f172a";
         }
 
         // --- Hàm xử lý Giao diện Kết thúc ---
         function openConclusionView() {
+            isConclusionOpen = true;
+
             // Tạm thời làm mờ giao diện sách
-            chapterView.classList.remove('opacity-100', 'pointer-events-auto');
-            chapterView.classList.add('opacity-0', 'pointer-events-none');
+            setOverlay(chapterView, false);
 
             // Hiện lá thư phần kết lên
-            conclusionView.classList.remove('opacity-0', 'pointer-events-none');
-            conclusionView.classList.add('opacity-100', 'pointer-events-auto');
+            setOverlay(conclusionView, true);
             conclusionView.scrollTo({ top: 0 });
+            conclusionView.focus({ preventScroll: true });
         }
 
         function closeConclusionView() {
+            isConclusionOpen = false;
+
             // Đóng phần kết
-            conclusionView.classList.remove('opacity-100', 'pointer-events-auto');
-            conclusionView.classList.add('opacity-0', 'pointer-events-none');
-            
+            setOverlay(conclusionView, false);
+
             // Bật lại giao diện sách
-            chapterView.classList.remove('opacity-0', 'pointer-events-none');
-            chapterView.classList.add('opacity-100', 'pointer-events-auto');
+            setOverlay(chapterView, true);
+            chapterView.focus({ preventScroll: true });
         }
     </script>
 </body>
