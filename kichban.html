@@ -1,565 +1,932 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tạo Kịch Bản Tranh Biện | You Can Club</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kịch bản tranh biện | You Can Club</title>
+<meta name="description" content="Nhập một chủ đề, chọn kiến nghị và phe, nhận kịch bản nói 3 phút có mốc thời gian để tập.">
+<meta name="theme-color" content="#061626">
 
-    <style>
-        :root {
-            --bg-color: #070b14;
-            --accent: #6ad2ff;
-            --pro: #34d399;
-            --con: #fb7185;
-            --card-bg: rgba(15, 23, 42, 0.6);
-            --card-border: rgba(51, 65, 85, 0.5);
-        }
-        body {
-            background-color: var(--bg-color);
-            font-family: 'Lora', serif;
-            color: #cbd5e1;
-            background-image: radial-gradient(circle at 50% 0%, rgba(106, 210, 255, 0.1), transparent 50%);
-            min-height: 100vh;
-        }
-        .font-title { font-family: 'Playfair Display', serif; }
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
 
-        .loading-spinner {
-            border: 3px solid rgba(106, 210, 255, 0.2);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+<style>
+/* ============================================================
+   1. TOKEN
+   ============================================================ */
+:root{
+  --ui:'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif:'Literata', Georgia, 'Times New Roman', serif;
 
-        .motion-card {
-            background: rgba(15, 23, 42, 0.5);
-            border: 1px solid var(--card-border);
-            transition: border-color 0.2s ease;
-        }
-        .motion-card:hover { border-color: rgba(106, 210, 255, 0.4); }
+  --bg:#061626;
+  --surface:#0B2438;
+  --paper:#0F2C44;
+  --text:#E8F0F8;
+  --muted:#9FB6CB;
+  --dim:#6C889F;
+  --line:rgba(232,240,248,.13);
+  --line-strong:rgba(232,240,248,.26);
 
-        .side-btn {
-            transition: transform 0.15s ease, background-color 0.15s ease;
-        }
-        .side-btn:hover { transform: translateY(-1px); }
-        .side-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  --blue:#5AA9F2;
+  --blue-ink:#04192B;
+  --blue-soft:rgba(90,169,242,.14);
 
-        .skeleton {
-            background: linear-gradient(90deg, rgba(51,65,85,0.3) 25%, rgba(71,85,105,0.4) 37%, rgba(51,65,85,0.3) 63%);
-            background-size: 400% 100%;
-            animation: skeleton-loading 1.4s ease infinite;
-        }
-        @keyframes skeleton-loading {
-            0% { background-position: 100% 50%; }
-            100% { background-position: 0 50%; }
-        }
+  --pro:#46C296;
+  --pro-soft:rgba(70,194,150,.13);
+  --con:#F2879A;
+  --con-soft:rgba(242,135,154,.13);
 
-        @media print {
-            body * { visibility: hidden; }
-            #print-area, #print-area * { visibility: visible; }
-            #print-area { position: absolute; top: 0; left: 0; width: 100%; color: #000; }
-        }
-    </style>
+  --radius:12px;
+}
+
+/* ============================================================
+   2. NỀN TẢNG
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.wrap{max-width:53rem;margin:0 auto;padding:clamp(1.25rem,4vw,2.75rem) 1.15rem 4rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ============================================================
+   3. ĐẦU TRANG
+   ============================================================ */
+.top{display:flex;align-items:center;gap:.85rem;margin-bottom:1.75rem}
+.mark{
+  width:48px;height:48px;flex:0 0 48px;border-radius:50%;
+  border:1px solid var(--blue);background:var(--surface);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  font-family:var(--serif);font-weight:600;font-size:.8rem;color:var(--blue);
+}
+.mark img{width:100%;height:100%;object-fit:contain;padding:5px}
+.top__name{font-family:var(--serif);font-size:1.02rem;font-weight:600;line-height:1.2;margin:0}
+.top__sub{margin:.1rem 0 0;font-size:.82rem;color:var(--muted)}
+/* ============================================================
+   4. THANH BƯỚC
+   ============================================================ */
+.steps{display:flex;align-items:center;gap:.5rem;margin-bottom:1.1rem}
+.steps__item{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--dim);white-space:nowrap}
+.steps__num{
+  width:22px;height:22px;flex:0 0 22px;border-radius:50%;border:1px solid var(--line-strong);
+  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;
+  font-variant-numeric:tabular-nums;
+}
+.steps__rule{flex:1;height:1px;background:var(--line);min-width:.75rem}
+.steps__item[data-state="now"]{color:var(--text);font-weight:600}
+.steps__item[data-state="now"] .steps__num{border-color:var(--blue);color:var(--blue)}
+.steps__item[data-state="done"]{color:var(--muted)}
+.steps__item[data-state="done"] .steps__num{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+
+/* ============================================================
+   5. KHUNG CHÍNH
+   ============================================================ */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1.15rem,3.5vw,2.1rem)}
+
+.ask{font-family:var(--serif);font-size:clamp(1.35rem,4.5vw,1.85rem);line-height:1.3;margin:0 0 1.35rem;font-weight:500}
+.field input{
+  width:100%;background:transparent;border:0;border-bottom:2px solid var(--line-strong);
+  font-family:var(--serif);font-size:clamp(1.05rem,3.2vw,1.35rem);padding:.45rem 0 .55rem;outline:none;
+}
+.field input::placeholder{color:var(--dim)}
+.field input:focus{border-bottom-color:var(--blue)}
+.field__row{display:flex;justify-content:space-between;gap:1rem;margin-top:.45rem;font-size:.76rem;color:var(--dim)}
+.field__err{color:var(--con)}
+.count{font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.35rem 0 1.75rem}
+.chips__label{width:100%;font-size:.78rem;color:var(--muted);margin-bottom:.1rem}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:.38rem .8rem;font-size:.82rem;cursor:pointer}
+.chip:hover{border-color:var(--blue);color:var(--text)}
+
+.btn{font-weight:600;font-size:.94rem;border-radius:10px;padding:.68rem 1.15rem;border:1px solid var(--line-strong);background:transparent;color:var(--text);cursor:pointer}
+.btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn--go{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
+.btn--go:hover:not(:disabled){filter:brightness(1.1);color:var(--blue-ink)}
+.btn--sm{padding:.42rem .72rem;font-size:.8rem;border-radius:8px;font-weight:500}
+.btn--link{border:0;padding:.35rem 0;color:var(--muted);font-weight:500;font-size:.84rem;background:none}
+.btn--link:hover:not(:disabled){color:var(--blue)}
+.actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+
+/* --- Kiến nghị --- */
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
+.head h2{font-family:var(--serif);font-size:1.2rem;margin:0;font-weight:600}
+#motions-topic{margin:.2rem 0 1.25rem;font-size:.84rem;color:var(--muted)}
+.motions{display:grid;gap:.85rem}
+.motion{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);overflow:hidden}
+.motion__text{padding:1rem 1.1rem;margin:0;font-family:var(--serif);font-size:1.02rem;line-height:1.55}
+.sides{display:grid;grid-template-columns:1fr 1fr}
+.side{border:0;border-top:1px solid var(--line);background:transparent;cursor:pointer;padding:.8rem 1rem .9rem;text-align:left;color:var(--muted);font-size:.84rem;line-height:1.45}
+.side+.side{border-left:1px solid var(--line)}
+.side b{display:block;font-size:.88rem;margin-bottom:.22rem}
+.side--pro b{color:var(--pro)}
+.side--con b{color:var(--con)}
+.side--pro:hover{background:var(--pro-soft);color:var(--text)}
+.side--con:hover{background:var(--con-soft);color:var(--text)}
+.side:disabled{opacity:.5;cursor:wait}
+
+/* --- Chọn giọng --- */
+.recap{border-left:2px solid var(--blue);padding:.15rem 0 .15rem .75rem;margin:0 0 1.25rem;font-size:.84rem;color:var(--muted)}
+.recap b{display:block;color:var(--text);font-family:var(--serif);font-weight:500;font-size:.96rem;line-height:1.45;margin-bottom:.2rem}
+.voices{display:grid;gap:.6rem}
+.voice{
+  display:block;width:100%;text-align:left;cursor:pointer;
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  padding:.85rem 1rem;color:var(--muted);font-size:.85rem;line-height:1.5;
+}
+.voice b{display:block;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
+.voice:hover{border-color:var(--blue);background:var(--blue-soft)}
+.voice[aria-pressed="true"]{border-color:var(--blue)}
+.voice[aria-pressed="true"] b::after{content:" · đang chọn";font-family:var(--ui);font-size:.72rem;font-weight:400;color:var(--blue)}
+.voice:disabled{opacity:.5;cursor:wait}
+
+.bone{height:.85rem;border-radius:4px;background:var(--line);position:relative;overflow:hidden}
+.bone+.bone{margin-top:.5rem}
+.bone::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,var(--line),transparent);animation:sweep 1.5s infinite}
+@keyframes sweep{100%{transform:translateX(100%)}}
+
+/* --- Đang tạo --- */
+.working{padding:2.5rem 0;text-align:center}
+.working__bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;max-width:15rem;margin:0 auto 1.1rem}
+.working__bar span{display:block;height:100%;width:38%;background:var(--blue);animation:slide 1.5s ease-in-out infinite}
+@keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(320%)}}
+.working p{margin:0;font-size:.95rem}
+.working small{display:block;margin-top:.4rem;color:var(--dim);font-size:.8rem}
+
+/* --- Lỗi --- */
+.alert{border:1px solid var(--con);background:var(--con-soft);border-radius:var(--radius);padding:1.1rem 1.15rem}
+.alert h3{margin:0 0 .35rem;font-size:.98rem;font-family:var(--serif)}
+.alert p{margin:0 0 .9rem;font-size:.87rem;color:var(--muted)}
+
+/* --- Bản thảo --- */
+.result__meta{font-size:.8rem;color:var(--muted);margin:0 0 .35rem}
+.badge{display:inline-flex;align-items:center;gap:.35rem}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.badge--pro{color:var(--pro)}
+.badge--con{color:var(--con)}
+.result__title{font-family:var(--serif);font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.25;margin:0 0 1rem;font-weight:600}
+
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;padding:.7rem 0 .9rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:1.25rem}
+.clock{font-variant-numeric:tabular-nums;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
+.clock small{font-weight:400;color:var(--dim);font-size:.78rem}
+.clock[data-fit="long"]{color:var(--con)}
+.clock[data-fit="short"]{color:var(--blue)}
+.bar__gap{flex:1}
+.pace{background:transparent;border:1px solid var(--line);border-radius:8px;padding:.35rem .5rem;font-size:.78rem;color:var(--muted);cursor:pointer}
+.pace option{color:#111}
+.hint{font-size:.78rem;color:var(--dim);margin:-.75rem 0 1.25rem}
+
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1rem,3vw,1.7rem)}
+.block{display:grid;grid-template-columns:3.4rem 1fr;gap:0 1.1rem;padding:1.15rem 0;border-top:1px solid var(--line)}
+.block:first-child{border-top:0;padding-top:0}
+.cue{font-size:.74rem;color:var(--dim);font-variant-numeric:tabular-nums;padding-top:.32rem}
+.block__head{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem;margin-bottom:.45rem}
+.block h3{font-family:var(--serif);font-size:1.03rem;margin:0;font-weight:600}
+.say{font-family:var(--serif);font-size:1.04rem;line-height:1.8;margin:0;white-space:pre-line;max-width:64ch}
+.tip{margin:.65rem 0 0;font-size:.82rem;color:var(--muted);font-style:italic;border-left:2px solid var(--blue);padding-left:.7rem}
+.say[contenteditable="true"]{outline:none;background:var(--blue-soft);border-radius:6px;box-shadow:0 0 0 .4rem var(--blue-soft)}
+
+.extra{margin-top:1.25rem;border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.15rem}
+.extra h3{font-family:var(--serif);font-size:1rem;margin:0 0 .75rem;font-weight:600}
+.extra dl{margin:0}
+.extra dt{font-weight:600;font-size:.88rem;color:var(--con)}
+.extra dd{margin:.2rem 0 .9rem;font-size:.9rem;color:var(--muted);line-height:1.6}
+.extra dd:last-child{margin-bottom:0}
+
+.foot{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
+.credit{margin-top:2.25rem;text-align:center;font-size:.76rem;color:var(--dim)}
+
+/* ============================================================
+   6. TẬP NÓI
+   ============================================================ */
+.prompter{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column}
+.prompter__bar{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:calc(.7rem + env(safe-area-inset-top,0px)) 1rem .7rem;border-bottom:1px solid var(--line);background:var(--surface)}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:1.6rem;line-height:1;min-width:4.4rem}
+.timer[data-zone="near"]{color:var(--blue)}
+.timer[data-zone="over"]{color:var(--con)}
+.prompter__target{font-size:.76rem;color:var(--dim);margin-right:auto}
+.prompter__body{flex:1;overflow-y:auto;padding:2rem 1.25rem 45vh;scroll-behavior:smooth}
+.prompter__inner{max-width:42rem;margin:0 auto;font-family:var(--serif);line-height:1.85}
+.prompter__inner h3{font-size:.78em;color:var(--blue);margin:2rem 0 .6rem;font-weight:600}
+.prompter__inner h3:first-child{margin-top:0}
+.prompter__inner p{margin:0;white-space:pre-line}
+.toggle{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--muted);cursor:pointer}
+
+@media (max-width:560px){
+  .block{grid-template-columns:1fr;gap:0}
+  .cue{padding:0 0 .3rem}
+  .sides{grid-template-columns:1fr}
+  .side+.side{border-left:0}
+  .steps__item span:last-child{display:none}
+  .steps__item[data-state="now"] span:last-child{display:inline}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
+/* ============================================================
+   7. IN
+   ============================================================ */
+.print-head{display:none}
+@media print{
+  body{background:#fff;color:#000;font-size:12pt}
+  .no-print,.top,.steps,.credit,.bar,.hint{display:none!important}
+  .wrap{max-width:none;padding:0}
+  .panel,.sheet,.extra{border:0;background:#fff;padding:0;border-radius:0}
+  .print-head{display:block;margin-bottom:1rem}
+  .print-head h1{font-family:var(--serif);font-size:18pt;margin:0 0 .3rem}
+  .print-head p{margin:0;font-size:10pt;color:#444}
+  .result__meta,.result__title{display:none}
+  .block{break-inside:avoid;border-top:1px solid #ddd;grid-template-columns:3rem 1fr}
+  .block h3,.say{color:#000}
+  .cue{color:#777}
+  .say{font-size:12pt;line-height:1.6;max-width:none}
+  .tip{color:#555;border-left-color:#bbb}
+  .extra{margin-top:1rem;break-inside:avoid}
+}
+</style>
 </head>
-<body class="flex flex-col items-center py-12 px-4 sm:px-6">
 
-    <header class="text-center mb-10 w-full max-w-3xl relative z-10">
-        <div class="inline-block relative mb-4 group">
-            <div class="absolute inset-0 bg-[var(--accent)] rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
-            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="Logo" class="w-20 h-20 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] relative z-10" onerror="this.src='https://placehold.co/150x150/070b14/6ad2ff?text=YCC'">
-        </div>
-        <h1 class="text-3xl md:text-4xl font-title font-bold text-white mb-2">Trợ lý AI Tạo Kịch Bản</h1>
-        <p class="text-slate-400 text-sm md:text-base">Từ một chủ đề lớn thành bài nói tranh biện 3 phút, sẵn sàng để tập.</p>
-    </header>
+<body>
+<div class="wrap">
 
-    <!-- Thanh tiến trình -->
-    <div class="w-full max-w-3xl mb-6 relative z-10 hidden md:flex items-center justify-center gap-3" id="progress-bar">
-        <div class="step-dot flex items-center gap-2 text-sm" data-step="1">
-            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">1</span>
-            <span class="text-slate-400">Chủ đề</span>
-        </div>
-        <div class="w-8 h-px bg-slate-700"></div>
-        <div class="step-dot flex items-center gap-2 text-sm" data-step="2">
-            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">2</span>
-            <span class="text-slate-400">Chọn kiến nghị</span>
-        </div>
-        <div class="w-8 h-px bg-slate-700"></div>
-        <div class="step-dot flex items-center gap-2 text-sm" data-step="3">
-            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">3</span>
-            <span class="text-slate-400">Kịch bản</span>
-        </div>
+  <header class="top no-print">
+    <div class="mark" aria-hidden="true">
+      <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="" onerror="this.remove()">YCC
     </div>
+    <div>
+      <p class="top__name">Kịch bản tranh biện 3 phút</p>
+      <p class="top__sub">You Can Club</p>
+    </div>
+  </header>
 
-    <main class="w-full max-w-3xl glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden z-10">
+  <nav class="steps no-print" aria-label="Tiến trình">
+    <div class="steps__item" data-step="1"><span class="steps__num">1</span><span>Chủ đề</span></div>
+    <div class="steps__rule"></div>
+    <div class="steps__item" data-step="2"><span class="steps__num">2</span><span>Kiến nghị</span></div>
+    <div class="steps__rule"></div>
+    <div class="steps__item" data-step="3"><span class="steps__num">3</span><span>Giọng</span></div>
+    <div class="steps__rule"></div>
+    <div class="steps__item" data-step="4"><span class="steps__num">4</span><span>Kịch bản</span></div>
+  </nav>
 
-        <!-- BƯỚC 1: Nhập chủ đề -->
-        <div id="topic-section">
-            <label class="text-white font-bold font-title tracking-wide block mb-2">Chủ đề lớn bạn muốn tranh biện:</label>
-            <input type="text" id="topic-input" placeholder="Ví dụ: Áp lực đồng trang lứa, Mạng xã hội và tuổi teen..."
-                class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 rounded-xl p-3 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all">
-            <p class="text-xs text-slate-500 mt-2">Từ chủ đề này, AI sẽ gợi ý 4 hướng tranh biện khác nhau để bạn chọn.</p>
+  <main class="panel">
 
-            <div class="mt-6 text-center">
-                <button id="btn-get-motions" onclick="fetchMotions()" class="bg-[var(--accent)] text-slate-900 font-bold font-title text-lg px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(106,210,255,0.4)] inline-flex items-center gap-2 cursor-pointer">
-                    <span>Gợi ý kiến nghị</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </button>
-            </div>
+    <!-- BƯỚC 1 -->
+    <section id="view-topic">
+      <h1 class="ask">Bạn muốn tranh biện về điều gì?</h1>
+      <div class="field">
+        <label class="sr" for="topic">Chủ đề</label>
+        <input id="topic" type="text" maxlength="100" autocomplete="off"
+               placeholder="Áp lực đồng trang lứa, học sinh dùng AI…">
+        <div class="field__row">
+          <span id="topic-msg">Từ chủ đề này, AI đề xuất 4 kiến nghị để bạn chọn.</span>
+          <span class="count"><span id="topic-count">0</span>/100</span>
         </div>
+      </div>
 
-        <!-- BƯỚC 2: Chọn kiến nghị + phe -->
-        <div id="motions-section" class="hidden">
-            <div class="flex items-center justify-between mb-1">
-                <h3 class="text-lg md:text-xl font-title font-bold text-white">Chọn 1 kiến nghị và 1 phe</h3>
-                <button onclick="backToTopic()" class="text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer">← Đổi chủ đề</button>
-            </div>
-            <p id="motions-topic-label" class="text-sm text-slate-500 mb-5"></p>
+      <div class="chips" id="chips">
+        <span class="chips__label">Chưa nghĩ ra thì lấy tạm một trong số này:</span>
+      </div>
 
-            <div id="motions-grid" class="grid sm:grid-cols-2 gap-4 mb-5"></div>
+      <div class="actions">
+        <button class="btn btn--go" id="btn-motions" type="button">Đề xuất kiến nghị</button>
+      </div>
+    </section>
 
-            <div class="text-center">
-                <button id="btn-regenerate" onclick="fetchMotions(true)" class="text-sm text-slate-400 hover:text-[var(--accent)] transition-colors cursor-pointer inline-flex items-center gap-1.5">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    Chưa ưng, gợi ý 4 kiến nghị khác
-                </button>
-            </div>
+    <!-- BƯỚC 2 -->
+    <section id="view-motions" hidden>
+      <div class="head">
+        <h2>Chọn kiến nghị và phe của bạn</h2>
+        <button class="btn btn--link" id="btn-back-topic" type="button">Đổi chủ đề</button>
+      </div>
+      <p id="motions-topic"></p>
+      <div class="motions" id="motions" aria-live="polite"></div>
+      <div class="actions" style="margin-top:1.1rem;justify-content:center">
+        <button class="btn btn--link" id="btn-regen" type="button">Xem 4 kiến nghị khác</button>
+      </div>
+    </section>
+
+    <!-- BƯỚC 3 -->
+    <section id="view-style" hidden>
+      <div class="head">
+        <h2>Bài nói này nghe như thế nào?</h2>
+        <button class="btn btn--link" id="btn-back-motions-2" type="button">Đổi kiến nghị</button>
+      </div>
+      <p id="style-recap" class="recap"></p>
+      <div class="voices" id="voices"></div>
+    </section>
+
+    <!-- ĐANG TẠO -->
+    <section id="view-working" hidden class="working" aria-live="polite">
+      <div class="working__bar"><span></span></div>
+      <p id="working-msg">Đang dựng phần mở đầu…</p>
+      <small>Thường mất 8 – 20 giây</small>
+    </section>
+
+    <!-- LỖI -->
+    <section id="view-error" hidden>
+      <div class="alert" role="alert">
+        <h3 id="error-title">Chưa tạo được kịch bản</h3>
+        <p id="error-msg"></p>
+        <div class="actions">
+          <button class="btn btn--go btn--sm" id="btn-retry" type="button">Thử lại</button>
+          <button class="btn btn--sm" id="btn-error-back" type="button">Quay lại</button>
         </div>
+      </div>
+    </section>
 
-        <!-- Màn hình Loading dùng chung -->
-        <div id="loading-section" class="hidden flex-col items-center justify-center py-12">
-            <div class="loading-spinner mb-5"></div>
-            <p id="loading-title" class="text-[var(--accent)] font-medium animate-pulse text-lg">Đang xử lý...</p>
-            <p id="loading-sub" class="text-slate-400 text-sm mt-2">Quá trình này có thể mất khoảng 5 - 10 giây</p>
+    <!-- BƯỚC 3 -->
+    <section id="view-script" hidden>
+      <div class="print-head">
+        <h1 id="print-title"></h1>
+        <p id="print-meta"></p>
+      </div>
+
+      <p class="result__meta" id="script-meta"></p>
+      <h2 class="result__title" id="script-title"></h2>
+
+      <div class="bar no-print">
+        <span class="clock" id="clock">
+          <span id="clock-time">0:00</span>
+          <small id="clock-note"></small>
+        </span>
+        <span class="bar__gap"></span>
+        <label class="sr" for="pace">Tốc độ nói</label>
+        <select class="pace" id="pace">
+          <option value="150">Nói chậm</option>
+          <option value="175" selected>Tốc độ vừa</option>
+          <option value="200">Nói nhanh</option>
+        </select>
+        <button class="btn btn--sm" id="btn-edit" type="button">Sửa lời</button>
+        <button class="btn btn--sm" id="btn-practice" type="button">Tập nói</button>
+        <button class="btn btn--sm" id="btn-copy" type="button">Chép</button>
+        <button class="btn btn--sm" id="btn-txt" type="button">Tải .txt</button>
+        <button class="btn btn--sm" id="btn-print" type="button">In</button>
+      </div>
+      <p class="hint no-print" id="edit-hint" hidden>Bấm vào đoạn văn để sửa. Bản sửa được giữ khi bạn chép, tải hay in.</p>
+
+      <div class="sheet" id="sheet"></div>
+      <div class="extra" id="rebuttals" hidden></div>
+
+      <div class="foot no-print">
+        <button class="btn btn--sm" id="btn-again" type="button">Viết bản khác</button>
+        <button class="btn btn--sm" id="btn-back-style" type="button">Đổi giọng</button>
+        <button class="btn btn--sm" id="btn-back-motions" type="button">Chọn kiến nghị khác</button>
+        <button class="btn btn--sm" id="btn-reset" type="button">Bắt đầu lại</button>
+      </div>
+    </section>
+
+  </main>
+
+  <p class="credit no-print">You Can Club · Kịch bản là bản nháp để bạn tập, hãy sửa lại bằng giọng của mình.</p>
+</div>
+
+<!-- TẬP NÓI -->
+<div class="prompter" id="prompter" hidden role="dialog" aria-modal="true" aria-label="Chế độ tập nói">
+  <div class="prompter__bar">
+    <span class="timer" id="timer" data-zone="ok">0:00</span>
+    <span class="prompter__target">mục tiêu 3:00</span>
+    <button class="btn btn--sm" id="btn-timer" type="button">Bắt đầu</button>
+    <button class="btn btn--sm" id="btn-timer-reset" type="button">Đặt lại</button>
+    <label class="toggle"><input type="checkbox" id="autoscroll"> Tự cuộn</label>
+    <button class="btn btn--sm" id="btn-font-down" type="button" aria-label="Chữ nhỏ hơn">A−</button>
+    <button class="btn btn--sm" id="btn-font-up" type="button" aria-label="Chữ to hơn">A+</button>
+    <button class="btn btn--sm" id="btn-prompter-close" type="button">Đóng</button>
+  </div>
+  <div class="prompter__body" id="prompter-body">
+    <div class="prompter__inner" id="prompter-inner" style="font-size:1.7rem"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   CẤU HÌNH
+   ============================================================ */
+const API = "https://backend-deno-yjgtm1r4x278.youcanclub.deno.net";
+const MOTIONS_URL = API + "/api/motions";
+const SCRIPT_URL  = API + "/api/script";
+const TIMEOUT_MOTIONS = 40000;
+const TIMEOUT_SCRIPT  = 90000;   // backend có thể phải viết lại một vòng
+const TARGET_SECONDS  = 180;
+const STORE = "ycc.debate.v4";
+
+// Kho chủ đề rộng để gợi ý — cố tình để mở, không phải kiến nghị cụ thể,
+// vì bước tiếp theo AI mới là chỗ thu hẹp thành kiến nghị.
+const TOPIC_POOL = [
+  "Áp lực đồng trang lứa",
+  "Mạng xã hội và tuổi teen",
+  "Điểm số và năng lực thật",
+  "Học sinh dùng AI",
+  "Áp lực thi cử",
+  "Học thêm ngoài giờ",
+  "Học sinh đi làm thêm",
+  "Chọn ngành theo đam mê hay theo nhu cầu xã hội",
+  "Đồng phục học đường",
+  "Kỷ luật trong nhà trường",
+  "Mối quan hệ giữa phụ huynh và con cái tuổi teen",
+  "Thần tượng và văn hoá fan",
+  "Thời gian sử dụng điện thoại",
+  "Giới hạn tuổi cho mạng xã hội",
+  "Giấc ngủ và lịch học của học sinh",
+  "Tự do ngôn luận trong trường học",
+  "Trung thực học đường",
+  "Cân bằng giữa học và chơi",
+  "Trách nhiệm của người nổi tiếng",
+  "Tiền tiêu vặt và tính tự lập",
+  "Văn hoá đọc của giới trẻ",
+  "Áp lực phải giỏi toàn diện",
+  "Tình bạn qua mạng xã hội",
+  "Giáo dục giới tính trong trường học",
+];
+
+function pickRandomTopics(n){
+  const pool = [...TOPIC_POOL];
+  for (let i = pool.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, n);
+}
+
+// Khoá phải trùng với bảng STYLES trong main.ts. Kiểm tra bằng GET /health.
+const VOICES = [
+  { key:"thang-than", name:"Thẳng thắn, rõ ràng",
+    desc:"Vào thẳng vấn đề, câu ngắn, không hoa mỹ. Hợp với kiến nghị về chính sách." },
+  { key:"cam-dong", name:"Kể chuyện, chạm cảm xúc",
+    desc:"Mở bằng câu chuyện về một bạn học sinh cụ thể rồi khép lại bằng chính bạn ấy." },
+  { key:"phan-tich", name:"Điềm tĩnh, phân tích",
+    desc:"Bình thản gỡ từng nút thắt, nói rõ điều kiện và ngoại lệ. Hợp khi đề khó." },
+  { key:"truyen-lua", name:"Truyền lửa, hùng biện",
+    desc:"Nhịp dồn dần, điệp ngữ, kết bằng lời kêu gọi làm được ngay trong trường." },
+  { key:"gan-gui", name:"Gần gũi, hóm hỉnh",
+    desc:"Như đang nói chuyện với bạn cùng lớp, có chút hài nhẹ nhưng lập luận vẫn chặt." }
+];
+
+/* ============================================================
+   TIỆN ÍCH
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
+  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[c]));
+const syllables = t => ((String(t||"").trim().match(/\S+/g)) || []).length;
+const mmss = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
+
+let state = { step:1, topic:"", motions:[], avoid:[], motion:null, side:null,
+              style:"thang-than", script:null, pace:175 };
+let lastAction = null, controller = null, editing = false;
+
+const save = () => { try { sessionStorage.setItem(STORE, JSON.stringify(state)); } catch(e){} };
+const load = () => {
+  try { const raw = sessionStorage.getItem(STORE); if (raw) state = Object.assign(state, JSON.parse(raw)); }
+  catch(e){}
+};
+
+/* ============================================================
+   ĐIỀU HƯỚNG
+   ============================================================ */
+const VIEWS = ["view-topic","view-motions","view-style","view-working","view-error","view-script"];
+const STEP_OF = { "view-script":4, "view-style":3, "view-motions":2 };
+function show(view){
+  VIEWS.forEach(v => $(v).hidden = (v !== view));
+  const step = STEP_OF[view] || state.step;
+  document.querySelectorAll(".steps__item").forEach(it => {
+    const n = +it.dataset.step;
+    it.dataset.state = n < step ? "done" : n === step ? "now" : "next";
+  });
+}
+function render(){
+  if (state.step === 4 && state.script && state.motion){ show("view-script"); paintScript(); }
+  else if (state.step === 3 && state.motion){ show("view-style"); paintVoices(); }
+  else if (state.step === 2 && state.motions.length){ show("view-motions"); paintMotions(); }
+  else { state.step = 1; show("view-topic"); $("topic").value = state.topic; updateCount(); }
+}
+const BACK_LABEL = { 1:"Đổi chủ đề", 2:"Chọn kiến nghị khác", 3:"Đổi giọng" };
+function fail(title, msg, back){
+  $("error-title").textContent = title;
+  $("error-msg").textContent = msg;
+  $("btn-error-back").textContent = BACK_LABEL[back] || "Quay lại";
+  $("view-error").dataset.back = back;
+  show("view-error");
+}
+function niceError(err){
+  if (err.name === "AbortError") return "Máy chủ trả lời quá lâu. Mạng có thể đang chậm, thử lại sau ít giây nhé.";
+  if (String(err.message).toLowerCase().includes("fetch")) return "Không nối được tới máy chủ. Kiểm tra kết nối mạng rồi thử lại.";
+  return err.message || "Có lỗi chưa rõ nguyên nhân.";
+}
+async function post(url, body, timeout){
+  if (controller) controller.abort();
+  const c = new AbortController();
+  controller = c;
+  const t = setTimeout(() => c.abort(), timeout);
+  try {
+    const res = await fetch(url, {
+      method:"POST", headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(body), signal: c.signal
+    });
+    let data = {};
+    try { data = await res.json(); }
+    catch(e){ throw new Error("Máy chủ trả về dữ liệu không đọc được."); }
+    if (!res.ok) throw new Error(data.message || `Máy chủ báo lỗi ${res.status}.`);
+    return data;
+  } finally {
+    clearTimeout(t);
+    if (controller === c) controller = null;
+  }
+}
+
+/* ============================================================
+   BƯỚC 1
+   ============================================================ */
+function updateCount(){ $("topic-count").textContent = $("topic").value.length; }
+function clearTopicMsg(){
+  $("topic-msg").classList.remove("field__err");
+  $("topic-msg").textContent = "Từ chủ đề này, AI đề xuất 4 kiến nghị để bạn chọn.";
+}
+function paintChips(){
+  const box = $("chips");
+  box.querySelectorAll(".chip").forEach(c => c.remove());
+  pickRandomTopics(6).forEach(topic => {
+    const b = document.createElement("button");
+    b.className = "chip";
+    b.type = "button";
+    b.textContent = topic;
+    b.onclick = () => { $("topic").value = topic; updateCount(); clearTopicMsg(); $("topic").focus(); };
+    box.appendChild(b);
+  });
+}
+$("topic").addEventListener("input", () => { updateCount(); clearTopicMsg(); });
+$("topic").addEventListener("keydown", e => { if (e.key === "Enter") getMotions(false); });
+$("btn-motions").onclick = () => getMotions(false);
+$("btn-regen").onclick = () => getMotions(true);
+$("btn-back-topic").onclick = () => { state.step = 1; save(); render(); $("topic").focus(); };
+
+function topicError(msg){
+  state.step = 1;
+  show("view-topic");
+  $("topic").value = state.topic;
+  updateCount();
+  $("topic-msg").textContent = msg;
+  $("topic-msg").classList.add("field__err");
+  $("topic").focus();
+}
+
+async function getMotions(regen){
+  if (!regen){
+    const topic = $("topic").value.trim();
+    if (topic.length < 3 || topic.length > 100){
+      topicError("Chủ đề cần từ 3 đến 100 ký tự.");
+      return;
+    }
+    state.topic = topic;
+    state.avoid = [];
+  } else {
+    state.avoid = [...new Set([...state.avoid, ...state.motions.map(m => m.motion)])].slice(-12);
+  }
+
+  lastAction = () => getMotions(regen);
+  state.step = 2;
+  show("view-motions");
+  $("motions-topic").textContent = `Chủ đề: ${state.topic}`;
+  $("btn-regen").disabled = true;
+  paintBones();
+
+  try {
+    const data = await post(MOTIONS_URL, { topic: state.topic, avoid_motions: state.avoid }, TIMEOUT_MOTIONS);
+    if (data.status === "invalid_topic"){
+      topicError(data.message || "Chủ đề này khó tranh biện. Thử một chủ đề có hai luồng ý kiến rõ rệt.");
+      return;
+    }
+    if (!Array.isArray(data.motions) || !data.motions.length)
+      throw new Error("AI chưa đưa ra được kiến nghị nào.");
+    state.motions = data.motions;
+    save();
+    paintMotions();
+  } catch (err){
+    console.error(err);
+    fail("Chưa lấy được kiến nghị", niceError(err), 1);
+  } finally {
+    $("btn-regen").disabled = false;
+  }
+}
+
+function paintBones(){
+  $("motions").innerHTML = Array.from({length:4}).map(() => `
+    <div class="motion" aria-hidden="true">
+      <div class="motion__text"><div class="bone" style="width:92%"></div><div class="bone" style="width:64%"></div></div>
+      <div class="sides">
+        <div class="side"><div class="bone" style="width:80%"></div></div>
+        <div class="side"><div class="bone" style="width:80%"></div></div>
+      </div>
+    </div>`).join("");
+}
+
+function paintMotions(){
+  $("motions-topic").textContent = `Chủ đề: ${state.topic}`;
+  $("motions").innerHTML = state.motions.map((m, i) => `
+    <article class="motion">
+      <p class="motion__text">${esc(m.motion)}</p>
+      <div class="sides">
+        <button class="side side--pro" data-i="${i}" data-side="pro"><b>Nói phe Ủng hộ</b>${esc(m.pro_summary)}</button>
+        <button class="side side--con" data-i="${i}" data-side="con"><b>Nói phe Phản đối</b>${esc(m.con_summary)}</button>
+      </div>
+    </article>`).join("");
+
+  $("motions").querySelectorAll(".side").forEach(b => b.onclick = () => {
+    state.motion = state.motions[+b.dataset.i];
+    state.side = b.dataset.side;
+    state.step = 3;
+    save();
+    show("view-style");
+    paintVoices();
+    window.scrollTo({ top:0, behavior:"smooth" });
+  });
+}
+
+/* ============================================================
+   BƯỚC 3 — CHỌN GIỌNG
+   ============================================================ */
+function paintVoices(){
+  const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+  $("style-recap").innerHTML =
+    `<b>${esc(state.motion.motion)}</b>Bạn nói phe ${sideName}. Cùng một luận điểm, mỗi giọng cho ra một bài khác hẳn.`;
+
+  $("voices").innerHTML = VOICES.map(v => `
+    <button class="voice" type="button" data-key="${v.key}" aria-pressed="${v.key === state.style}">
+      <b>${esc(v.name)}</b>${esc(v.desc)}
+    </button>`).join("");
+
+  $("voices").querySelectorAll(".voice").forEach(b => b.onclick = () => {
+    $("voices").querySelectorAll(".voice").forEach(x => x.disabled = true);
+    state.style = b.dataset.key;
+    save();
+    getScript(false);
+  });
+}
+$("btn-back-motions-2").onclick = () => {
+  state.step = 2; save(); render();
+  window.scrollTo({ top:0, behavior:"smooth" });
+};
+
+/* ============================================================
+   BƯỚC 3
+   ============================================================ */
+const WORKING_MSGS = [
+  "Đang dựng phần mở đầu…",
+  "Đang xây luận điểm chính…",
+  "Đang chuẩn bị phần đáp lại…",
+  "Đang chốt lời kết…",
+  "Đang cân lại độ dài cho khớp 3 phút…"
+];
+let workingTimer = null;
+function startWorking(){
+  let i = 0;
+  $("working-msg").textContent = WORKING_MSGS[0];
+  show("view-working");
+  clearInterval(workingTimer);
+  workingTimer = setInterval(() => {
+    i = Math.min(i + 1, WORKING_MSGS.length - 1);
+    $("working-msg").textContent = WORKING_MSGS[i];
+  }, 4000);
+}
+
+async function getScript(again){
+  lastAction = () => getScript(again);
+  startWorking();
+  const m = state.motion, side = state.side;
+  try {
+    const data = await post(SCRIPT_URL, {
+      motion: m.motion,
+      side,
+      style: state.style,
+      side_summary: side === "pro" ? m.pro_summary : m.con_summary,
+      opponent_summary: side === "pro" ? m.con_summary : m.pro_summary
+    }, TIMEOUT_SCRIPT);
+
+    if (!data.title || !Array.isArray(data.sections) || !data.sections.length)
+      throw new Error("AI trả về kịch bản không đủ phần.");
+
+    state.script = data;
+    state.step = 4;
+    editing = false;
+    $("btn-edit").textContent = "Sửa lời";
+    $("edit-hint").hidden = true;
+    save();
+    show("view-script");
+    paintScript();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (err){
+    console.error(err);
+    fail("Chưa viết được kịch bản", niceError(err), 3);
+  } finally {
+    clearInterval(workingTimer);
+    $("voices").querySelectorAll(".voice").forEach(x => x.disabled = false);
+  }
+}
+
+function secondsOf(text){ return syllables(text) / state.pace * 60; }
+
+function paintScript(){
+  const s = state.script;
+  const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+
+  $("script-title").textContent = s.title;
+  const voiceName = s.style || (VOICES.find(v => v.key === state.style) || {}).name || "";
+  $("script-meta").innerHTML =
+    `<span class="badge badge--${state.side}">Phe ${sideName}</span> · giọng ${esc(voiceName.toLowerCase())} · ${esc(state.motion.motion)}`;
+  $("print-title").textContent = s.title;
+  $("print-meta").textContent = `${state.motion.motion} — Phe ${sideName} — Giọng ${voiceName.toLowerCase()}`;
+  $("pace").value = String(state.pace);
+
+  let running = 0;
+  $("sheet").innerHTML = s.sections.map((sec, i) => {
+    const cue = mmss(running);
+    running += secondsOf(sec.content);
+    return `
+      <section class="block">
+        <div class="cue">${cue}</div>
+        <div>
+          <div class="block__head">
+            <h3>${esc(sec.heading)}</h3>
+            <button class="btn btn--link no-print" data-copy="${i}">Chép</button>
+          </div>
+          <p class="say" data-i="${i}">${esc(sec.content)}</p>
+          ${sec.tip ? `<p class="tip">${esc(sec.tip)}</p>` : ""}
         </div>
+      </section>`;
+  }).join("");
 
-        <!-- Màn hình báo lỗi dùng chung -->
-        <div id="error-section" class="hidden bg-red-500/10 border border-red-500/50 rounded-xl p-6 text-center">
-            <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mx-auto mb-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            </div>
-            <h3 class="text-red-400 font-bold text-xl font-title mb-2">Chưa xong được</h3>
-            <p id="error-message" class="text-slate-300 text-sm mb-6 break-words bg-slate-900/50 p-3 rounded-lg"></p>
-            <button onclick="handleErrorBack()" class="px-6 py-2.5 rounded-full bg-slate-800 text-slate-300 border border-slate-600 hover:bg-slate-700 transition-colors font-medium cursor-pointer">Quay lại</button>
-        </div>
+  $("sheet").querySelectorAll("[data-copy]").forEach(b => b.onclick = () =>
+    copy(s.sections[+b.dataset.copy].content, b));
 
-        <!-- BƯỚC 3: Kết quả kịch bản -->
-        <div id="script-section" class="hidden">
-            <div class="flex items-start justify-between mb-4 gap-3">
-                <div>
-                    <p class="text-xs uppercase tracking-wide text-slate-500 mb-1" id="script-side-label"></p>
-                    <h3 id="script-title" class="text-xl md:text-2xl font-title font-bold text-[var(--accent)]"></h3>
-                </div>
-                <button onclick="copyAll()" class="shrink-0 text-xs px-3 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap">Sao chép tất cả</button>
-            </div>
+  const reb = Array.isArray(s.rebuttals) ? s.rebuttals : [];
+  $("rebuttals").hidden = reb.length === 0;
+  if (reb.length){
+    $("rebuttals").innerHTML = `<h3>Phe đối diện nhiều khả năng sẽ nói</h3><dl>` +
+      reb.map(r => `<dt>${esc(r.claim)}</dt><dd>${esc(r.response)}</dd>`).join("") + `</dl>`;
+  }
 
-            <div id="print-area">
-                <div id="script-sections" class="space-y-4 mb-6"></div>
-            </div>
+  if (editing){ editing = false; $("btn-edit").click(); }
+  updateClock();
+}
 
-            <div class="flex flex-wrap justify-center gap-3 border-t border-slate-700/50 pt-6">
-                <button onclick="fetchScript(true)" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
-                    Tạo bản khác cho kiến nghị này
-                </button>
-                <button onclick="backToMotions()" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
-                    Chọn kiến nghị khác
-                </button>
-                <button onclick="window.print()" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
-                    In / Xuất PDF
-                </button>
-                <button onclick="resetAll()" class="px-5 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-colors font-bold font-title text-sm cursor-pointer">
-                    Bắt đầu lại
-                </button>
-            </div>
-        </div>
-    </main>
+function updateClock(){
+  const total = state.script.sections.reduce((a, s) => a + secondsOf(s.content), 0);
+  const count = state.script.sections.reduce((a, s) => a + syllables(s.content), 0);
+  $("clock-time").textContent = mmss(total);
+  $("clock-note").textContent = `· ${count} âm tiết ở nhịp ${state.pace}/phút`;
+  const fit = total > TARGET_SECONDS + 20 ? "long" : total < TARGET_SECONDS - 35 ? "short" : "ok";
+  $("clock").dataset.fit = fit;
+  $("clock").title = fit === "long" ? "Dài hơn 3 phút, nên cắt bớt một ý."
+                   : fit === "short" ? "Ngắn hơn 3 phút, có thể thêm ví dụ."
+                   : "Vừa khít 3 phút.";
+}
 
-    <script>
-    // ================== CẤU HÌNH ==================
-    // Thay 2 URL này bằng địa chỉ backend Deno Deploy thật khi đã triển khai.
-const MOTIONS_URL = "https://backend-deno-yjgtm1r4x278.youcanclub.deno.net/api/motions";
-const SCRIPT_URL   = "https://backend-deno-yjgtm1r4x278.youcanclub.deno.net/api/script";
-    const REQUEST_TIMEOUT_MS = 20000;
-    const STORAGE_KEY = "debateTool.state";
+$("pace").onchange = e => { state.pace = +e.target.value; save(); paintScript(); };
 
-    // ================== STATE ==================
-    let state = {
-        step: 1,              // 1 = topic, 2 = motions, 3 = script
-        topic: "",
-        motions: [],
-        previousMotions: [],  // để tránh lặp khi "tạo lại"
-        selectedMotion: null, // { motion, pro_summary, con_summary }
-        selectedSide: null,   // "pro" | "con"
-        script: null          // { title, sections: [{heading, content}] }
+/* ============================================================
+   SỬA LỜI
+   ============================================================ */
+$("btn-edit").onclick = () => {
+  editing = !editing;
+  $("btn-edit").textContent = editing ? "Xong" : "Sửa lời";
+  $("edit-hint").hidden = !editing;
+  $("sheet").querySelectorAll(".say").forEach(p => {
+    p.contentEditable = editing ? "true" : "false";
+    p.onblur = () => {
+      state.script.sections[+p.dataset.i].content = p.innerText.trim();
+      save(); updateClock();
     };
+  });
+  if (editing) $("sheet").querySelector(".say")?.focus();
+};
 
-    // ================== DOM ==================
-    const el = (id) => document.getElementById(id);
-    const topicSection = el("topic-section");
-    const motionsSection = el("motions-section");
-    const loadingSection = el("loading-section");
-    const errorSection = el("error-section");
-    const scriptSection = el("script-section");
+/* ============================================================
+   CHÉP / TẢI / IN
+   ============================================================ */
+function plainText(){
+  const s = state.script;
+  const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+  const parts = [ s.title, `${state.motion.motion} — Phe ${sideName}`, "",
+    ...s.sections.map(sec => `${sec.heading}\n${sec.content}`) ];
+  if (Array.isArray(s.rebuttals) && s.rebuttals.length){
+    parts.push("Phe đối diện nhiều khả năng sẽ nói");
+    s.rebuttals.forEach(r => parts.push(`- ${r.claim}\n  → ${r.response}`));
+  }
+  return parts.join("\n\n");
+}
+function copy(text, btn){
+  const done = () => {
+    if (!btn) return;
+    const old = btn.textContent;
+    btn.textContent = "Đã chép";
+    setTimeout(() => btn.textContent = old, 1500);
+  };
+  if (navigator.clipboard?.writeText)
+    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  else fallbackCopy(text, done);
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); done(); } catch(e){}
+  ta.remove();
+}
+$("btn-copy").onclick = e => copy(plainText(), e.currentTarget);
+$("btn-print").onclick = () => window.print();
+$("btn-txt").onclick = () => {
+  const blob = new Blob(["\uFEFF" + plainText()], { type:"text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `kich-ban-${state.side === "pro" ? "ung-ho" : "phan-doi"}.txt`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+};
 
-    // ================== KHỞI TẠO / KHÔI PHỤC PHIÊN ==================
-    function loadState() {
-        try {
-            const raw = sessionStorage.getItem(STORAGE_KEY);
-            if (raw) state = Object.assign(state, JSON.parse(raw));
-        } catch (e) { /* bỏ qua nếu dữ liệu hỏng */ }
-    }
-    function saveState() {
-        try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-    }
-    function clearState() {
-        sessionStorage.removeItem(STORAGE_KEY);
-    }
+/* ============================================================
+   TẬP NÓI
+   ============================================================ */
+let tick = null, elapsed = 0, fontSize = 1.7;
+const pbody = $("prompter-body");
 
-    function render() {
-        [topicSection, motionsSection, loadingSection, errorSection, scriptSection].forEach(s => {
-            s.classList.add("hidden");
-            s.classList.remove("flex");
-        });
-        updateProgress(state.step);
+$("btn-practice").onclick = () => {
+  $("prompter-inner").innerHTML = state.script.sections
+    .map(s => `<h3>${esc(s.heading)}</h3><p>${esc(s.content)}</p>`).join("");
+  $("prompter").hidden = false;
+  document.body.style.overflow = "hidden";
+  resetTimer();
+  $("btn-timer").focus();
+};
+function closePrompter(){
+  $("prompter").hidden = true;
+  document.body.style.overflow = "";
+  stopTimer();
+  $("btn-practice").focus();
+}
+$("btn-prompter-close").onclick = closePrompter;
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && !$("prompter").hidden) closePrompter();
+});
+function paintTimer(){
+  $("timer").textContent = mmss(elapsed);
+  $("timer").dataset.zone = elapsed > TARGET_SECONDS + 5 ? "over"
+                          : elapsed > TARGET_SECONDS - 20 ? "near" : "ok";
+  if ($("autoscroll").checked){
+    const max = pbody.scrollHeight - pbody.clientHeight;
+    pbody.scrollTop = Math.min(max, max * (elapsed / TARGET_SECONDS));
+  }
+}
+function stopTimer(){ clearInterval(tick); tick = null; $("btn-timer").textContent = "Bắt đầu"; }
+function resetTimer(){ stopTimer(); elapsed = 0; pbody.scrollTop = 0; paintTimer(); }
+$("btn-timer").onclick = () => {
+  if (tick){ stopTimer(); return; }
+  $("btn-timer").textContent = "Tạm dừng";
+  tick = setInterval(() => { elapsed++; paintTimer(); }, 1000);
+};
+$("btn-timer-reset").onclick = resetTimer;
+$("btn-font-up").onclick = () => setFont(fontSize + .2);
+$("btn-font-down").onclick = () => setFont(fontSize - .2);
+function setFont(v){
+  fontSize = Math.min(3.2, Math.max(1.1, v));
+  $("prompter-inner").style.fontSize = fontSize + "rem";
+}
 
-        if (state.step === 1) {
-            topicSection.classList.remove("hidden");
-            if (state.topic) el("topic-input").value = state.topic;
-        } else if (state.step === 2) {
-            motionsSection.classList.remove("hidden");
-            renderMotions();
-        } else if (state.step === 3 && state.script) {
-            scriptSection.classList.remove("hidden");
-            renderScript();
-        } else {
-            state.step = 1;
-            topicSection.classList.remove("hidden");
-        }
-    }
+/* ============================================================
+   NÚT CÒN LẠI
+   ============================================================ */
+$("btn-again").onclick = () => getScript(true);
+$("btn-back-style").onclick = () => {
+  state.step = 3; state.script = null; save(); render();
+  window.scrollTo({ top:0, behavior:"smooth" });
+};
+$("btn-back-motions").onclick = () => {
+  state.step = 2; state.script = null; save(); render();
+  window.scrollTo({ top:0, behavior:"smooth" });
+};
+$("btn-reset").onclick = () => {
+  state = { step:1, topic:"", motions:[], avoid:[], motion:null, side:null,
+            style:state.style, script:null, pace:state.pace };
+  try { sessionStorage.removeItem(STORE); } catch(e){}
+  $("topic").value = ""; updateCount(); clearTopicMsg(); render();
+  window.scrollTo({ top:0, behavior:"smooth" });
+};
+$("btn-retry").onclick = () => lastAction && lastAction();
+$("btn-error-back").onclick = () => { state.step = +$("view-error").dataset.back || 1; render(); };
 
-    function updateProgress(step) {
-        document.querySelectorAll(".step-dot").forEach(dot => {
-            const dotStep = parseInt(dot.dataset.step, 10);
-            const circle = dot.querySelector("span:first-child");
-            const label = dot.querySelector("span:last-child");
-            if (dotStep < step) {
-                circle.className = "w-6 h-6 rounded-full flex items-center justify-center bg-[var(--accent)] text-slate-900 font-title font-bold text-xs";
-                label.className = "text-slate-300";
-            } else if (dotStep === step) {
-                circle.className = "w-6 h-6 rounded-full flex items-center justify-center border-2 border-[var(--accent)] text-[var(--accent)] font-title font-bold text-xs";
-                label.className = "text-white font-medium";
-            } else {
-                circle.className = "w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs";
-                label.className = "text-slate-400";
-            }
-        });
-    }
-
-    // ================== TIỆN ÍCH ==================
-    function escapeHTML(text) {
-        return String(text)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-    function showLoading(title, sub) {
-        [topicSection, motionsSection, errorSection, scriptSection].forEach(s => s.classList.add("hidden"));
-        el("loading-title").innerText = title;
-        el("loading-sub").innerText = sub || "Quá trình này có thể mất khoảng 5 - 10 giây";
-        loadingSection.classList.remove("hidden");
-        loadingSection.classList.add("flex");
-    }
-
-    function showError(message, backStep) {
-        [topicSection, motionsSection, loadingSection, scriptSection].forEach(s => {
-            s.classList.add("hidden");
-            s.classList.remove("flex");
-        });
-        el("error-message").innerText = message;
-        errorSection.dataset.backStep = backStep;
-        errorSection.classList.remove("hidden");
-    }
-
-    function handleErrorBack() {
-        const backStep = parseInt(errorSection.dataset.backStep || "1", 10);
-        state.step = backStep;
-        render();
-    }
-
-    async function fetchWithTimeout(url, options) {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
-        try {
-            const res = await fetch(url, Object.assign({}, options, { signal: controller.signal }));
-            return res;
-        } finally {
-            clearTimeout(timer);
-        }
-    }
-
-    function friendlyNetworkError(error) {
-        if (error.name === "AbortError") {
-            return "Kết nối chậm quá, bạn thử lại nhé.";
-        }
-        return "Không kết nối được với máy chủ. Kiểm tra mạng rồi thử lại nhé.";
-    }
-
-    // ================== BƯỚC 1 → 2: GỢI Ý KIẾN NGHỊ ==================
-    async function fetchMotions(isRegenerate) {
-        const topicInput = el("topic-input");
-        let topic = state.topic;
-
-        if (!isRegenerate) {
-            topic = topicInput.value.trim();
-            if (topic.length < 3 || topic.length > 100) {
-                showError("Chủ đề cần dài từ 3 đến 100 ký tự.", 1);
-                return;
-            }
-            state.topic = topic;
-            state.previousMotions = [];
-        } else {
-            state.previousMotions = (state.motions || []).map(m => m.motion);
-        }
-
-        showLoading("Đang nghĩ ra các hướng tranh biện...", "Thường mất 5 - 10 giây");
-
-        try {
-            const res = await fetchWithTimeout(MOTIONS_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    topic: state.topic,
-                    avoid_motions: state.previousMotions
-                })
-            });
-
-            let data;
-            try { data = await res.json(); }
-            catch (e) { throw new Error("Máy chủ trả về dữ liệu không hợp lệ."); }
-
-            if (res.status === 429) {
-                showError("Hiện có nhiều người dùng cùng lúc, đợi khoảng 1 phút rồi thử lại nhé.", 1);
-                return;
-            }
-            if (!res.ok) {
-                throw new Error(data.message || `Máy chủ trả về lỗi ${res.status}.`);
-            }
-            if (data.status === "invalid_topic") {
-                showError(data.message || "Chủ đề này chưa phù hợp, hãy thử một chủ đề khác.", 1);
-                return;
-            }
-            if (!Array.isArray(data.motions) || data.motions.length === 0) {
-                throw new Error("Không nhận được kiến nghị nào từ AI.");
-            }
-
-            state.motions = data.motions;
-            state.step = 2;
-            saveState();
-            render();
-
-        } catch (error) {
-            console.error("fetchMotions error:", error);
-            showError(friendlyNetworkErrorOr(error), 1);
-        }
-    }
-
-    function friendlyNetworkErrorOr(error) {
-        if (error.name === "AbortError" || error.message.includes("Failed to fetch")) {
-            return friendlyNetworkError(error);
-        }
-        return error.message || "Có lỗi không xác định xảy ra, thử lại nhé.";
-    }
-
-    function renderMotions() {
-        el("motions-topic-label").innerText = `Chủ đề: ${state.topic}`;
-        const grid = el("motions-grid");
-        grid.innerHTML = "";
-
-        state.motions.forEach((m, idx) => {
-            const card = document.createElement("div");
-            card.className = "motion-card rounded-xl p-4 flex flex-col";
-            card.innerHTML = `
-                <p class="text-slate-200 font-medium leading-relaxed mb-4">${escapeHTML(m.motion)}</p>
-                <div class="mt-auto space-y-2">
-                    <button class="side-btn w-full text-left rounded-lg p-3 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 cursor-pointer" data-idx="${idx}" data-side="pro">
-                        <span class="block text-emerald-400 font-bold text-xs uppercase tracking-wide mb-1">Chọn phe Ủng hộ</span>
-                        <span class="block text-slate-300 text-sm leading-snug">${escapeHTML(m.pro_summary)}</span>
-                    </button>
-                    <button class="side-btn w-full text-left rounded-lg p-3 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 cursor-pointer" data-idx="${idx}" data-side="con">
-                        <span class="block text-rose-400 font-bold text-xs uppercase tracking-wide mb-1">Chọn phe Phản đối</span>
-                        <span class="block text-slate-300 text-sm leading-snug">${escapeHTML(m.con_summary)}</span>
-                    </button>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-
-        grid.querySelectorAll(".side-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                selectMotion(state.motions[idx], btn.dataset.side);
-            });
-        });
-    }
-
-    function selectMotion(motion, side) {
-        state.selectedMotion = motion;
-        state.selectedSide = side;
-        saveState();
-        fetchScript(false);
-    }
-
-    function backToTopic() {
-        state.step = 1;
-        render();
-    }
-
-    // ================== BƯỚC 2 → 3: SINH KỊCH BẢN ==================
-    async function fetchScript(isRegenerate) {
-        if (!isRegenerate) {
-            showLoading("Đang viết mở đầu và bối cảnh...", "Bước tiếp theo sẽ là luận điểm chính");
-            setTimeout(() => {
-                if (el("loading-section").classList.contains("hidden")) return;
-                el("loading-title").innerText = "Đang xây luận điểm và phản biện...";
-            }, 2500);
-            setTimeout(() => {
-                if (el("loading-section").classList.contains("hidden")) return;
-                el("loading-title").innerText = "Đang chốt phần kết luận...";
-            }, 5000);
-        } else {
-            showLoading("Đang viết một phiên bản khác...", "Thường mất 5 - 10 giây");
-        }
-
-        const motion = state.selectedMotion;
-        const side = state.selectedSide;
-        const sideSummary = side === "pro" ? motion.pro_summary : motion.con_summary;
-        const opponentSummary = side === "pro" ? motion.con_summary : motion.pro_summary;
-
-        try {
-            const res = await fetchWithTimeout(SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    motion: motion.motion,
-                    side: side,
-                    side_summary: sideSummary,
-                    opponent_summary: opponentSummary
-                })
-            });
-
-            let data;
-            try { data = await res.json(); }
-            catch (e) { throw new Error("Máy chủ trả về dữ liệu không hợp lệ."); }
-
-            if (res.status === 429) {
-                showError("Hiện có nhiều người dùng cùng lúc, đợi khoảng 1 phút rồi thử lại nhé.", 2);
-                return;
-            }
-            if (!res.ok) {
-                throw new Error(data.message || `Máy chủ trả về lỗi ${res.status}.`);
-            }
-            if (!data.title || !Array.isArray(data.sections) || data.sections.length === 0) {
-                throw new Error("AI không trả về kịch bản hợp lệ.");
-            }
-
-            state.script = data;
-            state.step = 3;
-            saveState();
-            render();
-
-            setTimeout(() => scriptSection.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
-
-        } catch (error) {
-            console.error("fetchScript error:", error);
-            showError(friendlyNetworkErrorOr(error), 2);
-        }
-    }
-
-    function renderScript() {
-        const s = state.script;
-        el("script-title").innerText = s.title;
-        el("script-side-label").innerText =
-            `Kiến nghị: ${state.selectedMotion.motion} · Phe ${state.selectedSide === "pro" ? "Ủng hộ" : "Phản đối"}`;
-
-        const container = el("script-sections");
-        container.innerHTML = "";
-        s.sections.forEach((sec, i) => {
-            const block = document.createElement("div");
-            block.className = "bg-slate-900/60 border border-slate-700 rounded-xl p-5 shadow-inner";
-            block.innerHTML = `
-                <div class="flex items-center justify-between mb-2">
-                    <h4 class="text-[var(--accent)] font-title font-bold text-base">${escapeHTML(sec.heading)}</h4>
-                    <button class="copy-section-btn text-xs text-slate-400 hover:text-slate-200 cursor-pointer" data-idx="${i}">Sao chép</button>
-                </div>
-                <p class="text-slate-300 leading-relaxed whitespace-pre-line">${escapeHTML(sec.content)}</p>
-            `;
-            container.appendChild(block);
-        });
-
-        container.querySelectorAll(".copy-section-btn").forEach(btn => {
-            btn.addEventListener("click", () => {
-                const idx = parseInt(btn.dataset.idx, 10);
-                copyText(s.sections[idx].content, btn);
-            });
-        });
-    }
-
-    function copyText(text, btnEl) {
-        navigator.clipboard.writeText(text).then(() => {
-            if (btnEl) {
-                const original = btnEl.innerText;
-                btnEl.innerText = "Đã sao chép";
-                setTimeout(() => { btnEl.innerText = original; }, 1500);
-            }
-        }).catch(() => {});
-    }
-
-    function copyAll() {
-        const s = state.script;
-        if (!s) return;
-        const full = s.title + "\n\n" + s.sections.map(sec => `${sec.heading}\n${sec.content}`).join("\n\n");
-        copyText(full, null);
-        const btn = document.querySelector('button[onclick="copyAll()"]');
-        if (btn) {
-            const original = btn.innerText;
-            btn.innerText = "Đã sao chép!";
-            setTimeout(() => { btn.innerText = original; }, 1500);
-        }
-    }
-
-    function backToMotions() {
-        state.step = 2;
-        state.script = null;
-        saveState();
-        render();
-    }
-
-    function resetAll() {
-        state = { step: 1, topic: "", motions: [], previousMotions: [], selectedMotion: null, selectedSide: null, script: null };
-        clearState();
-        el("topic-input").value = "";
-        render();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    // ================== KHỞI CHẠY ==================
-    loadState();
-    render();
-    </script>
+/* ============================================================
+   KHỞI CHẠY
+   ============================================================ */
+load();
+paintChips();
+render();
+</script>
 </body>
 </html>
