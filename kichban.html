@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tạo Kịch Bản Tranh Biện | You Can Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #070b14;
+            --accent: #6ad2ff;
+            --pro: #34d399;
+            --con: #fb7185;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --card-border: rgba(51, 65, 85, 0.5);
+        }
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Lora', serif;
+            color: #cbd5e1;
+            background-image: radial-gradient(circle at 50% 0%, rgba(106, 210, 255, 0.1), transparent 50%);
+            min-height: 100vh;
+        }
+        .font-title { font-family: 'Playfair Display', serif; }
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+        .loading-spinner {
+            border: 3px solid rgba(106, 210, 255, 0.2);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .motion-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--card-border);
+            transition: border-color 0.2s ease;
+        }
+        .motion-card:hover { border-color: rgba(106, 210, 255, 0.4); }
+
+        .side-btn {
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+        .side-btn:hover { transform: translateY(-1px); }
+        .side-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .skeleton {
+            background: linear-gradient(90deg, rgba(51,65,85,0.3) 25%, rgba(71,85,105,0.4) 37%, rgba(51,65,85,0.3) 63%);
+            background-size: 400% 100%;
+            animation: skeleton-loading 1.4s ease infinite;
+        }
+        @keyframes skeleton-loading {
+            0% { background-position: 100% 50%; }
+            100% { background-position: 0 50%; }
+        }
+
+        @media print {
+            body * { visibility: hidden; }
+            #print-area, #print-area * { visibility: visible; }
+            #print-area { position: absolute; top: 0; left: 0; width: 100%; color: #000; }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center py-12 px-4 sm:px-6">
+
+    <header class="text-center mb-10 w-full max-w-3xl relative z-10">
+        <div class="inline-block relative mb-4 group">
+            <div class="absolute inset-0 bg-[var(--accent)] rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
+            <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="Logo" class="w-20 h-20 object-cover rounded-full border-2 border-[var(--accent)] p-1 bg-[#070b14] relative z-10" onerror="this.src='https://placehold.co/150x150/070b14/6ad2ff?text=YCC'">
+        </div>
+        <h1 class="text-3xl md:text-4xl font-title font-bold text-white mb-2">Trợ lý AI Tạo Kịch Bản</h1>
+        <p class="text-slate-400 text-sm md:text-base">Từ một chủ đề lớn thành bài nói tranh biện 3 phút, sẵn sàng để tập.</p>
+    </header>
+
+    <!-- Thanh tiến trình -->
+    <div class="w-full max-w-3xl mb-6 relative z-10 hidden md:flex items-center justify-center gap-3" id="progress-bar">
+        <div class="step-dot flex items-center gap-2 text-sm" data-step="1">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">1</span>
+            <span class="text-slate-400">Chủ đề</span>
+        </div>
+        <div class="w-8 h-px bg-slate-700"></div>
+        <div class="step-dot flex items-center gap-2 text-sm" data-step="2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">2</span>
+            <span class="text-slate-400">Chọn kiến nghị</span>
+        </div>
+        <div class="w-8 h-px bg-slate-700"></div>
+        <div class="step-dot flex items-center gap-2 text-sm" data-step="3">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs">3</span>
+            <span class="text-slate-400">Kịch bản</span>
+        </div>
+    </div>
+
+    <main class="w-full max-w-3xl glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden z-10">
+
+        <!-- BƯỚC 1: Nhập chủ đề -->
+        <div id="topic-section">
+            <label class="text-white font-bold font-title tracking-wide block mb-2">Chủ đề lớn bạn muốn tranh biện:</label>
+            <input type="text" id="topic-input" placeholder="Ví dụ: Áp lực đồng trang lứa, Mạng xã hội và tuổi teen..."
+                class="w-full bg-slate-900/80 border border-slate-700 text-slate-200 rounded-xl p-3 focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] transition-all">
+            <p class="text-xs text-slate-500 mt-2">Từ chủ đề này, AI sẽ gợi ý 4 hướng tranh biện khác nhau để bạn chọn.</p>
+
+            <div class="mt-6 text-center">
+                <button id="btn-get-motions" onclick="fetchMotions()" class="bg-[var(--accent)] text-slate-900 font-bold font-title text-lg px-8 py-3 rounded-full hover:scale-105 transition-transform shadow-[0_0_15px_rgba(106,210,255,0.4)] inline-flex items-center gap-2 cursor-pointer">
+                    <span>Gợi ý kiến nghị</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- BƯỚC 2: Chọn kiến nghị + phe -->
+        <div id="motions-section" class="hidden">
+            <div class="flex items-center justify-between mb-1">
+                <h3 class="text-lg md:text-xl font-title font-bold text-white">Chọn 1 kiến nghị và 1 phe</h3>
+                <button onclick="backToTopic()" class="text-xs text-slate-400 hover:text-slate-200 transition-colors cursor-pointer">← Đổi chủ đề</button>
+            </div>
+            <p id="motions-topic-label" class="text-sm text-slate-500 mb-5"></p>
+
+            <div id="motions-grid" class="grid sm:grid-cols-2 gap-4 mb-5"></div>
+
+            <div class="text-center">
+                <button id="btn-regenerate" onclick="fetchMotions(true)" class="text-sm text-slate-400 hover:text-[var(--accent)] transition-colors cursor-pointer inline-flex items-center gap-1.5">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Chưa ưng, gợi ý 4 kiến nghị khác
+                </button>
+            </div>
+        </div>
+
+        <!-- Màn hình Loading dùng chung -->
+        <div id="loading-section" class="hidden flex-col items-center justify-center py-12">
+            <div class="loading-spinner mb-5"></div>
+            <p id="loading-title" class="text-[var(--accent)] font-medium animate-pulse text-lg">Đang xử lý...</p>
+            <p id="loading-sub" class="text-slate-400 text-sm mt-2">Quá trình này có thể mất khoảng 5 - 10 giây</p>
+        </div>
+
+        <!-- Màn hình báo lỗi dùng chung -->
+        <div id="error-section" class="hidden bg-red-500/10 border border-red-500/50 rounded-xl p-6 text-center">
+            <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center text-red-500 mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-red-400 font-bold text-xl font-title mb-2">Chưa xong được</h3>
+            <p id="error-message" class="text-slate-300 text-sm mb-6 break-words bg-slate-900/50 p-3 rounded-lg"></p>
+            <button onclick="handleErrorBack()" class="px-6 py-2.5 rounded-full bg-slate-800 text-slate-300 border border-slate-600 hover:bg-slate-700 transition-colors font-medium cursor-pointer">Quay lại</button>
+        </div>
+
+        <!-- BƯỚC 3: Kết quả kịch bản -->
+        <div id="script-section" class="hidden">
+            <div class="flex items-start justify-between mb-4 gap-3">
+                <div>
+                    <p class="text-xs uppercase tracking-wide text-slate-500 mb-1" id="script-side-label"></p>
+                    <h3 id="script-title" class="text-xl md:text-2xl font-title font-bold text-[var(--accent)]"></h3>
+                </div>
+                <button onclick="copyAll()" class="shrink-0 text-xs px-3 py-2 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer whitespace-nowrap">Sao chép tất cả</button>
+            </div>
+
+            <div id="print-area">
+                <div id="script-sections" class="space-y-4 mb-6"></div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-3 border-t border-slate-700/50 pt-6">
+                <button onclick="fetchScript(true)" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
+                    Tạo bản khác cho kiến nghị này
+                </button>
+                <button onclick="backToMotions()" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
+                    Chọn kiến nghị khác
+                </button>
+                <button onclick="window.print()" class="px-5 py-2.5 rounded-full border border-slate-600 text-slate-300 hover:bg-slate-800 transition-colors font-medium text-sm cursor-pointer">
+                    In / Xuất PDF
+                </button>
+                <button onclick="resetAll()" class="px-5 py-2.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 transition-colors font-bold font-title text-sm cursor-pointer">
+                    Bắt đầu lại
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+    // ================== CẤU HÌNH ==================
+    // Thay 2 URL này bằng địa chỉ backend Deno Deploy thật khi đã triển khai.
+    const MOTIONS_URL = "https://your-deno-project.deno.dev/api/motions";
+    const SCRIPT_URL   = "https://your-deno-project.deno.dev/api/script";
+    const REQUEST_TIMEOUT_MS = 20000;
+    const STORAGE_KEY = "debateTool.state";
+
+    // ================== STATE ==================
+    let state = {
+        step: 1,              // 1 = topic, 2 = motions, 3 = script
+        topic: "",
+        motions: [],
+        previousMotions: [],  // để tránh lặp khi "tạo lại"
+        selectedMotion: null, // { motion, pro_summary, con_summary }
+        selectedSide: null,   // "pro" | "con"
+        script: null          // { title, sections: [{heading, content}] }
+    };
+
+    // ================== DOM ==================
+    const el = (id) => document.getElementById(id);
+    const topicSection = el("topic-section");
+    const motionsSection = el("motions-section");
+    const loadingSection = el("loading-section");
+    const errorSection = el("error-section");
+    const scriptSection = el("script-section");
+
+    // ================== KHỞI TẠO / KHÔI PHỤC PHIÊN ==================
+    function loadState() {
+        try {
+            const raw = sessionStorage.getItem(STORAGE_KEY);
+            if (raw) state = Object.assign(state, JSON.parse(raw));
+        } catch (e) { /* bỏ qua nếu dữ liệu hỏng */ }
+    }
+    function saveState() {
+        try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+    function clearState() {
+        sessionStorage.removeItem(STORAGE_KEY);
+    }
+
+    function render() {
+        [topicSection, motionsSection, loadingSection, errorSection, scriptSection].forEach(s => {
+            s.classList.add("hidden");
+            s.classList.remove("flex");
+        });
+        updateProgress(state.step);
+
+        if (state.step === 1) {
+            topicSection.classList.remove("hidden");
+            if (state.topic) el("topic-input").value = state.topic;
+        } else if (state.step === 2) {
+            motionsSection.classList.remove("hidden");
+            renderMotions();
+        } else if (state.step === 3 && state.script) {
+            scriptSection.classList.remove("hidden");
+            renderScript();
+        } else {
+            state.step = 1;
+            topicSection.classList.remove("hidden");
+        }
+    }
+
+    function updateProgress(step) {
+        document.querySelectorAll(".step-dot").forEach(dot => {
+            const dotStep = parseInt(dot.dataset.step, 10);
+            const circle = dot.querySelector("span:first-child");
+            const label = dot.querySelector("span:last-child");
+            if (dotStep < step) {
+                circle.className = "w-6 h-6 rounded-full flex items-center justify-center bg-[var(--accent)] text-slate-900 font-title font-bold text-xs";
+                label.className = "text-slate-300";
+            } else if (dotStep === step) {
+                circle.className = "w-6 h-6 rounded-full flex items-center justify-center border-2 border-[var(--accent)] text-[var(--accent)] font-title font-bold text-xs";
+                label.className = "text-white font-medium";
+            } else {
+                circle.className = "w-6 h-6 rounded-full flex items-center justify-center border border-slate-600 text-slate-400 font-title font-bold text-xs";
+                label.className = "text-slate-400";
+            }
+        });
+    }
+
+    // ================== TIỆN ÍCH ==================
+    function escapeHTML(text) {
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function showLoading(title, sub) {
+        [topicSection, motionsSection, errorSection, scriptSection].forEach(s => s.classList.add("hidden"));
+        el("loading-title").innerText = title;
+        el("loading-sub").innerText = sub || "Quá trình này có thể mất khoảng 5 - 10 giây";
+        loadingSection.classList.remove("hidden");
+        loadingSection.classList.add("flex");
+    }
+
+    function showError(message, backStep) {
+        [topicSection, motionsSection, loadingSection, scriptSection].forEach(s => {
+            s.classList.add("hidden");
+            s.classList.remove("flex");
+        });
+        el("error-message").innerText = message;
+        errorSection.dataset.backStep = backStep;
+        errorSection.classList.remove("hidden");
+    }
+
+    function handleErrorBack() {
+        const backStep = parseInt(errorSection.dataset.backStep || "1", 10);
+        state.step = backStep;
+        render();
+    }
+
+    async function fetchWithTimeout(url, options) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+        try {
+            const res = await fetch(url, Object.assign({}, options, { signal: controller.signal }));
+            return res;
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
+    function friendlyNetworkError(error) {
+        if (error.name === "AbortError") {
+            return "Kết nối chậm quá, bạn thử lại nhé.";
+        }
+        return "Không kết nối được với máy chủ. Kiểm tra mạng rồi thử lại nhé.";
+    }
+
+    // ================== BƯỚC 1 → 2: GỢI Ý KIẾN NGHỊ ==================
+    async function fetchMotions(isRegenerate) {
+        const topicInput = el("topic-input");
+        let topic = state.topic;
+
+        if (!isRegenerate) {
+            topic = topicInput.value.trim();
+            if (topic.length < 3 || topic.length > 100) {
+                showError("Chủ đề cần dài từ 3 đến 100 ký tự.", 1);
+                return;
+            }
+            state.topic = topic;
+            state.previousMotions = [];
+        } else {
+            state.previousMotions = (state.motions || []).map(m => m.motion);
+        }
+
+        showLoading("Đang nghĩ ra các hướng tranh biện...", "Thường mất 5 - 10 giây");
+
+        try {
+            const res = await fetchWithTimeout(MOTIONS_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    topic: state.topic,
+                    avoid_motions: state.previousMotions
+                })
+            });
+
+            let data;
+            try { data = await res.json(); }
+            catch (e) { throw new Error("Máy chủ trả về dữ liệu không hợp lệ."); }
+
+            if (res.status === 429) {
+                showError("Hiện có nhiều người dùng cùng lúc, đợi khoảng 1 phút rồi thử lại nhé.", 1);
+                return;
+            }
+            if (!res.ok) {
+                throw new Error(data.message || `Máy chủ trả về lỗi ${res.status}.`);
+            }
+            if (data.status === "invalid_topic") {
+                showError(data.message || "Chủ đề này chưa phù hợp, hãy thử một chủ đề khác.", 1);
+                return;
+            }
+            if (!Array.isArray(data.motions) || data.motions.length === 0) {
+                throw new Error("Không nhận được kiến nghị nào từ AI.");
+            }
+
+            state.motions = data.motions;
+            state.step = 2;
+            saveState();
+            render();
+
+        } catch (error) {
+            console.error("fetchMotions error:", error);
+            showError(friendlyNetworkErrorOr(error), 1);
+        }
+    }
+
+    function friendlyNetworkErrorOr(error) {
+        if (error.name === "AbortError" || error.message.includes("Failed to fetch")) {
+            return friendlyNetworkError(error);
+        }
+        return error.message || "Có lỗi không xác định xảy ra, thử lại nhé.";
+    }
+
+    function renderMotions() {
+        el("motions-topic-label").innerText = `Chủ đề: ${state.topic}`;
+        const grid = el("motions-grid");
+        grid.innerHTML = "";
+
+        state.motions.forEach((m, idx) => {
+            const card = document.createElement("div");
+            card.className = "motion-card rounded-xl p-4 flex flex-col";
+            card.innerHTML = `
+                <p class="text-slate-200 font-medium leading-relaxed mb-4">${escapeHTML(m.motion)}</p>
+                <div class="mt-auto space-y-2">
+                    <button class="side-btn w-full text-left rounded-lg p-3 bg-emerald-500/10 border border-emerald-500/30 hover:bg-emerald-500/20 cursor-pointer" data-idx="${idx}" data-side="pro">
+                        <span class="block text-emerald-400 font-bold text-xs uppercase tracking-wide mb-1">Chọn phe Ủng hộ</span>
+                        <span class="block text-slate-300 text-sm leading-snug">${escapeHTML(m.pro_summary)}</span>
+                    </button>
+                    <button class="side-btn w-full text-left rounded-lg p-3 bg-rose-500/10 border border-rose-500/30 hover:bg-rose-500/20 cursor-pointer" data-idx="${idx}" data-side="con">
+                        <span class="block text-rose-400 font-bold text-xs uppercase tracking-wide mb-1">Chọn phe Phản đối</span>
+                        <span class="block text-slate-300 text-sm leading-snug">${escapeHTML(m.con_summary)}</span>
+                    </button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        grid.querySelectorAll(".side-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const idx = parseInt(btn.dataset.idx, 10);
+                selectMotion(state.motions[idx], btn.dataset.side);
+            });
+        });
+    }
+
+    function selectMotion(motion, side) {
+        state.selectedMotion = motion;
+        state.selectedSide = side;
+        saveState();
+        fetchScript(false);
+    }
+
+    function backToTopic() {
+        state.step = 1;
+        render();
+    }
+
+    // ================== BƯỚC 2 → 3: SINH KỊCH BẢN ==================
+    async function fetchScript(isRegenerate) {
+        if (!isRegenerate) {
+            showLoading("Đang viết mở đầu và bối cảnh...", "Bước tiếp theo sẽ là luận điểm chính");
+            setTimeout(() => {
+                if (el("loading-section").classList.contains("hidden")) return;
+                el("loading-title").innerText = "Đang xây luận điểm và phản biện...";
+            }, 2500);
+            setTimeout(() => {
+                if (el("loading-section").classList.contains("hidden")) return;
+                el("loading-title").innerText = "Đang chốt phần kết luận...";
+            }, 5000);
+        } else {
+            showLoading("Đang viết một phiên bản khác...", "Thường mất 5 - 10 giây");
+        }
+
+        const motion = state.selectedMotion;
+        const side = state.selectedSide;
+        const sideSummary = side === "pro" ? motion.pro_summary : motion.con_summary;
+        const opponentSummary = side === "pro" ? motion.con_summary : motion.pro_summary;
+
+        try {
+            const res = await fetchWithTimeout(SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    motion: motion.motion,
+                    side: side,
+                    side_summary: sideSummary,
+                    opponent_summary: opponentSummary
+                })
+            });
+
+            let data;
+            try { data = await res.json(); }
+            catch (e) { throw new Error("Máy chủ trả về dữ liệu không hợp lệ."); }
+
+            if (res.status === 429) {
+                showError("Hiện có nhiều người dùng cùng lúc, đợi khoảng 1 phút rồi thử lại nhé.", 2);
+                return;
+            }
+            if (!res.ok) {
+                throw new Error(data.message || `Máy chủ trả về lỗi ${res.status}.`);
+            }
+            if (!data.title || !Array.isArray(data.sections) || data.sections.length === 0) {
+                throw new Error("AI không trả về kịch bản hợp lệ.");
+            }
+
+            state.script = data;
+            state.step = 3;
+            saveState();
+            render();
+
+            setTimeout(() => scriptSection.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+
+        } catch (error) {
+            console.error("fetchScript error:", error);
+            showError(friendlyNetworkErrorOr(error), 2);
+        }
+    }
+
+    function renderScript() {
+        const s = state.script;
+        el("script-title").innerText = s.title;
+        el("script-side-label").innerText =
+            `Kiến nghị: ${state.selectedMotion.motion} · Phe ${state.selectedSide === "pro" ? "Ủng hộ" : "Phản đối"}`;
+
+        const container = el("script-sections");
+        container.innerHTML = "";
+        s.sections.forEach((sec, i) => {
+            const block = document.createElement("div");
+            block.className = "bg-slate-900/60 border border-slate-700 rounded-xl p-5 shadow-inner";
+            block.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <h4 class="text-[var(--accent)] font-title font-bold text-base">${escapeHTML(sec.heading)}</h4>
+                    <button class="copy-section-btn text-xs text-slate-400 hover:text-slate-200 cursor-pointer" data-idx="${i}">Sao chép</button>
+                </div>
+                <p class="text-slate-300 leading-relaxed whitespace-pre-line">${escapeHTML(sec.content)}</p>
+            `;
+            container.appendChild(block);
+        });
+
+        container.querySelectorAll(".copy-section-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const idx = parseInt(btn.dataset.idx, 10);
+                copyText(s.sections[idx].content, btn);
+            });
+        });
+    }
+
+    function copyText(text, btnEl) {
+        navigator.clipboard.writeText(text).then(() => {
+            if (btnEl) {
+                const original = btnEl.innerText;
+                btnEl.innerText = "Đã sao chép";
+                setTimeout(() => { btnEl.innerText = original; }, 1500);
+            }
+        }).catch(() => {});
+    }
+
+    function copyAll() {
+        const s = state.script;
+        if (!s) return;
+        const full = s.title + "\n\n" + s.sections.map(sec => `${sec.heading}\n${sec.content}`).join("\n\n");
+        copyText(full, null);
+        const btn = document.querySelector('button[onclick="copyAll()"]');
+        if (btn) {
+            const original = btn.innerText;
+            btn.innerText = "Đã sao chép!";
+            setTimeout(() => { btn.innerText = original; }, 1500);
+        }
+    }
+
+    function backToMotions() {
+        state.step = 2;
+        state.script = null;
+        saveState();
+        render();
+    }
+
+    function resetAll() {
+        state = { step: 1, topic: "", motions: [], previousMotions: [], selectedMotion: null, selectedSide: null, script: null };
+        clearState();
+        el("topic-input").value = "";
+        render();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ================== KHỞI CHẠY ==================
+    loadState();
+    render();
+    </script>
+</body>
+</html>
