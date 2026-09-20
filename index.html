@@ -53,7 +53,6 @@
     
     <!-- Kết nối sớm tới các CDN để tải nhanh hơn -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
-    <link rel="preconnect" href="https://youcanclub.github.io" crossorigin>
 
     <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -155,14 +154,27 @@
 
         /* Hiệu ứng mờ dần khi chuyển cảnh (Dùng cho khi mở các Chương) */
         .fade-transition {
-            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
 
         /* Lớp phủ: không cuộn xuyên xuống trang phía sau, không hiện viền focus khi focus bằng JS */
         #chapter-view, #conclusion-view {
             overscroll-behavior: contain;
-            -webkit-overflow-scrolling: touch;
             outline: none;
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        /* Khi đang đọc chương/lời kết: ẩn hẳn cảnh phong bì phía sau để iOS Safari không vẽ đè/nhòe các lớp 3D */
+        body.overlay-open #scene { visibility: hidden; }
+
+        /* Nút Messenger nổi: giữ trên lớp riêng, tránh bị "vệt vuông" khi cuộn trên iOS */
+        #fab-chat {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            will-change: transform;
         }
         
         /* --- NÂNG CẤP GIAO DIỆN SÁCH (BOOK UI) --- */
@@ -380,7 +392,7 @@
             
             <!-- Nút quay lại thư mở đầu -->
             <div class="mb-4 w-full flex justify-start z-10 relative">
-                <button type="button" onclick="closeChapterView()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-[var(--accent)] rounded-full hover:bg-slate-700 hover:text-white transition-all font-medium text-sm md:text-base border border-slate-700 cursor-pointer shadow-md">
+                <button type="button" onclick="closeChapterView()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-800 text-[var(--accent)] rounded-full hover:bg-slate-700 hover:text-white transition-colors font-medium text-sm md:text-base border border-slate-700 cursor-pointer shadow-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -445,7 +457,7 @@
 
             <!-- Nút quay lại chương cuối -->
             <div class="mb-4 w-full flex justify-start z-10 relative">
-                <button type="button" onclick="closeConclusionView()" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-[var(--text-accent)] rounded-full hover:bg-blue-50 transition-all font-medium text-sm md:text-base border border-blue-200 cursor-pointer shadow-sm">
+                <button type="button" onclick="closeConclusionView()" class="inline-flex items-center gap-2 px-4 py-2 bg-white text-[var(--text-accent)] rounded-full hover:bg-blue-50 transition-colors font-medium text-sm md:text-base border border-blue-200 cursor-pointer shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -541,7 +553,7 @@
     </div>
 
     <!-- Nút nhắn tin Messenger nổi (Floating Action Button) -->
-    <div class="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none group/chat">
+    <div id="fab-chat" class="fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3 pointer-events-none group/chat">
         <!-- Bubble Chat (Pop up text) -->
         <div class="bg-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.15)] border border-blue-50 text-sm font-medium text-slate-700 pointer-events-auto transform transition-all duration-300 origin-bottom-right translate-y-2 opacity-0 group-hover/chat:translate-y-0 group-hover/chat:opacity-100 group-focus-within/chat:translate-y-0 group-focus-within/chat:opacity-100 flex items-center gap-2 max-w-[200px] md:max-w-none text-center md:text-left">
             <span>Cần hỗ trợ? Nhắn cho CLB nhé!</span>
@@ -1366,7 +1378,9 @@
                 el.setAttribute('aria-hidden', 'true');
             }
             // Khi có lớp phủ mở thì cảnh phong bì phía sau không nhận focus
-            sceneEl.inert = isChapterViewOpen || isConclusionOpen;
+            const anyOpen = isChapterViewOpen || isConclusionOpen;
+            sceneEl.inert = anyOpen;
+            document.body.classList.toggle('overlay-open', anyOpen);
         }
 
         // ==========================================
