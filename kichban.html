@@ -2,182 +2,110 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tạo kịch bản | You Can Club</title>
-<meta name="description" content="Nhập một chủ đề, chọn kiến nghị và phe, nhận kịch bản để tập nói kèm mốc thời gian ước tính.">
+<meta name="description" content="Nhập một đề tài, chọn chủ đề và phe, nhận kịch bản để tập nói kèm mốc thời gian ước tính.">
 <meta name="theme-color" content="#061626">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
-
 <style>
-/* ============================================================
-   1. TOKEN
-   ============================================================ */
 :root{
-  --ui:'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --serif:'Literata', Georgia, 'Times New Roman', serif;
-
-  --bg:#061626;
-  --surface:#0B2438;
-  --paper:#0F2C44;
-  --text:#E8F0F8;
-  --muted:#9FB6CB;
-  --dim:#6C889F;
-  --line:rgba(232,240,248,.13);
-  --line-strong:rgba(232,240,248,.26);
-
-  --blue:#5AA9F2;
-  --blue-ink:#04192B;
-  --blue-soft:rgba(90,169,242,.14);
-  --blue-deep:#2E7BD1;
-
-  --pro:#46C296;
-  --pro-soft:rgba(70,194,150,.13);
-  --con:#F2879A;
-  --con-soft:rgba(242,135,154,.13);
-
-  --radius:12px;
-  --radius-pill:999px;
-  --shadow:0 12px 30px -14px rgba(0,0,0,.55);
+  --ui:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Literata',Georgia,'Times New Roman',serif;
+  --bg:#061626;--surface:#0B2438;--paper:#0F2C44;
+  --text:#E8F0F8;--muted:#9FB6CB;--dim:#6C889F;
+  --line:rgba(232,240,248,.13);--line-strong:rgba(232,240,248,.26);
+  --blue:#5AA9F2;--blue-ink:#04192B;--blue-soft:rgba(90,169,242,.14);--blue-deep:#2E7BD1;
+  --pro:#46C296;--pro-soft:rgba(70,194,150,.13);
+  --con:#F2879A;--con-soft:rgba(242,135,154,.13);
+  --radius:12px;--shadow:0 12px 30px -14px rgba(0,0,0,.55);
 }
-
-/* ============================================================
-   2. NỀN TẢNG
-   ============================================================ */
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
-html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
-}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation;-webkit-tap-highlight-color:transparent;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--ui);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
 .wrap{max-width:53rem;margin:0 auto;padding:clamp(1.25rem,4vw,2.75rem) 1.15rem 4rem}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* ============================================================
-   3. ĐẦU TRANG
-   ============================================================ */
 .top{display:flex;align-items:center;gap:.85rem;margin-bottom:1.75rem}
-.mark{
-  width:48px;height:48px;flex:0 0 48px;border-radius:50%;position:relative;
-  border:1px solid var(--blue);background:var(--surface);
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-  font-family:var(--serif);font-weight:600;font-size:.8rem;color:var(--blue);
-  box-shadow:0 0 0 3px rgba(90,169,242,.12);
-}
-.mark__fallback{position:relative;z-index:1}
-.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:5px;background:var(--surface);z-index:2}
+.mark{width:48px;height:48px;flex:0 0 48px;border-radius:50%;position:relative;border:1px solid var(--blue);background:var(--surface);display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--serif);font-weight:600;font-size:.8rem;color:var(--blue);box-shadow:0 0 0 3px rgba(90,169,242,.12)}
+.mark img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:5px;background:var(--surface)}
 .top__name{font-family:var(--serif);font-size:1.02rem;font-weight:600;line-height:1.2;margin:0}
 .top__sub{margin:.1rem 0 0;font-size:.82rem;color:var(--muted)}
-/* ============================================================
-   4. THANH BƯỚC
-   ============================================================ */
+
 .steps{display:flex;align-items:center;gap:.5rem;margin-bottom:1.1rem}
 .steps__item{display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:var(--dim);white-space:nowrap}
-.steps__num{
-  width:22px;height:22px;flex:0 0 22px;border-radius:50%;border:1px solid var(--line-strong);
-  display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;
-  font-variant-numeric:tabular-nums;
-}
+.steps__num{width:22px;height:22px;flex:0 0 22px;border-radius:50%;border:1px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600}
 .steps__rule{flex:1;height:1px;background:var(--line);min-width:.75rem}
 .steps__item[data-state="now"]{color:var(--text);font-weight:600}
 .steps__item[data-state="now"] .steps__num{border-color:var(--blue);color:var(--blue)}
 .steps__item[data-state="done"]{color:var(--muted)}
 .steps__item[data-state="done"] .steps__num{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
 
-/* ============================================================
-   5. KHUNG CHÍNH
-   ============================================================ */
-.panel{
-  background:var(--surface);border:1px solid var(--line);border-radius:calc(var(--radius) + 4px);
-  padding:clamp(1.15rem,3.5vw,2.1rem);box-shadow:var(--shadow);position:relative;overflow:hidden;
-}
-.panel::before{
-  content:"";position:absolute;inset:0 0 auto 0;height:3px;
-  background:linear-gradient(90deg,var(--blue-deep),var(--blue));
-}
-.panel>section.appear{animation:viewIn .32s ease both}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(1.15rem,3.5vw,2.1rem);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.panel::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--blue-deep),var(--blue))}
+.panel>section.appear{animation:viewIn .3s ease both}
 @keyframes viewIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 .ask{font-family:var(--serif);font-size:clamp(1.35rem,4.5vw,1.85rem);line-height:1.3;margin:0 0 1.35rem;font-weight:500}
-.field input{
-  width:100%;background:transparent;border:0;border-bottom:2px solid var(--line-strong);
-  font-family:var(--serif);font-size:clamp(1.05rem,3.2vw,1.35rem);padding:.45rem 0 .55rem;outline:none;
-}
-.field input::placeholder{color:var(--dim)}
+.field input{width:100%;background:transparent;border:0;border-bottom:2px solid var(--line-strong);font-family:var(--serif);font-size:clamp(1.05rem,3.2vw,1.35rem);padding:.45rem 0 .55rem;outline:none;border-radius:0}
+.field input::placeholder,.field textarea::placeholder{color:var(--dim)}
 .field input:focus{border-bottom-color:var(--blue)}
+.field textarea{width:100%;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);font-size:1rem;line-height:1.6;padding:.85rem .95rem;outline:none;resize:vertical;min-height:5rem}
+.field textarea:focus{border-color:var(--blue)}
 .field__row{display:flex;justify-content:space-between;gap:1rem;margin-top:.45rem;font-size:.76rem;color:var(--dim)}
 .field__err{color:var(--con)}
-.count{font-variant-numeric:tabular-nums}
+.count{font-variant-numeric:tabular-nums;white-space:nowrap}
+
 .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.35rem 0 1.75rem}
 .chips__label{width:100%;font-size:.78rem;color:var(--muted);margin-bottom:.1rem}
-.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:.38rem .8rem;font-size:.82rem;cursor:pointer;transition:transform .12s ease,border-color .12s ease,color .12s ease}
-.chip:hover{border-color:var(--blue);color:var(--text);transform:translateY(-1px)}
+.chip{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:.42rem .85rem;font-size:.82rem;cursor:pointer;transition:border-color .12s,color .12s}
+.chip:hover{border-color:var(--blue);color:var(--text)}
 .chip--idea{border-style:dashed}
-
-/* --- Ý tưởng (bước tuỳ chọn) --- */
-.optional-badge{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--blue);background:var(--blue-soft);border:1px solid rgba(90,169,242,.35);border-radius:999px;padding:.18rem .55rem;margin-left:.55rem;vertical-align:middle}
-.field textarea{
-  width:100%;background:var(--paper);border:1px solid var(--line-strong);border-radius:var(--radius);
-  font-family:var(--ui);font-size:.95rem;line-height:1.6;padding:.85rem .95rem;outline:none;resize:vertical;min-height:5rem;
-}
-.field textarea::placeholder{color:var(--dim)}
-.field textarea:focus{border-color:var(--blue)}
+.optional-badge{display:inline-block;font-size:.68rem;font-weight:600;color:var(--blue);background:var(--blue-soft);border:1px solid rgba(90,169,242,.35);border-radius:999px;padding:.18rem .55rem;margin-left:.55rem;vertical-align:middle}
 .idea-note{display:flex;gap:.6rem;align-items:flex-start;border:1px dashed var(--line-strong);border-radius:var(--radius);padding:.85rem 1rem;margin-bottom:1.1rem;font-size:.83rem;color:var(--muted);background:rgba(90,169,242,.06)}
 .idea-note b{color:var(--text)}
 
-.btn{font-weight:600;font-size:.94rem;border-radius:var(--radius-pill);padding:.68rem 1.25rem;border:1px solid var(--line-strong);background:transparent;color:var(--text);cursor:pointer;transition:transform .12s ease,border-color .12s ease,color .12s ease,filter .12s ease}
-.btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
-.btn:active:not(:disabled){transform:translateY(0)}
+.btn{font-weight:600;font-size:.94rem;border-radius:999px;padding:.68rem 1.25rem;min-height:44px;border:1px solid var(--line-strong);background:transparent;color:var(--text);cursor:pointer;transition:border-color .12s,color .12s,filter .12s}
+.btn:hover:not(:disabled){border-color:var(--blue);color:var(--blue)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn--go{background:var(--blue);border-color:var(--blue);color:var(--blue-ink)}
-.btn--go:hover:not(:disabled){filter:brightness(1.08);color:var(--blue-ink);border-color:var(--blue)}
-.btn--sm{padding:.42rem .85rem;font-size:.8rem;border-radius:var(--radius-pill);font-weight:500}
-.btn--copy{
-  background:var(--blue);border-color:var(--blue);color:var(--blue-ink);
-  font-size:1rem;padding:.85rem 1.5rem;box-shadow:0 10px 24px -10px rgba(90,169,242,.55);
-  display:inline-flex;align-items:center;gap:.5rem;
-}
+.btn--go:hover:not(:disabled){filter:brightness(1.08);color:var(--blue-ink)}
+.btn--sm{padding:.42rem .95rem;font-size:.82rem;font-weight:500;min-height:38px}
+.btn--copy{font-size:1rem;padding:.85rem 1.5rem;background:var(--blue);border-color:var(--blue);color:var(--blue-ink);box-shadow:0 10px 24px -10px rgba(90,169,242,.55)}
 .btn--copy:hover:not(:disabled){filter:brightness(1.08);color:var(--blue-ink)}
-.btn--link{border:0;padding:.35rem 0;color:var(--muted);font-weight:500;font-size:.84rem;background:none}
+.btn--link{border:0;padding:.35rem 0;min-height:36px;color:var(--muted);font-weight:500;font-size:.84rem;background:none}
 .btn--link:hover:not(:disabled){color:var(--blue)}
 .actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 
-/* --- Kiến nghị --- */
 .head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
 .head h2{font-family:var(--serif);font-size:1.2rem;margin:0;font-weight:600}
 #motions-topic{margin:.2rem 0 1.25rem;font-size:.84rem;color:var(--muted)}
 .motions{display:grid;gap:.85rem}
-.motion{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);overflow:hidden;transition:border-color .12s ease,transform .12s ease}
-.motion:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+.motion{border:1px solid var(--line);border-radius:var(--radius);background:var(--paper);overflow:hidden}
+.motion--own{border-color:var(--blue)}
 .motion__text{padding:1rem 1.1rem;margin:0;font-family:var(--serif);font-size:1.02rem;line-height:1.55}
 .sides{display:grid;grid-template-columns:1fr 1fr}
-.side{border:0;border-top:1px solid var(--line);background:transparent;cursor:pointer;padding:.8rem 1rem .9rem;text-align:left;color:var(--muted);font-size:.84rem;line-height:1.45}
+.side{border:0;border-top:1px solid var(--line);background:transparent;cursor:pointer;padding:.85rem 1rem .95rem;text-align:left;color:var(--muted);font-size:.84rem;line-height:1.45}
 .side+.side{border-left:1px solid var(--line)}
 .side b{display:block;font-size:.88rem;margin-bottom:.22rem}
-.side--pro b{color:var(--pro)}
-.side--con b{color:var(--con)}
+.side--pro b{color:var(--pro)}.side--con b{color:var(--con)}
 .side--pro:hover{background:var(--pro-soft);color:var(--text)}
 .side--con:hover{background:var(--con-soft);color:var(--text)}
-.side:disabled{opacity:.5;cursor:wait}
 
-/* --- Chọn giọng --- */
+.custom{margin-top:1.4rem;border:1px dashed var(--line-strong);border-radius:var(--radius);padding:1.1rem 1.15rem;background:rgba(90,169,242,.05)}
+.custom h3{font-family:var(--serif);font-size:1rem;margin:0 0 .25rem;font-weight:600}
+.custom>p{margin:0 0 .75rem;font-size:.84rem;color:var(--muted)}
+
 .recap{border-left:2px solid var(--blue);padding:.15rem 0 .15rem .75rem;margin:0 0 1.25rem;font-size:.84rem;color:var(--muted)}
 .recap b{display:block;color:var(--text);font-family:var(--serif);font-weight:500;font-size:.96rem;line-height:1.45;margin-bottom:.2rem}
 .voices{display:grid;gap:.6rem}
-.voice{
-  display:block;width:100%;text-align:left;cursor:pointer;
-  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
-  padding:.85rem 1rem;color:var(--muted);font-size:.85rem;line-height:1.5;
-}
+.voice{display:block;width:100%;text-align:left;cursor:pointer;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:.85rem 1rem;color:var(--muted);font-size:.85rem;line-height:1.5;transition:border-color .12s,background .12s}
 .voice b{display:block;font-family:var(--serif);font-size:1rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
-.voice:hover{border-color:var(--blue);background:var(--blue-soft);transform:translateY(-1px)}
-.voice{transition:transform .12s ease,border-color .12s ease,background .12s ease}
+.voice:hover{border-color:var(--blue);background:var(--blue-soft)}
 .voice[aria-pressed="true"]{border-color:var(--blue)}
 .voice[aria-pressed="true"] b::after{content:" · đang chọn";font-family:var(--ui);font-size:.72rem;font-weight:400;color:var(--blue)}
 .voice:disabled{opacity:.5;cursor:wait}
@@ -186,66 +114,31 @@ button,input,select,textarea{font:inherit;color:inherit}
 .bone+.bone{margin-top:.5rem}
 .bone::after{content:"";position:absolute;inset:0;transform:translateX(-100%);background:linear-gradient(90deg,transparent,var(--line),transparent);animation:sweep 1.5s infinite}
 @keyframes sweep{100%{transform:translateX(100%)}}
-
-/* --- Đang tạo --- */
 .working{padding:2.5rem 0;text-align:center}
 .working__bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden;max-width:15rem;margin:0 auto 1.1rem}
 .working__bar span{display:block;height:100%;width:38%;background:var(--blue);animation:slide 1.5s ease-in-out infinite}
 @keyframes slide{0%{transform:translateX(-100%)}100%{transform:translateX(320%)}}
 .working p{margin:0;font-size:.95rem}
 .working small{display:block;margin-top:.4rem;color:var(--dim);font-size:.8rem}
-
-/* --- Lỗi --- */
 .alert{border:1px solid var(--con);background:var(--con-soft);border-radius:var(--radius);padding:1.1rem 1.15rem}
 .alert h3{margin:0 0 .35rem;font-size:.98rem;font-family:var(--serif)}
 .alert p{margin:0 0 .9rem;font-size:.87rem;color:var(--muted)}
 
-/* --- Bản thảo --- */
 .result__meta{font-size:.8rem;color:var(--muted);margin:0 0 .35rem}
 .badge{display:inline-flex;align-items:center;gap:.35rem}
 .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
-.badge--pro{color:var(--pro)}
-.badge--con{color:var(--con)}
+.badge--pro{color:var(--pro)}.badge--con{color:var(--con)}
 .result__title{font-family:var(--serif);font-size:clamp(1.3rem,4vw,1.7rem);line-height:1.25;margin:0 0 1rem;font-weight:600}
-
 .clock{font-variant-numeric:tabular-nums;font-weight:600;font-size:.92rem;display:flex;align-items:center;gap:.4rem;flex-wrap:wrap}
 .clock small{font-weight:400;color:var(--dim);font-size:.78rem}
-.clock[data-fit="long"]{color:var(--con)}
-.clock[data-fit="short"]{color:var(--blue)}
-.pace{background:transparent;border:1px solid var(--line);border-radius:8px;padding:.35rem .5rem;font-size:.78rem;color:var(--muted);cursor:pointer}
+.clock[data-fit="long"]{color:var(--con)}.clock[data-fit="short"]{color:var(--blue)}
+.pace{background:transparent;border:1px solid var(--line);border-radius:8px;padding:.45rem .55rem;font-size:16px;color:var(--muted);cursor:pointer}
 .pace option{color:#111}
 .hint{font-size:.78rem;color:var(--dim);margin:0 0 .9rem}
-
-/* --- Khối nội dung kịch bản --- */
 .sheet-card{margin-top:1.5rem}
 .sheet-card__head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}
 .sheet-card__head h3{font-family:var(--serif);font-size:.92rem;margin:0;font-weight:600;color:var(--muted)}
 .sheet{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1rem,3vw,1.7rem)}
-
-/* --- Khối chép / in, tách riêng và làm nổi bật --- */
-.copy-card{
-  margin-top:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
-  border:1px solid var(--blue);background:var(--blue-soft);border-radius:var(--radius);padding:1.1rem 1.25rem;
-}
-.copy-card__text h3{font-family:var(--serif);font-size:1rem;margin:0 0 .2rem;font-weight:600}
-.copy-card__text p{margin:0;font-size:.84rem;color:var(--muted)}
-.copy-card__actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-
-/* --- Khối luyện tập nói, tách hẳn khỏi phần đọc/chép --- */
-.practice-card{
-  margin-top:1.25rem;border:1px solid var(--line);border-radius:var(--radius);
-  padding:1.1rem 1.25rem;background:var(--paper);
-}
-.practice-card__head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.4rem;flex-wrap:wrap}
-.practice-card__head h3{font-family:var(--serif);font-size:1rem;margin:0;font-weight:600}
-.practice-card__desc{margin:0 0 .9rem;font-size:.84rem;color:var(--muted)}
-.practice-card__row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-
-@media (max-width:560px){
-  .copy-card,.copy-card__actions{justify-content:stretch}
-  .copy-card__actions{width:100%}
-  .copy-card__actions .btn{flex:1}
-}
 .block{display:grid;grid-template-columns:3.4rem 1fr;gap:0 1.1rem;padding:1.15rem 0;border-top:1px solid var(--line)}
 .block:first-child{border-top:0;padding-top:0}
 .cue{font-size:.74rem;color:var(--dim);font-variant-numeric:tabular-nums;padding-top:.32rem}
@@ -254,25 +147,28 @@ button,input,select,textarea{font:inherit;color:inherit}
 .say{font-family:var(--serif);font-size:1.04rem;line-height:1.8;margin:0;white-space:pre-line;max-width:64ch}
 .tip{margin:.65rem 0 0;font-size:.82rem;color:var(--muted);font-style:italic;border-left:2px solid var(--blue);padding-left:.7rem}
 .say[contenteditable="true"]{outline:none;background:var(--blue-soft);border-radius:6px;box-shadow:0 0 0 .4rem var(--blue-soft)}
-
 .extra{margin-top:1.25rem;border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.15rem}
 .extra h3{font-family:var(--serif);font-size:1rem;margin:0 0 .75rem;font-weight:600}
 .extra dl{margin:0}
 .extra dt{font-weight:600;font-size:.88rem;color:var(--con)}
 .extra dd{margin:.2rem 0 .9rem;font-size:.9rem;color:var(--muted);line-height:1.6}
 .extra dd:last-child{margin-bottom:0}
-
+.copy-card{margin-top:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border:1px solid var(--blue);background:var(--blue-soft);border-radius:var(--radius);padding:1.1rem 1.25rem}
+.copy-card h3{font-family:var(--serif);font-size:1rem;margin:0 0 .2rem;font-weight:600}
+.copy-card p{margin:0;font-size:.84rem;color:var(--muted)}
+.copy-card__actions{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
+.practice-card{margin-top:1.25rem;border:1px solid var(--line);border-radius:var(--radius);padding:1.1rem 1.25rem;background:var(--paper)}
+.practice-card__head{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.4rem;flex-wrap:wrap}
+.practice-card__head h3{font-family:var(--serif);font-size:1rem;margin:0;font-weight:600}
+.practice-card__desc{margin:0 0 .9rem;font-size:.84rem;color:var(--muted)}
+.practice-card__row{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
 .foot{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.5rem}
 .credit{margin-top:2.25rem;text-align:center;font-size:.76rem;color:var(--dim)}
 
-/* ============================================================
-   6. TẬP NÓI
-   ============================================================ */
 .prompter{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column}
 .prompter__bar{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:calc(.7rem + env(safe-area-inset-top,0px)) 1rem .7rem;border-bottom:1px solid var(--line);background:var(--surface)}
 .timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:1.6rem;line-height:1;min-width:4.4rem}
-.timer[data-zone="near"]{color:var(--blue)}
-.timer[data-zone="over"]{color:var(--con)}
+.timer[data-zone="near"]{color:var(--blue)}.timer[data-zone="over"]{color:var(--con)}
 .prompter__target{font-size:.76rem;color:var(--dim);margin-right:auto}
 .prompter__body{flex:1;overflow-y:auto;padding:2rem 1.25rem 45vh;scroll-behavior:smooth}
 .prompter__inner{max-width:42rem;margin:0 auto;font-family:var(--serif);line-height:1.85}
@@ -288,42 +184,19 @@ button,input,select,textarea{font:inherit;color:inherit}
   .side+.side{border-left:0}
   .steps__item span:last-child{display:none}
   .steps__item[data-state="now"] span:last-child{display:inline}
+  .copy-card__actions{width:100%}
+  .copy-card__actions .btn{flex:1}
 }
-@media (prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
-}
-
-/* ============================================================
-   7. IN
-   ============================================================ */
-.print-head{display:none}
-@media print{
-  body{background:#fff;color:#000;font-size:12pt}
-  .no-print,.top,.steps,.credit,.hint{display:none!important}
-  .wrap{max-width:none;padding:0}
-  .panel,.sheet,.extra,.sheet-card{border:0;background:#fff;padding:0;border-radius:0}
-  .print-head{display:block;margin-bottom:1rem}
-  .print-head h1{font-family:var(--serif);font-size:18pt;margin:0 0 .3rem}
-  .print-head p{margin:0;font-size:10pt;color:#444}
-  .result__meta,.result__title{display:none}
-  .block{break-inside:avoid;border-top:1px solid #ddd;grid-template-columns:3rem 1fr}
-  .block h3,.say{color:#000}
-  .cue{color:#777}
-  .say{font-size:12pt;line-height:1.6;max-width:none}
-  .tip{color:#555;border-left-color:#bbb}
-  .extra{margin-top:1rem;break-inside:avoid}
-}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
 <body>
 <div class="wrap">
-
-  <header class="top no-print">
+  <header class="top">
     <div class="mark" aria-hidden="true">
-      <span class="mark__fallback">YCC</span>
-      <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt=""
-           onerror="this.style.display='none'">
+      <span>YCC</span>
+      <img src="https://youcanclub.github.io/logoclbyoucan.jpg" alt="" onerror="this.style.display='none'">
     </div>
     <div>
       <p class="top__name">Tạo kịch bản</p>
@@ -331,12 +204,12 @@ button,input,select,textarea{font:inherit;color:inherit}
     </div>
   </header>
 
-  <nav class="steps no-print" aria-label="Tiến trình">
-    <div class="steps__item" data-step="1"><span class="steps__num">1</span><span>Chủ đề</span></div>
+  <nav class="steps" aria-label="Tiến trình">
+    <div class="steps__item" data-step="1"><span class="steps__num">1</span><span>Đề tài</span></div>
     <div class="steps__rule"></div>
     <div class="steps__item" data-step="2"><span class="steps__num">2</span><span>Ý tưởng</span></div>
     <div class="steps__rule"></div>
-    <div class="steps__item" data-step="3"><span class="steps__num">3</span><span>Kiến nghị</span></div>
+    <div class="steps__item" data-step="3"><span class="steps__num">3</span><span>Chủ đề</span></div>
     <div class="steps__rule"></div>
     <div class="steps__item" data-step="4"><span class="steps__num">4</span><span>Giọng</span></div>
     <div class="steps__rule"></div>
@@ -345,89 +218,84 @@ button,input,select,textarea{font:inherit;color:inherit}
 
   <main class="panel">
 
-    <!-- BƯỚC 1 -->
     <section id="view-topic">
       <h1 class="ask">Bạn muốn tranh biện về điều gì?</h1>
       <div class="field">
-        <label class="sr" for="topic">Chủ đề</label>
-        <input id="topic" type="text" maxlength="100" autocomplete="off"
-               placeholder="Áp lực đồng trang lứa, học sinh dùng AI…">
+        <label class="sr" for="topic">Đề tài</label>
+        <input id="topic" type="text" maxlength="100" autocomplete="off" placeholder="Áp lực đồng trang lứa, học sinh dùng AI…">
         <div class="field__row">
-          <span id="topic-msg">Từ chủ đề này, AI đề xuất 4 kiến nghị để bạn chọn.</span>
+          <span id="topic-msg">Từ đề tài này, AI đề xuất 4 chủ đề để bạn chọn.</span>
           <span class="count"><span id="topic-count">0</span>/100</span>
         </div>
       </div>
-
-      <div class="chips" id="chips">
-        <span class="chips__label">Chưa nghĩ ra thì lấy tạm một trong số này:</span>
-      </div>
-
-      <div class="actions">
-        <button class="btn btn--go" id="btn-motions" type="button">Tiếp tục</button>
-      </div>
+      <div class="chips" id="chips"><span class="chips__label">Chưa nghĩ ra thì lấy tạm một trong số này:</span></div>
+      <div class="actions"><button class="btn btn--go" id="btn-motions" type="button">Tiếp tục</button></div>
     </section>
 
-    <!-- BƯỚC 2 (TUỲ CHỌN) -->
     <section id="view-idea" hidden>
       <div class="head">
         <h2>Bạn có định hướng riêng không?<span class="optional-badge">Không bắt buộc</span></h2>
-        <button class="btn btn--link" id="btn-back-topic" type="button">Đổi chủ đề</button>
+        <button class="btn btn--link" id="btn-back-topic" type="button">Đổi đề tài</button>
       </div>
       <div class="idea-note">
         <span>💡</span>
-        <span>Bỏ qua cũng được — AI sẽ tự chọn góc kiến nghị. Điền vào nếu bạn muốn bài nói bám sát ý riêng của mình hơn, ví dụ <b>góc muốn khai thác</b>, <b>ví dụ cụ thể muốn nhắc tới</b>, hay <b>điều cần tránh</b>.</span>
+        <span>Bỏ qua cũng được, AI sẽ tự chọn góc. Điền vào nếu bạn muốn bài nói bám sát ý riêng, ví dụ <b>góc muốn khai thác</b>, <b>ví dụ cụ thể muốn nhắc tới</b>, hay <b>điều cần tránh</b>.</span>
       </div>
       <div class="field">
         <label class="sr" for="idea">Ý tưởng riêng</label>
-        <textarea id="idea" maxlength="300" placeholder="Ví dụ: muốn kiến nghị xoay quanh áp lực từ nhóm chat lớp, có nhắc tới chuyện học sinh sợ bị bỏ lỡ tin tức của bạn bè…"></textarea>
+        <textarea id="idea" maxlength="300" placeholder="Ví dụ: muốn chủ đề xoay quanh áp lực từ nhóm chat lớp, có nhắc tới chuyện học sinh sợ bị bỏ lỡ tin tức của bạn bè…"></textarea>
         <div class="field__row">
-          <span>Nội dung này chỉ giúp AI chọn góc kiến nghị sát ý bạn hơn.</span>
+          <span>AI dùng nội dung này để chọn góc chủ đề và viết bài nói sát ý bạn hơn.</span>
           <span class="count"><span id="idea-count">0</span>/300</span>
         </div>
       </div>
-      <div class="chips" id="idea-chips">
-        <span class="chips__label">Hoặc chọn nhanh một định hướng:</span>
-      </div>
+      <div class="chips" id="idea-chips"><span class="chips__label">Hoặc chọn nhanh một định hướng:</span></div>
       <div class="actions">
         <button class="btn btn--go" id="btn-idea-continue" type="button">Tiếp tục</button>
         <button class="btn btn--link" id="btn-idea-skip" type="button">Bỏ qua, để AI tự chọn</button>
       </div>
     </section>
 
-    <!-- BƯỚC 3 -->
     <section id="view-motions" hidden>
       <div class="head">
-        <h2>Chọn kiến nghị và phe của bạn</h2>
+        <h2>Chọn chủ đề và phe của bạn</h2>
         <button class="btn btn--link" id="btn-back-idea" type="button">Đổi ý tưởng</button>
       </div>
       <p id="motions-topic"></p>
       <p id="motions-idea" class="recap" hidden></p>
       <div class="motions" id="motions" aria-live="polite"></div>
       <div class="actions" style="margin-top:1.1rem;justify-content:center">
-        <button class="btn btn--link" id="btn-regen" type="button">Xem 4 kiến nghị khác</button>
+        <button class="btn btn--link" id="btn-regen" type="button">Xem 4 chủ đề khác</button>
+      </div>
+
+      <div class="custom field">
+        <h3>Có chủ đề riêng?</h3>
+        <p>Chưa ưng cái nào thì tự viết. AI sẽ soạn lý lẽ cho cả hai phe để bạn chọn phe.</p>
+        <label class="sr" for="custom-motion">Chủ đề tự nhập</label>
+        <textarea id="custom-motion" maxlength="160" rows="2" placeholder="Ví dụ: Chúng tôi phản đối việc công khai bảng xếp hạng điểm của cả lớp"></textarea>
+        <div class="field__row">
+          <span id="custom-msg">Nên mở bằng "Chúng tôi ủng hộ / phản đối / tin rằng…"</span>
+          <span class="count"><span id="custom-count">0</span>/160</span>
+        </div>
+        <button class="btn btn--go btn--sm" id="btn-custom" type="button" style="margin-top:.8rem">Dùng chủ đề này</button>
       </div>
     </section>
 
-    <!-- BƯỚC 4 -->
     <section id="view-style" hidden>
       <div class="head">
         <h2>Bài nói này nghe như thế nào?</h2>
-        <button class="btn btn--link" id="btn-back-motions-2" type="button">Đổi kiến nghị</button>
-        <!-- lưu ý: nút này đưa người dùng về bước chọn kiến nghị (step 3) -->
-        
+        <button class="btn btn--link" id="btn-back-motions-2" type="button">Đổi chủ đề</button>
       </div>
       <p id="style-recap" class="recap"></p>
       <div class="voices" id="voices"></div>
     </section>
 
-    <!-- ĐANG TẠO -->
     <section id="view-working" hidden class="working" aria-live="polite">
       <div class="working__bar"><span></span></div>
       <p id="working-msg">Đang dựng phần mở đầu…</p>
       <small>Thường mất 8 – 20 giây</small>
     </section>
 
-    <!-- LỖI -->
     <section id="view-error" hidden>
       <div class="alert" role="alert">
         <h3 id="error-title">Chưa tạo được kịch bản</h3>
@@ -439,45 +307,36 @@ button,input,select,textarea{font:inherit;color:inherit}
       </div>
     </section>
 
-    <!-- BƯỚC 5 -->
     <section id="view-script" hidden>
-      <div class="print-head">
-        <h1 id="print-title"></h1>
-        <p id="print-meta"></p>
-      </div>
-
       <p class="result__meta" id="script-meta"></p>
       <h2 class="result__title" id="script-title"></h2>
 
       <div class="sheet-card">
-        <div class="sheet-card__head no-print">
+        <div class="sheet-card__head">
           <h3>Nội dung kịch bản</h3>
           <button class="btn btn--sm" id="btn-edit" type="button">Sửa lời</button>
         </div>
-        <p class="hint no-print" id="edit-hint" hidden>Bấm vào đoạn văn để sửa. Bản sửa được giữ khi bạn chép, tải hay in.</p>
+        <p class="hint" id="edit-hint" hidden>Bấm vào đoạn văn để sửa. Bản sửa được giữ khi bạn chép hoặc tải file.</p>
         <div class="sheet" id="sheet"></div>
       </div>
 
       <div class="extra" id="rebuttals" hidden></div>
 
-      <div class="copy-card no-print">
-        <div class="copy-card__text">
+      <div class="copy-card">
+        <div>
           <h3>Lấy bản này đi tập</h3>
-          <p>Chép nguyên bài để dán vào ghi chú, hoặc in ra cầm giấy.</p>
+          <p>Chép nguyên bài để dán vào ghi chú, hoặc tải file Word để in và cầm giấy.</p>
         </div>
         <div class="copy-card__actions">
           <button class="btn btn--copy" id="btn-copy" type="button">Chép kịch bản</button>
-          <button class="btn btn--sm" id="btn-print" type="button">In</button>
+          <button class="btn btn--sm" id="btn-docx" type="button">Tải file Word</button>
         </div>
       </div>
 
-      <div class="practice-card no-print">
+      <div class="practice-card">
         <div class="practice-card__head">
           <h3>Luyện tập nói</h3>
-          <span class="clock" id="clock">
-            <span id="clock-time">0:00</span>
-            <small id="clock-note"></small>
-          </span>
+          <span class="clock" id="clock"><span id="clock-time">0:00</span><small id="clock-note"></small></span>
         </div>
         <p class="practice-card__desc">Đọc thử ngay trên màn hình với đồng hồ đếm giờ, chỉnh tốc độ nói cho khớp giọng của bạn.</p>
         <div class="practice-card__row">
@@ -491,20 +350,19 @@ button,input,select,textarea{font:inherit;color:inherit}
         </div>
       </div>
 
-      <div class="foot no-print">
+      <div class="foot">
         <button class="btn btn--sm" id="btn-again" type="button">Viết bản khác</button>
         <button class="btn btn--sm" id="btn-back-style" type="button">Đổi giọng</button>
-        <button class="btn btn--sm" id="btn-back-motions" type="button">Chọn kiến nghị khác</button>
+        <button class="btn btn--sm" id="btn-back-motions" type="button">Chọn chủ đề khác</button>
         <button class="btn btn--sm" id="btn-reset" type="button">Bắt đầu lại</button>
       </div>
     </section>
 
   </main>
 
-  <p class="credit no-print">You Can Club · Kịch bản là bản nháp để bạn tập, hãy sửa lại bằng giọng của mình.</p>
+  <p class="credit">You Can Club · Kịch bản là bản nháp để bạn tập, hãy sửa lại bằng giọng của mình.</p>
 </div>
 
-<!-- TẬP NÓI -->
 <div class="prompter" id="prompter" hidden role="dialog" aria-modal="true" aria-label="Chế độ tập nói">
   <div class="prompter__bar">
     <span class="timer" id="timer" data-zone="ok">0:00</span>
@@ -522,99 +380,59 @@ button,input,select,textarea{font:inherit;color:inherit}
 </div>
 
 <script>
-/* ============================================================
-   CẤU HÌNH
-   ============================================================ */
+/* ===== CẤU HÌNH ===== */
 const API = "https://backend-deno-yjgtm1r4x278.youcanclub.deno.net";
 const MOTIONS_URL = API + "/api/motions";
+const CUSTOM_URL  = API + "/api/custom";
 const SCRIPT_URL  = API + "/api/script";
-const TIMEOUT_MOTIONS = 40000;
-const TIMEOUT_SCRIPT  = 90000;   // backend có thể phải viết lại một vòng
-const TARGET_SECONDS  = 180;
-const STORE = "ycc.debate.v4";
+const TIMEOUT_MOTIONS = 40000, TIMEOUT_SCRIPT = 90000, TARGET_SECONDS = 180;
+const STORE = "ycc.debate.v5";
 
-// Kho chủ đề rộng để gợi ý — cố tình để mở, không phải kiến nghị cụ thể,
-// vì bước tiếp theo AI mới là chỗ thu hẹp thành kiến nghị.
 const TOPIC_POOL = [
-  "Áp lực đồng trang lứa",
-  "Mạng xã hội và tuổi teen",
-  "Điểm số và năng lực thật",
-  "Học sinh dùng AI",
-  "Áp lực thi cử",
-  "Học thêm ngoài giờ",
-  "Học sinh đi làm thêm",
-  "Chọn ngành theo đam mê hay theo nhu cầu xã hội",
-  "Đồng phục học đường",
-  "Kỷ luật trong nhà trường",
-  "Mối quan hệ giữa phụ huynh và con cái tuổi teen",
-  "Thần tượng và văn hoá fan",
-  "Thời gian sử dụng điện thoại",
-  "Giới hạn tuổi cho mạng xã hội",
-  "Giấc ngủ và lịch học của học sinh",
-  "Tự do ngôn luận trong trường học",
-  "Trung thực học đường",
-  "Cân bằng giữa học và chơi",
-  "Trách nhiệm của người nổi tiếng",
-  "Tiền tiêu vặt và tính tự lập",
-  "Văn hoá đọc của giới trẻ",
-  "Áp lực phải giỏi toàn diện",
-  "Tình bạn qua mạng xã hội",
-  "Giáo dục giới tính trong trường học",
+  "Áp lực đồng trang lứa","Mạng xã hội và tuổi teen","Điểm số và năng lực thật","Học sinh dùng AI",
+  "Áp lực thi cử","Học thêm ngoài giờ","Học sinh đi làm thêm","Chọn ngành theo đam mê hay theo nhu cầu xã hội",
+  "Đồng phục học đường","Kỷ luật trong nhà trường","Mối quan hệ giữa phụ huynh và con cái tuổi teen",
+  "Thần tượng và văn hoá fan","Thời gian sử dụng điện thoại","Giới hạn tuổi cho mạng xã hội",
+  "Giấc ngủ và lịch học của học sinh","Tự do ngôn luận trong trường học","Trung thực học đường",
+  "Cân bằng giữa học và chơi","Trách nhiệm của người nổi tiếng","Tiền tiêu vặt và tính tự lập",
+  "Văn hoá đọc của giới trẻ","Áp lực phải giỏi toàn diện","Tình bạn qua mạng xã hội","Giáo dục giới tính trong trường học"
 ];
-
-function pickRandomTopics(n){
-  const pool = [...TOPIC_POOL];
-  for (let i = pool.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
-  return pool.slice(0, n);
-}
-
-// Khoá phải trùng với bảng STYLES trong main.ts. Kiểm tra bằng GET /health.
+const IDEA_POOL = [
+  "Thiên về câu chuyện cá nhân, cảm xúc","Tập trung vào chính sách của nhà trường","Có ví dụ hài hước, gần gũi",
+  "Giọng nghiêm túc, phân tích sâu","Nhấn vào trách nhiệm của phụ huynh","Ngắn gọn, dễ hiểu cho người mới tập"
+];
+// Khoá phải trùng với bảng STYLES trong main.ts (kiểm tra bằng GET /health).
 const VOICES = [
-  { key:"thang-than", name:"Thẳng thắn, rõ ràng",
-    desc:"Vào thẳng vấn đề, câu ngắn, không hoa mỹ. Hợp với kiến nghị về chính sách." },
-  { key:"cam-dong", name:"Kể chuyện, chạm cảm xúc",
-    desc:"Mở bằng câu chuyện về một bạn học sinh cụ thể rồi khép lại bằng chính bạn ấy." },
-  { key:"phan-tich", name:"Điềm tĩnh, phân tích",
-    desc:"Bình thản gỡ từng nút thắt, nói rõ điều kiện và ngoại lệ. Hợp khi đề khó." },
-  { key:"truyen-lua", name:"Truyền lửa, hùng biện",
-    desc:"Nhịp dồn dần, điệp ngữ, kết bằng lời kêu gọi làm được ngay trong trường." },
-  { key:"gan-gui", name:"Gần gũi, hóm hỉnh",
-    desc:"Như đang nói chuyện với bạn cùng lớp, có chút hài nhẹ nhưng lập luận vẫn chặt." }
+  { key:"thang-than", name:"Thẳng thắn, rõ ràng", desc:"Vào thẳng vấn đề, câu ngắn, không hoa mỹ. Hợp với chủ đề về chính sách." },
+  { key:"cam-dong", name:"Kể chuyện, chạm cảm xúc", desc:"Mở bằng câu chuyện về một bạn học sinh cụ thể rồi khép lại bằng chính bạn ấy." },
+  { key:"phan-tich", name:"Điềm tĩnh, phân tích", desc:"Bình thản gỡ từng nút thắt, nói rõ điều kiện và ngoại lệ. Hợp khi đề khó." },
+  { key:"truyen-lua", name:"Truyền lửa, hùng biện", desc:"Nhịp dồn dần, điệp ngữ, kết bằng lời kêu gọi làm được ngay trong trường." },
+  { key:"gan-gui", name:"Gần gũi, hóm hỉnh", desc:"Như đang nói chuyện với bạn cùng lớp, có chút hài nhẹ nhưng lập luận vẫn chặt." }
 ];
 
-/* ============================================================
-   TIỆN ÍCH
-   ============================================================ */
+/* ===== TIỆN ÍCH ===== */
 const $ = id => document.getElementById(id);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
-  ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;" }[c]));
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
 const syllables = t => ((String(t||"").trim().match(/\S+/g)) || []).length;
 const mmss = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,"0")}`;
+const pickRandom = (arr, n) => [...arr].sort(() => Math.random() - .5).slice(0, n);
 
-let state = { step:1, topic:"", idea:"", motions:[], avoid:[], motion:null, side:null,
-              style:"thang-than", script:null, pace:175 };
+let state = { step:1, topic:"", idea:"", motions:[], avoid:[], motion:null, side:null, style:"thang-than", script:null, pace:175 };
 let lastAction = null, controller = null, editing = false;
 
 const save = () => { try { sessionStorage.setItem(STORE, JSON.stringify(state)); } catch(e){} };
-const load = () => {
-  try { const raw = sessionStorage.getItem(STORE); if (raw) state = Object.assign(state, JSON.parse(raw)); }
-  catch(e){}
-};
+const load = () => { try { const r = sessionStorage.getItem(STORE); if (r) state = Object.assign(state, JSON.parse(r)); } catch(e){} };
 
-/* ============================================================
-   ĐIỀU HƯỚNG
-   ============================================================ */
+// Chặn thu phóng bằng cử chỉ (iOS Safari bỏ qua user-scalable=no)
+["gesturestart","gesturechange","gestureend"].forEach(t => document.addEventListener(t, e => e.preventDefault()));
+
+/* ===== ĐIỀU HƯỚNG ===== */
 const VIEWS = ["view-topic","view-idea","view-motions","view-style","view-working","view-error","view-script"];
 const STEP_OF = { "view-script":5, "view-style":4, "view-motions":3, "view-idea":2 };
 function show(view){
   VIEWS.forEach(v => $(v).hidden = (v !== view));
   const el = $(view);
-  el.classList.remove("appear");
-  void el.offsetWidth;
-  el.classList.add("appear");
+  el.classList.remove("appear"); void el.offsetWidth; el.classList.add("appear");
   const step = STEP_OF[view] || state.step;
   document.querySelectorAll(".steps__item").forEach(it => {
     const n = +it.dataset.step;
@@ -628,7 +446,7 @@ function render(){
   else if (state.step === 2){ show("view-idea"); $("idea").value = state.idea; updateIdeaCount(); }
   else { state.step = 1; show("view-topic"); $("topic").value = state.topic; updateCount(); }
 }
-const BACK_LABEL = { 1:"Đổi chủ đề", 2:"Đổi ý tưởng", 3:"Chọn kiến nghị khác", 4:"Đổi giọng" };
+const BACK_LABEL = { 1:"Đổi đề tài", 2:"Đổi ý tưởng", 3:"Chọn chủ đề khác", 4:"Đổi giọng" };
 function fail(title, msg, back){
   $("error-title").textContent = title;
   $("error-msg").textContent = msg;
@@ -643,101 +461,65 @@ function niceError(err){
 }
 async function post(url, body, timeout){
   if (controller) controller.abort();
-  const c = new AbortController();
-  controller = c;
+  const c = new AbortController(); controller = c;
   const t = setTimeout(() => c.abort(), timeout);
   try {
-    const res = await fetch(url, {
-      method:"POST", headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify(body), signal: c.signal
-    });
+    const res = await fetch(url, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body), signal: c.signal });
     let data = {};
-    try { data = await res.json(); }
-    catch(e){ throw new Error("Máy chủ trả về dữ liệu không đọc được."); }
+    try { data = await res.json(); } catch(e){ throw new Error("Máy chủ trả về dữ liệu không đọc được."); }
     if (!res.ok) throw new Error(data.message || `Máy chủ báo lỗi ${res.status}.`);
     return data;
-  } finally {
-    clearTimeout(t);
-    if (controller === c) controller = null;
-  }
+  } finally { clearTimeout(t); if (controller === c) controller = null; }
 }
 
-/* ============================================================
-   BƯỚC 1
-   ============================================================ */
+/* ===== BƯỚC 1: ĐỀ TÀI ===== */
 function updateCount(){ $("topic-count").textContent = $("topic").value.length; }
 function clearTopicMsg(){
   $("topic-msg").classList.remove("field__err");
-  $("topic-msg").textContent = "Từ chủ đề này, AI đề xuất 4 kiến nghị để bạn chọn.";
+  $("topic-msg").textContent = "Từ đề tài này, AI đề xuất 4 chủ đề để bạn chọn.";
 }
 function paintChips(){
   const box = $("chips");
   box.querySelectorAll(".chip").forEach(c => c.remove());
-  pickRandomTopics(6).forEach(topic => {
+  pickRandom(TOPIC_POOL, 6).forEach(topic => {
     const b = document.createElement("button");
-    b.className = "chip";
-    b.type = "button";
-    b.textContent = topic;
+    b.className = "chip"; b.type = "button"; b.textContent = topic;
     b.onclick = () => { $("topic").value = topic; updateCount(); clearTopicMsg(); $("topic").focus(); };
     box.appendChild(b);
   });
 }
 $("topic").addEventListener("input", () => { updateCount(); clearTopicMsg(); });
 $("topic").addEventListener("keydown", e => { if (e.key === "Enter") goToIdea(); });
-$("btn-motions").onclick = () => goToIdea();
+$("btn-motions").onclick = goToIdea;
 $("btn-regen").onclick = () => getMotions(true);
 $("btn-back-topic").onclick = () => { state.step = 1; save(); render(); $("topic").focus(); };
 
 function topicError(msg){
-  state.step = 1;
-  show("view-topic");
-  $("topic").value = state.topic;
-  updateCount();
+  state.step = 1; show("view-topic");
+  $("topic").value = state.topic; updateCount();
   $("topic-msg").textContent = msg;
   $("topic-msg").classList.add("field__err");
   $("topic").focus();
 }
-
 function goToIdea(){
   const topic = $("topic").value.trim();
-  if (topic.length < 3 || topic.length > 100){
-    topicError("Chủ đề cần từ 3 đến 100 ký tự.");
-    return;
-  }
-  state.topic = topic;
-  state.avoid = [];
-  state.step = 2;
-  save();
-  show("view-idea");
-  $("idea").value = state.idea;
-  updateIdeaCount();
-  $("idea").focus();
+  if (topic.length < 3 || topic.length > 100){ topicError("Đề tài cần từ 3 đến 100 ký tự."); return; }
+  state.topic = topic; state.avoid = []; state.motions = []; state.step = 2;
+  save(); show("view-idea");
+  $("idea").value = state.idea; updateIdeaCount(); $("idea").focus();
 }
 
-/* ============================================================
-   BƯỚC 2 (TUỲ CHỌN) — Ý TƯỞNG
-   ============================================================ */
-const IDEA_POOL = [
-  "Thiên về câu chuyện cá nhân, cảm xúc",
-  "Tập trung vào chính sách của nhà trường",
-  "Có ví dụ hài hước, gần gũi",
-  "Giọng nghiêm túc, phân tích sâu",
-  "Nhấn vào trách nhiệm của phụ huynh",
-  "Ngắn gọn, dễ hiểu cho người mới tập",
-];
+/* ===== BƯỚC 2: Ý TƯỞNG (TUỲ CHỌN) ===== */
 function paintIdeaChips(){
   const box = $("idea-chips");
   box.querySelectorAll(".chip").forEach(c => c.remove());
   IDEA_POOL.forEach(text => {
     const b = document.createElement("button");
-    b.className = "chip chip--idea";
-    b.type = "button";
-    b.textContent = text;
+    b.className = "chip chip--idea"; b.type = "button"; b.textContent = text;
     b.onclick = () => {
       const cur = $("idea").value.trim();
-      $("idea").value = cur ? `${cur}. ${text}` : text;
-      updateIdeaCount();
-      $("idea").focus();
+      $("idea").value = (cur ? `${cur}. ${text}` : text).slice(0, 300);
+      updateIdeaCount(); $("idea").focus();
     };
     box.appendChild(b);
   });
@@ -746,160 +528,123 @@ function updateIdeaCount(){ $("idea-count").textContent = $("idea").value.length
 $("idea").addEventListener("input", updateIdeaCount);
 $("btn-back-idea").onclick = () => { state.step = 2; save(); render(); };
 $("btn-idea-skip").onclick = () => { state.idea = ""; save(); getMotions(false); };
-$("btn-idea-continue").onclick = () => {
-  state.idea = $("idea").value.trim();
-  save();
-  getMotions(false);
-};
+$("btn-idea-continue").onclick = () => { state.idea = $("idea").value.trim(); save(); getMotions(false); };
 
+/* ===== BƯỚC 3: CHỦ ĐỀ ===== */
 async function getMotions(regen){
-  if (regen){
-    state.avoid = [...new Set([...state.avoid, ...state.motions.map(m => m.motion)])].slice(-12);
-  }
-
+  if (regen) state.avoid = [...new Set([...state.avoid, ...state.motions.map(m => m.motion)])].slice(-12);
   lastAction = () => getMotions(regen);
   state.step = 3;
   show("view-motions");
-  $("motions-topic").textContent = `Chủ đề: ${state.topic}`;
-  if (state.idea){
-    $("motions-idea").hidden = false;
-    $("motions-idea").innerHTML = `<b>Định hướng của bạn</b>${esc(state.idea)}`;
-  } else {
-    $("motions-idea").hidden = true;
-  }
+  paintRecap();
   $("btn-regen").disabled = true;
   paintBones();
-
   try {
     const data = await post(MOTIONS_URL, { topic: state.topic, avoid_motions: state.avoid, idea: state.idea }, TIMEOUT_MOTIONS);
     if (data.status === "invalid_topic"){
-      topicError(data.message || "Chủ đề này khó tranh biện. Thử một chủ đề có hai luồng ý kiến rõ rệt.");
+      topicError(data.message || "Đề tài này khó tranh biện. Thử một đề tài có hai luồng ý kiến rõ rệt.");
       return;
     }
-    if (!Array.isArray(data.motions) || !data.motions.length)
-      throw new Error("AI chưa đưa ra được kiến nghị nào.");
-    state.motions = data.motions;
-    save();
-    paintMotions();
+    if (!Array.isArray(data.motions) || !data.motions.length) throw new Error("AI chưa đưa ra được chủ đề nào.");
+    state.motions = [...(regen ? state.motions.filter(m => m.custom) : []), ...data.motions];
+    save(); paintMotions();
   } catch (err){
     console.error(err);
-    fail("Chưa lấy được kiến nghị", niceError(err), 2);
-  } finally {
-    $("btn-regen").disabled = false;
-  }
+    fail("Chưa lấy được chủ đề", niceError(err), 2);
+  } finally { $("btn-regen").disabled = false; }
 }
-
+function paintRecap(){
+  $("motions-topic").textContent = `Đề tài: ${state.topic}`;
+  $("motions-idea").hidden = !state.idea;
+  if (state.idea) $("motions-idea").innerHTML = `<b>Định hướng của bạn</b>${esc(state.idea)}`;
+}
 function paintBones(){
   $("motions").innerHTML = Array.from({length:4}).map(() => `
     <div class="motion" aria-hidden="true">
       <div class="motion__text"><div class="bone" style="width:92%"></div><div class="bone" style="width:64%"></div></div>
-      <div class="sides">
-        <div class="side"><div class="bone" style="width:80%"></div></div>
-        <div class="side"><div class="bone" style="width:80%"></div></div>
-      </div>
+      <div class="sides"><div class="side"><div class="bone" style="width:80%"></div></div><div class="side"><div class="bone" style="width:80%"></div></div></div>
     </div>`).join("");
 }
-
 function paintMotions(){
-  $("motions-topic").textContent = `Chủ đề: ${state.topic}`;
-  if (state.idea){
-    $("motions-idea").hidden = false;
-    $("motions-idea").innerHTML = `<b>Định hướng của bạn</b>${esc(state.idea)}`;
-  } else {
-    $("motions-idea").hidden = true;
-  }
+  paintRecap();
   $("motions").innerHTML = state.motions.map((m, i) => `
-    <article class="motion">
-      <p class="motion__text">${esc(m.motion)}</p>
+    <article class="motion${m.custom ? " motion--own" : ""}">
+      <p class="motion__text">${m.custom ? '<span class="optional-badge" style="margin:0 .5rem 0 0">Của bạn</span>' : ""}${esc(m.motion)}</p>
       <div class="sides">
-        <button class="side side--pro" data-i="${i}" data-side="pro"><b>Nói phe Ủng hộ</b>${esc(m.pro_summary)}</button>
-        <button class="side side--con" data-i="${i}" data-side="con"><b>Nói phe Phản đối</b>${esc(m.con_summary)}</button>
+        <button class="side side--pro" type="button" data-i="${i}" data-side="pro"><b>Nói phe Ủng hộ</b>${esc(m.pro_summary)}</button>
+        <button class="side side--con" type="button" data-i="${i}" data-side="con"><b>Nói phe Phản đối</b>${esc(m.con_summary)}</button>
       </div>
     </article>`).join("");
-
   $("motions").querySelectorAll(".side").forEach(b => b.onclick = () => {
     state.motion = state.motions[+b.dataset.i];
     state.side = b.dataset.side;
-    state.step = 4;
-    save();
-    show("view-style");
-    paintVoices();
+    state.step = 4; save();
+    show("view-style"); paintVoices();
     window.scrollTo({ top:0, behavior:"smooth" });
   });
 }
 
-/* ============================================================
-   BƯỚC 3 — CHỌN GIỌNG
-   ============================================================ */
+// Chủ đề người dùng tự nhập
+$("custom-motion").addEventListener("input", () => {
+  $("custom-count").textContent = $("custom-motion").value.length;
+  $("custom-msg").classList.remove("field__err");
+});
+$("btn-custom").onclick = async () => {
+  const motion = $("custom-motion").value.trim(), msg = $("custom-msg"), btn = $("btn-custom");
+  const bad = t => { msg.textContent = t; msg.classList.add("field__err"); };
+  if (motion.length < 10) return bad("Chủ đề cần ít nhất 10 ký tự.");
+  btn.disabled = true; btn.textContent = "AI đang soạn lý lẽ…";
+  try {
+    const data = await post(CUSTOM_URL, { topic: state.topic, motion, idea: state.idea }, TIMEOUT_MOTIONS);
+    if (data.status === "invalid_motion") return bad(data.message);
+    state.motions = [data.motion, ...state.motions.filter(m => !m.custom && m.motion !== data.motion.motion)];
+    save(); paintMotions();
+    $("custom-motion").value = ""; $("custom-count").textContent = "0";
+    window.scrollTo({ top:0, behavior:"smooth" });
+  } catch (err){ bad(niceError(err)); }
+  finally { btn.disabled = false; btn.textContent = "Dùng chủ đề này"; }
+};
+
+/* ===== BƯỚC 4: GIỌNG ===== */
 function paintVoices(){
   const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
-  $("style-recap").innerHTML =
-    `<b>${esc(state.motion.motion)}</b>Bạn nói phe ${sideName}. Cùng một luận điểm, mỗi giọng cho ra một bài khác hẳn.`;
-
+  $("style-recap").innerHTML = `<b>${esc(state.motion.motion)}</b>Bạn nói phe ${sideName}. Cùng một luận điểm, mỗi giọng cho ra một bài khác hẳn.`;
   $("voices").innerHTML = VOICES.map(v => `
     <button class="voice" type="button" data-key="${v.key}" aria-pressed="${v.key === state.style}">
       <b>${esc(v.name)}</b>${esc(v.desc)}
     </button>`).join("");
-
   $("voices").querySelectorAll(".voice").forEach(b => b.onclick = () => {
     $("voices").querySelectorAll(".voice").forEach(x => x.disabled = true);
-    state.style = b.dataset.key;
-    save();
-    getScript(false);
+    state.style = b.dataset.key; save(); getScript(false);
   });
 }
-$("btn-back-motions-2").onclick = () => {
-  state.step = 3; save(); render();
-  window.scrollTo({ top:0, behavior:"smooth" });
-};
+$("btn-back-motions-2").onclick = () => { state.step = 3; save(); render(); window.scrollTo({ top:0, behavior:"smooth" }); };
 
-/* ============================================================
-   BƯỚC 3
-   ============================================================ */
-const WORKING_MSGS = [
-  "Đang dựng phần mở đầu…",
-  "Đang xây luận điểm chính…",
-  "Đang chuẩn bị phần đáp lại…",
-  "Đang chốt lời kết…",
-  "Đang cân lại độ dài cho vừa…"
-];
+/* ===== BƯỚC 5: KỊCH BẢN ===== */
+const WORKING_MSGS = ["Đang dựng phần mở đầu…","Đang xây luận điểm chính…","Đang chuẩn bị phần đáp lại…","Đang chốt lời kết…","Đang cân lại độ dài cho vừa…"];
 let workingTimer = null;
 function startWorking(){
   let i = 0;
   $("working-msg").textContent = WORKING_MSGS[0];
   show("view-working");
   clearInterval(workingTimer);
-  workingTimer = setInterval(() => {
-    i = Math.min(i + 1, WORKING_MSGS.length - 1);
-    $("working-msg").textContent = WORKING_MSGS[i];
-  }, 4000);
+  workingTimer = setInterval(() => { i = Math.min(i + 1, WORKING_MSGS.length - 1); $("working-msg").textContent = WORKING_MSGS[i]; }, 4000);
 }
-
 async function getScript(again){
   lastAction = () => getScript(again);
   startWorking();
   const m = state.motion, side = state.side;
   try {
     const data = await post(SCRIPT_URL, {
-      motion: m.motion,
-      side,
-      style: state.style,
+      motion: m.motion, side, style: state.style, idea: state.idea,
       side_summary: side === "pro" ? m.pro_summary : m.con_summary,
       opponent_summary: side === "pro" ? m.con_summary : m.pro_summary
     }, TIMEOUT_SCRIPT);
-
-    if (!data.title || !Array.isArray(data.sections) || !data.sections.length)
-      throw new Error("AI trả về kịch bản không đủ phần.");
-
-    state.script = data;
-    state.step = 5;
-    editing = false;
-    $("btn-edit").textContent = "Sửa lời";
-    $("edit-hint").hidden = true;
-    save();
-    show("view-script");
-    paintScript();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (!data.title || !Array.isArray(data.sections) || !data.sections.length) throw new Error("AI trả về kịch bản không đủ phần.");
+    state.script = data; state.step = 5; editing = false;
+    $("btn-edit").textContent = "Sửa lời"; $("edit-hint").hidden = true;
+    save(); show("view-script"); paintScript();
+    window.scrollTo({ top:0, behavior:"smooth" });
   } catch (err){
     console.error(err);
     fail("Chưa viết được kịch bản", niceError(err), 4);
@@ -908,19 +653,14 @@ async function getScript(again){
     $("voices").querySelectorAll(".voice").forEach(x => x.disabled = false);
   }
 }
-
-function secondsOf(text){ return syllables(text) / state.pace * 60; }
+const secondsOf = text => syllables(text) / state.pace * 60;
 
 function paintScript(){
   const s = state.script;
   const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
-
   $("script-title").textContent = s.title;
   const voiceName = s.style || (VOICES.find(v => v.key === state.style) || {}).name || "";
-  $("script-meta").innerHTML =
-    `<span class="badge badge--${state.side}">Phe ${sideName}</span> · giọng ${esc(voiceName.toLowerCase())} · ${esc(state.motion.motion)}`;
-  $("print-title").textContent = s.title;
-  $("print-meta").textContent = `${state.motion.motion} — Phe ${sideName} — Giọng ${voiceName.toLowerCase()}`;
+  $("script-meta").innerHTML = `<span class="badge badge--${state.side}">Phe ${sideName}</span> · giọng ${esc(voiceName.toLowerCase())} · ${esc(state.motion.motion)}`;
   $("pace").value = String(state.pace);
 
   let running = 0;
@@ -933,28 +673,23 @@ function paintScript(){
         <div>
           <div class="block__head">
             <h3>${esc(sec.heading)}</h3>
-            <button class="btn btn--link no-print" data-copy="${i}">Chép</button>
+            <button class="btn btn--link" type="button" data-copy="${i}">Chép</button>
           </div>
           <p class="say" data-i="${i}">${esc(sec.content)}</p>
           ${sec.tip ? `<p class="tip">${esc(sec.tip)}</p>` : ""}
         </div>
       </section>`;
   }).join("");
-
-  $("sheet").querySelectorAll("[data-copy]").forEach(b => b.onclick = () =>
-    copy(s.sections[+b.dataset.copy].content, b));
+  $("sheet").querySelectorAll("[data-copy]").forEach(b => b.onclick = () => copy(s.sections[+b.dataset.copy].content, b));
 
   const reb = Array.isArray(s.rebuttals) ? s.rebuttals : [];
   $("rebuttals").hidden = reb.length === 0;
-  if (reb.length){
-    $("rebuttals").innerHTML = `<h3>Phe đối diện nhiều khả năng sẽ nói</h3><dl>` +
-      reb.map(r => `<dt>${esc(r.claim)}</dt><dd>${esc(r.response)}</dd>`).join("") + `</dl>`;
-  }
+  if (reb.length) $("rebuttals").innerHTML = `<h3>Phe đối diện nhiều khả năng sẽ nói</h3><dl>` +
+    reb.map(r => `<dt>${esc(r.claim)}</dt><dd>${esc(r.response)}</dd>`).join("") + `</dl>`;
 
   if (editing){ editing = false; $("btn-edit").click(); }
   updateClock();
 }
-
 function updateClock(){
   const total = state.script.sections.reduce((a, s) => a + secondsOf(s.content), 0);
   const count = state.script.sections.reduce((a, s) => a + syllables(s.content), 0);
@@ -962,38 +697,25 @@ function updateClock(){
   $("clock-note").textContent = `· ${count} âm tiết ở nhịp ${state.pace}/phút`;
   const fit = total > TARGET_SECONDS + 20 ? "long" : total < TARGET_SECONDS - 35 ? "short" : "ok";
   $("clock").dataset.fit = fit;
-  $("clock").title = fit === "long" ? "Hơi dài, có thể cắt bớt một ý."
-                   : fit === "short" ? "Hơi ngắn, có thể thêm một ví dụ."
-                   : "Độ dài vừa phải để nói liền mạch.";
+  $("clock").title = fit === "long" ? "Hơi dài, có thể cắt bớt một ý." : fit === "short" ? "Hơi ngắn, có thể thêm một ví dụ." : "Độ dài vừa phải để nói liền mạch.";
 }
-
 $("pace").onchange = e => { state.pace = +e.target.value; save(); paintScript(); };
 
-/* ============================================================
-   SỬA LỜI
-   ============================================================ */
 $("btn-edit").onclick = () => {
   editing = !editing;
   $("btn-edit").textContent = editing ? "Xong" : "Sửa lời";
   $("edit-hint").hidden = !editing;
   $("sheet").querySelectorAll(".say").forEach(p => {
     p.contentEditable = editing ? "true" : "false";
-    p.onblur = () => {
-      state.script.sections[+p.dataset.i].content = p.innerText.trim();
-      save(); updateClock();
-    };
+    p.onblur = () => { state.script.sections[+p.dataset.i].content = p.innerText.trim(); save(); updateClock(); };
   });
   if (editing) $("sheet").querySelector(".say")?.focus();
 };
 
-/* ============================================================
-   CHÉP / TẢI / IN
-   ============================================================ */
+/* ===== CHÉP ===== */
 function plainText(){
-  const s = state.script;
-  const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
-  const parts = [ s.title, `${state.motion.motion} — Phe ${sideName}`, "",
-    ...s.sections.map(sec => `${sec.heading}\n${sec.content}`) ];
+  const s = state.script, sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+  const parts = [s.title, `${state.motion.motion} — Phe ${sideName}`, "", ...s.sections.map(x => `${x.heading}\n${x.content}`)];
   if (Array.isArray(s.rebuttals) && s.rebuttals.length){
     parts.push("Phe đối diện nhiều khả năng sẽ nói");
     s.rebuttals.forEach(r => parts.push(`- ${r.claim}\n  → ${r.response}`));
@@ -1001,14 +723,8 @@ function plainText(){
   return parts.join("\n\n");
 }
 function copy(text, btn){
-  const done = () => {
-    if (!btn) return;
-    const old = btn.textContent;
-    btn.textContent = "Đã chép";
-    setTimeout(() => btn.textContent = old, 1500);
-  };
-  if (navigator.clipboard?.writeText)
-    navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+  const done = () => { if (!btn) return; const old = btn.textContent; btn.textContent = "Đã chép"; setTimeout(() => btn.textContent = old, 1500); };
+  if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
   else fallbackCopy(text, done);
 }
 function fallbackCopy(text, done){
@@ -1019,38 +735,86 @@ function fallbackCopy(text, done){
   ta.remove();
 }
 $("btn-copy").onclick = e => copy(plainText(), e.currentTarget);
-$("btn-print").onclick = () => window.print();
 
-/* ============================================================
-   TẬP NÓI
-   ============================================================ */
+/* ===== TẢI FILE WORD (.docx) — tự đóng gói, không cần thư viện ===== */
+const CRC = (() => { const t = []; for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+const crc32 = b => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+const u16 = n => [n & 255, (n >> 8) & 255];
+const u32 = n => [n & 255, (n >> 8) & 255, (n >> 16) & 255, (n >>> 24) & 255];
+
+function zipStore(files){
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  for (const f of files){
+    const name = enc.encode(f.name), data = enc.encode(f.text), crc = crc32(data), size = data.length;
+    const head = new Uint8Array([0x50,0x4B,3,4, ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0x21), ...u32(crc), ...u32(size), ...u32(size), ...u16(name.length), ...u16(0)]);
+    parts.push(head, name, data);
+    central.push(new Uint8Array([0x50,0x4B,1,2, ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(0x21), ...u32(crc), ...u32(size), ...u32(size), ...u16(name.length), ...u16(0), ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(off)]), name);
+    off += head.length + name.length + size;
+  }
+  const cd = central.reduce((a, b) => a + b.length, 0);
+  const end = new Uint8Array([0x50,0x4B,5,6, 0,0,0,0, ...u16(files.length), ...u16(files.length), ...u32(cd), ...u32(off), 0,0]);
+  return new Blob([...parts, ...central, end], { type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+}
+const xesc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function para(text, o = {}){
+  const runs = String(text).split("\n").map((l, i) => `${i ? "<w:br/>" : ""}<w:t xml:space="preserve">${xesc(l)}</w:t>`).join("");
+  const rpr = `<w:rPr>${o.bold ? "<w:b/>" : ""}${o.italic ? "<w:i/>" : ""}${o.color ? `<w:color w:val="${o.color}"/>` : ""}${o.size ? `<w:sz w:val="${o.size}"/>` : ""}</w:rPr>`;
+  return `<w:p><w:pPr><w:spacing w:before="${o.before || 0}" w:after="${o.after ?? 120}" w:line="336" w:lineRule="auto"/></w:pPr><w:r>${rpr}${runs}</w:r></w:p>`;
+}
+function downloadDocx(){
+  const s = state.script, sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+  const voice = (s.style || "").toLowerCase();
+  const total = s.sections.reduce((a, x) => a + secondsOf(x.content), 0);
+  const b = [
+    para(s.title, { bold:true, size:38, after:80 }),
+    para(state.motion.motion, { italic:true, color:"555555", after:40 }),
+    para(`Phe ${sideName} · giọng ${voice} · khoảng ${mmss(total)} ở nhịp ${state.pace} âm tiết/phút`, { size:20, color:"777777", after:240 }),
+  ];
+  s.sections.forEach(x => {
+    b.push(para(x.heading, { bold:true, size:28, color:"1F5FA8", before:220, after:60 }));
+    b.push(para(x.content, { size:26 }));
+    if (x.tip) b.push(para("Mẹo nói: " + x.tip, { italic:true, size:21, color:"666666", before:60 }));
+  });
+  if (Array.isArray(s.rebuttals) && s.rebuttals.length){
+    b.push(para("Phe đối diện nhiều khả năng sẽ nói", { bold:true, size:28, color:"1F5FA8", before:300, after:80 }));
+    s.rebuttals.forEach(r => { b.push(para(r.claim, { bold:true, size:24, after:20 })); b.push(para("→ " + r.response, { size:24 })); });
+  }
+  const H = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+  const W = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+  const R = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+  const RS = "http://schemas.openxmlformats.org/package/2006/relationships";
+  const blob = zipStore([
+    { name:"[Content_Types].xml", text:`${H}<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>` },
+    { name:"_rels/.rels", text:`${H}<Relationships xmlns="${RS}"><Relationship Id="rId1" Type="${R}/officeDocument" Target="word/document.xml"/></Relationships>` },
+    { name:"word/_rels/document.xml.rels", text:`${H}<Relationships xmlns="${RS}"><Relationship Id="rId1" Type="${R}/styles" Target="styles.xml"/></Relationships>` },
+    { name:"word/styles.xml", text:`${H}<w:styles ${W}><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman"/><w:sz w:val="26"/><w:lang w:val="vi-VN"/></w:rPr></w:rPrDefault></w:docDefaults></w:styles>` },
+    { name:"word/document.xml", text:`${H}<w:document ${W}><w:body>${b.join("")}<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>` },
+  ]);
+  const slug = s.title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/gi, "d").replace(/[^a-z0-9]+/gi, "-").replace(/^-|-$/g, "").slice(0, 50) || "kich-ban";
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = `kich-ban-${slug}.docx`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+$("btn-docx").onclick = downloadDocx;
+
+/* ===== TẬP NÓI ===== */
 let tick = null, elapsed = 0, fontSize = 1.7, practiceTarget = TARGET_SECONDS;
 const pbody = $("prompter-body");
-
 $("btn-practice").onclick = () => {
-  $("prompter-inner").innerHTML = state.script.sections
-    .map(s => `<h3>${esc(s.heading)}</h3><p>${esc(s.content)}</p>`).join("");
+  $("prompter-inner").innerHTML = state.script.sections.map(s => `<h3>${esc(s.heading)}</h3><p>${esc(s.content)}</p>`).join("");
   practiceTarget = Math.round(state.script.sections.reduce((a, s) => a + secondsOf(s.content), 0));
   $("prompter-target").textContent = `khoảng ${mmss(practiceTarget)}`;
   $("prompter").hidden = false;
   document.body.style.overflow = "hidden";
-  resetTimer();
-  $("btn-timer").focus();
+  resetTimer(); $("btn-timer").focus();
 };
-function closePrompter(){
-  $("prompter").hidden = true;
-  document.body.style.overflow = "";
-  stopTimer();
-  $("btn-practice").focus();
-}
+function closePrompter(){ $("prompter").hidden = true; document.body.style.overflow = ""; stopTimer(); $("btn-practice").focus(); }
 $("btn-prompter-close").onclick = closePrompter;
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape" && !$("prompter").hidden) closePrompter();
-});
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("prompter").hidden) closePrompter(); });
 function paintTimer(){
   $("timer").textContent = mmss(elapsed);
-  $("timer").dataset.zone = elapsed > practiceTarget + 5 ? "over"
-                          : elapsed > practiceTarget - 20 ? "near" : "ok";
+  $("timer").dataset.zone = elapsed > practiceTarget + 5 ? "over" : elapsed > practiceTarget - 20 ? "near" : "ok";
   if ($("autoscroll").checked){
     const max = pbody.scrollHeight - pbody.clientHeight;
     pbody.scrollTop = Math.min(max, max * (elapsed / practiceTarget));
@@ -1064,44 +828,27 @@ $("btn-timer").onclick = () => {
   tick = setInterval(() => { elapsed++; paintTimer(); }, 1000);
 };
 $("btn-timer-reset").onclick = resetTimer;
+const setFont = v => { fontSize = Math.min(3.2, Math.max(1.1, v)); $("prompter-inner").style.fontSize = fontSize + "rem"; };
 $("btn-font-up").onclick = () => setFont(fontSize + .2);
 $("btn-font-down").onclick = () => setFont(fontSize - .2);
-function setFont(v){
-  fontSize = Math.min(3.2, Math.max(1.1, v));
-  $("prompter-inner").style.fontSize = fontSize + "rem";
-}
 
-/* ============================================================
-   NÚT CÒN LẠI
-   ============================================================ */
+/* ===== NÚT CÒN LẠI ===== */
 $("btn-again").onclick = () => getScript(true);
-$("btn-back-style").onclick = () => {
-  state.step = 4; state.script = null; save(); render();
-  window.scrollTo({ top:0, behavior:"smooth" });
-};
-$("btn-back-motions").onclick = () => {
-  state.step = 3; state.script = null; save(); render();
-  window.scrollTo({ top:0, behavior:"smooth" });
-};
+$("btn-back-style").onclick = () => { state.step = 4; state.script = null; save(); render(); window.scrollTo({ top:0, behavior:"smooth" }); };
+$("btn-back-motions").onclick = () => { state.step = 3; state.script = null; save(); render(); window.scrollTo({ top:0, behavior:"smooth" }); };
 $("btn-reset").onclick = () => {
-  state = { step:1, topic:"", idea:"", motions:[], avoid:[], motion:null, side:null,
-            style:state.style, script:null, pace:state.pace };
+  state = { step:1, topic:"", idea:"", motions:[], avoid:[], motion:null, side:null, style:state.style, script:null, pace:state.pace };
   try { sessionStorage.removeItem(STORE); } catch(e){}
   $("topic").value = ""; updateCount(); clearTopicMsg();
   $("idea").value = ""; updateIdeaCount();
-  render();
-  window.scrollTo({ top:0, behavior:"smooth" });
+  $("custom-motion").value = ""; $("custom-count").textContent = "0";
+  render(); window.scrollTo({ top:0, behavior:"smooth" });
 };
 $("btn-retry").onclick = () => lastAction && lastAction();
 $("btn-error-back").onclick = () => { state.step = +$("view-error").dataset.back || 1; render(); };
 
-/* ============================================================
-   KHỞI CHẠY
-   ============================================================ */
-load();
-paintChips();
-paintIdeaChips();
-render();
+/* ===== KHỞI CHẠY ===== */
+load(); paintChips(); paintIdeaChips(); render();
 </script>
 </body>
 </html>
