@@ -79,6 +79,9 @@ button,input,select,textarea{font:inherit;color:inherit}
 .btn--copy:hover:not(:disabled){filter:brightness(1.08);color:var(--blue-ink)}
 .btn--link{border:0;padding:.35rem 0;min-height:36px;color:var(--muted);font-weight:500;font-size:.84rem;background:none}
 .btn--link:hover:not(:disabled){color:var(--blue)}
+.btn--accent{border-color:rgba(90,169,242,.55);background:rgba(90,169,242,.12);color:var(--blue)}
+.btn--accent:hover:not(:disabled){border-color:var(--blue);background:rgba(90,169,242,.22);color:var(--text)}
+.btn--accent:active:not(:disabled){background:rgba(90,169,242,.3)}
 .actions{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 
 .head{display:flex;align-items:baseline;justify-content:space-between;gap:1rem}
@@ -328,9 +331,9 @@ button,input,select,textarea{font:inherit;color:inherit}
           <p>Sao chép kịch bản kèm chủ đề để nộp tại biểu mẫu hoặc tải file để in ra.</p>
         </div>
         <div class="copy-card__actions">
-          <button class="btn btn--sm" id="btn-copy-motion" type="button">Chủ đề</button>
-          <button class="btn btn--sm" id="btn-copy" type="button">Kịch bản</button>
-          <button class="btn btn--sm" id="btn-docx" type="button">Tải file</button>
+          <button class="btn btn--sm btn--accent" id="btn-copy-motion" type="button">Chủ đề</button>
+          <button class="btn btn--sm btn--accent" id="btn-copy" type="button">Kịch bản</button>
+          <button class="btn btn--sm btn--accent" id="btn-docx" type="button">Tải file</button>
         </div>
       </div>
 
@@ -361,7 +364,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
   </main>
 
-  <p class="credit">Công cụ hỗ trợ tạo kịch bản bằng AI</p>
+  <p class="credit">Công cụ hỗ trợ tạo kịch bản</p>
 </div>
 
 <div class="prompter" id="prompter" hidden role="dialog" aria-modal="true" aria-label="Chế độ tập nói">
