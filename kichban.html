@@ -324,12 +324,13 @@ button,input,select,textarea{font:inherit;color:inherit}
 
       <div class="copy-card">
         <div>
-          <h3>Lấy bản này đi tập</h3>
-          <p>Chép nguyên bài để dán vào ghi chú, hoặc tải file Word để in và cầm giấy.</p>
+          <h3>Lấy nội dung</h3>
+          <p>Sao chép kịch bản kèm chủ đề để nộp tại biểu mẫu hoặc tải file để in ra.</p>
         </div>
         <div class="copy-card__actions">
-          <button class="btn btn--copy" id="btn-copy" type="button">Chép kịch bản</button>
-          <button class="btn btn--sm" id="btn-docx" type="button">Tải file Word</button>
+          <button class="btn btn--sm" id="btn-copy-motion" type="button">Chủ đề</button>
+          <button class="btn btn--copy" id="btn-copy" type="button">Kịch bản</button>
+          <button class="btn btn--sm" id="btn-docx" type="button">Tải file</button>
         </div>
       </div>
 
@@ -360,7 +361,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
   </main>
 
-  <p class="credit">You Can Club · Kịch bản là bản nháp để bạn tập, hãy sửa lại bằng giọng của mình.</p>
+  <p class="credit">Công cụ hỗ trợ tạo kịch bản</p>
 </div>
 
 <div class="prompter" id="prompter" hidden role="dialog" aria-modal="true" aria-label="Chế độ tập nói">
@@ -722,6 +723,10 @@ function plainText(){
   }
   return parts.join("\n\n");
 }
+function motionText(){
+  const sideName = state.side === "pro" ? "Ủng hộ" : "Phản đối";
+  return `${state.motion.motion} — Phe ${sideName}`;
+}
 function copy(text, btn){
   const done = () => { if (!btn) return; const old = btn.textContent; btn.textContent = "Đã chép"; setTimeout(() => btn.textContent = old, 1500); };
   if (navigator.clipboard?.writeText) navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
@@ -735,6 +740,7 @@ function fallbackCopy(text, done){
   ta.remove();
 }
 $("btn-copy").onclick = e => copy(plainText(), e.currentTarget);
+$("btn-copy-motion").onclick = e => copy(motionText(), e.currentTarget);
 
 /* ===== TẢI FILE WORD (.docx) — tự đóng gói, không cần thư viện ===== */
 const CRC = (() => { const t = []; for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
