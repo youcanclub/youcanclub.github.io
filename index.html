@@ -2,8 +2,7 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <!-- Đã bỏ maximum-scale/user-scalable=no để người dùng vẫn có thể phóng to (trợ năng) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#F0F9FF">
     
     <!-- ========================================== -->
@@ -282,6 +281,74 @@
             }
         }
     </style>
+    <!-- ===== VÁ LỖI HIỂN THỊ SAFARI iOS (dán ngay TRƯỚC thẻ </head>) ===== -->
+<script>
+  // Tắt hiệu ứng hover trên màn hình cảm ứng (chạm vào thẻ không còn kích hoạt hover)
+  if (window.tailwind) { tailwind.config = { future: { hoverOnlyWhenSupported: true } }; }
+</script>
+<style>
+    /* Bỏ ép layer GPU trên 2 lớp phủ cuộn dài (thủ phạm chính gây khối trắng) */
+    #chapter-view, #conclusion-view {
+        -webkit-transform: none !important;
+        transform: none !important;
+        -webkit-backface-visibility: visible !important;
+        backface-visibility: visible !important;
+        transition: opacity .3s ease-in-out, visibility 0s linear 0s;
+    }
+    /* Khi đóng: ẩn hẳn sau khi mờ xong để giải phóng bộ nhớ GPU */
+    #chapter-view[inert], #conclusion-view[inert] {
+        visibility: hidden;
+        transition: opacity .3s ease-in-out, visibility 0s linear .3s;
+    }
+
+    /* Nút Messenger: bỏ layer thừa, tránh thanh Home/tai thỏ, ping chỉ chạy vài lần */
+    #fab-chat {
+        -webkit-transform: none !important;
+        transform: none !important;
+        will-change: auto !important;
+        bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+        right: calc(1.5rem + env(safe-area-inset-right, 0px));
+    }
+    .animate-custom-ping { animation-iteration-count: 4; }
+
+    /* Đốm sáng blur-2xl -> gradient nhẹ (nhìn gần giống, Safari vẽ ổn định) */
+    #conclusion-view .blur-2xl {
+        -webkit-filter: none !important;
+        filter: none !important;
+        background: radial-gradient(circle, rgba(147,197,253,.4) 0%, rgba(147,197,253,0) 70%) !important;
+    }
+
+    /* Bỏ filter trên chữ tiêu đề (mỗi filter tạo thêm 1 lớp vẽ) */
+    h1.drop-shadow-sm, h2.drop-shadow-sm {
+        -webkit-filter: none !important;
+        filter: none !important;
+    }
+
+    /* Thẻ Lời kết: chỉ animate thuộc tính cần thiết, không dùng transition-all */
+    #conclusion-view .group,
+    #conclusion-view .group * {
+        transition-property: box-shadow, transform, color, background-color !important;
+    }
+
+    /* Màn hình cảm ứng: bỏ hiệu ứng lọc nặng */
+    @media (hover: none), (pointer: coarse) {
+        .role-card { filter: none !important; }
+        .game-card-attr {
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+            background: rgba(30, 64, 175, 0.3);
+        }
+    }
+
+    /* Điện thoại: căn trái cho dễ đọc, tránh hở chữ do căn đều */
+    @media (max-width: 639px) {
+        .book-text {
+            text-align: left;
+            -webkit-hyphens: manual;
+            hyphens: manual;
+        }
+    }
+</style>
 </head>
 <body class="min-h-screen">
 
